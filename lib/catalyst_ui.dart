@@ -8,3 +8,5 @@ export 'package:flutter/widgets.dart';
 export 'components/app/catalyst_app.dart';
 // Avatar
 export 'components/avatar/avatar.dart';
+// Badge
+export 'components/badge/badge.dart';

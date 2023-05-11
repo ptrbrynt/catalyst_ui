@@ -1,5 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
-import 'package:example/avatars/avatars_example.dart';
+import 'package:example/badges/badges_example.dart';
 import 'package:example/theme.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class ExampleApp extends StatelessWidget {
       child: Container(
         color: const Color(0xFFFFFFFF),
         alignment: Alignment.center,
-        child: const AvatarsExample(),
+        child: const BadgesExample(),
       ),
     );
   }

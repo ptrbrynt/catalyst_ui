@@ -23,6 +23,29 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
               ),
         },
       ),
+      badgeThemeData: BadgeThemeData(
+        backgroundColor: const Color(0x20000000),
+        borderRadius: BorderRadius.circular(6),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        textStyle: const TextStyle(color: Color(0xFF000000), fontSize: 12),
+        outlined: true,
+        styles: {
+          'error': (base) => base.copyWith(
+                backgroundColor: const Color(0xFFFF0000),
+                textStyle: base.textStyle.copyWith(
+                  color: const Color(0xFFFFFFFF),
+                ),
+              ),
+          'pill': (base) => base.copyWith(
+                borderRadius: BorderRadius.circular(16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                textStyle: base.textStyle.copyWith(fontSize: 16),
+              ),
+        },
+      ),
     );
 
 enum AvatarStyles {
