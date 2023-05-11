@@ -6,37 +6,59 @@ class AvatarsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Avatar.network(
-              'https://i.pravatar.cc/300',
-              styles: const [AvatarStyles.small],
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+              styles: [AvatarStyles.small],
             ),
-            Avatar.network('https://i.pravatar.cc/300'),
-            Avatar.network(
-              'https://i.pravatar.cc/300',
-              styles: const [AvatarStyles.large],
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+            ),
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+              styles: [AvatarStyles.large],
             ),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Avatar.network(
-              'https://i.pravatar.cc/300',
-              styles: const [AvatarStyles.circle, AvatarStyles.small],
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+              styles: [AvatarStyles.circle, AvatarStyles.small],
             ),
-            Avatar.network(
-              'https://i.pravatar.cc/300',
-              styles: const [AvatarStyles.circle],
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+              styles: [AvatarStyles.circle],
             ),
-            Avatar.network(
-              'https://i.pravatar.cc/300',
-              styles: const [AvatarStyles.circle, AvatarStyles.large],
+            Avatar(
+              NetworkImage('https://i.pravatar.cc/300'),
+              styles: [AvatarStyles.circle, AvatarStyles.large],
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Avatar(
+              null,
+              styles: [AvatarStyles.circle, AvatarStyles.small],
+              child: Text('TW'),
+            ),
+            Avatar(
+              null,
+              styles: [AvatarStyles.circle],
+              child: Text('TW'),
+            ),
+            Avatar(
+              null,
+              styles: [AvatarStyles.circle, AvatarStyles.large],
+              child: Text('TW'),
             ),
           ],
         ),

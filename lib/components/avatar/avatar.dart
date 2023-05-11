@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:catalyst_ui/components/widget/catalyst_widget.dart';
-import 'package:flutter/foundation.dart';
 
 export 'avatar_theme_data.dart';
 
@@ -13,66 +10,18 @@ export 'avatar_theme_data.dart';
 /// {@endtemplate}
 class Avatar extends StyleableWidget {
   /// {@macro avatar}
-  const Avatar({
-    this.image,
+  const Avatar(
+    this.avatarImage, {
+    this.child,
     super.styles = const [],
     super.key,
   });
 
-  /// Creates an avatar that displays an image from the network.
-  factory Avatar.network(
-    String url, {
-    Key? key,
-    List<dynamic> styles = const [],
-  }) {
-    return Avatar(
-      key: key,
-      image: NetworkImage(url),
-      styles: styles,
-    );
-  }
-
-  /// Creates an avatar that displays an image from an asset.
-  factory Avatar.asset(
-    String name, {
-    Key? key,
-    List<dynamic> styles = const [],
-  }) {
-    return Avatar(
-      key: key,
-      image: AssetImage(name),
-      styles: styles,
-    );
-  }
-
-  /// Creates an avatar that displays an image from a file on the file system.
-  factory Avatar.file(
-    String path, {
-    Key? key,
-    List<dynamic> styles = const [],
-  }) {
-    return Avatar(
-      key: key,
-      image: FileImage(File(path)),
-      styles: styles,
-    );
-  }
-
-  /// Creates an avatar that displays an image from a [Uint8List].
-  factory Avatar.memory(
-    Uint8List bytes, {
-    Key? key,
-    List<dynamic> styles = const [],
-  }) {
-    return Avatar(
-      key: key,
-      image: MemoryImage(bytes),
-      styles: styles,
-    );
-  }
-
   /// The image to display in the avatar.
-  final ImageProvider<Object>? image;
+  final ImageProvider<Object>? avatarImage;
+
+  /// The widget below this widget in the tree.
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -82,17 +31,22 @@ class Avatar extends StyleableWidget {
     final shape = theme?.shape ?? BoxShape.circle;
 
     return Container(
+      alignment: Alignment.center,
       height: theme?.size ?? AvatarThemeData.defaultSize,
       width: theme?.size ?? AvatarThemeData.defaultSize,
       decoration: BoxDecoration(
+        color: theme?.backgroundColor,
         borderRadius: shape == BoxShape.circle
             ? null
             : theme?.borderRadius ?? BorderRadius.zero,
         shape: shape,
-        image: image != null ? DecorationImage(image: image!) : null,
+        image:
+            avatarImage != null ? DecorationImage(image: avatarImage!) : null,
         border: theme?.border,
         boxShadow: theme?.boxShadow,
       ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
     );
   }
 }

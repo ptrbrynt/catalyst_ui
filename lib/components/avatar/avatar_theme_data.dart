@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:flutter/foundation.dart';
 
 /// {@template avatar_theme_data}
 /// The theme data for Avatars.
@@ -12,6 +13,7 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
     this.borderRadius,
     this.boxShadow,
     this.border,
+    this.backgroundColor,
     this.size = defaultSize,
     super.styles = const {},
   });
@@ -32,6 +34,9 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
   /// The default size of the avatar. Can be overridden by individual Avatars.
   final double size;
 
+  /// The background color of the avatar.
+  final Color? backgroundColor;
+
   /// The default size for avatars if none is specified.
   static const double defaultSize = 48;
 
@@ -39,11 +44,23 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
   bool operator ==(covariant AvatarThemeData other) {
     if (identical(this, other)) return true;
 
-    return other.shape == shape && other.borderRadius == borderRadius;
+    return other.shape == shape &&
+        other.borderRadius == borderRadius &&
+        listEquals(other.boxShadow, boxShadow) &&
+        other.border == border &&
+        other.size == size &&
+        other.backgroundColor == backgroundColor;
   }
 
   @override
-  int get hashCode => shape.hashCode ^ borderRadius.hashCode;
+  int get hashCode {
+    return shape.hashCode ^
+        borderRadius.hashCode ^
+        boxShadow.hashCode ^
+        border.hashCode ^
+        size.hashCode ^
+        backgroundColor.hashCode;
+  }
 
   AvatarThemeData copyWith({
     BoxShape? shape,
@@ -51,6 +68,7 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
     List<BoxShadow>? boxShadow,
     BoxBorder? border,
     double? size,
+    Color? backgroundColor,
   }) {
     return AvatarThemeData(
       shape: shape ?? this.shape,
@@ -58,6 +76,7 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
       boxShadow: boxShadow ?? this.boxShadow,
       border: border ?? this.border,
       size: size ?? this.size,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
 }
