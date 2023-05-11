@@ -1,0 +1,44 @@
+name: catalyst_ui
+description: A non-opinionated Flutter UI component library
+version: 0.0.1
+homepage: https://github.com/ptrbrynt/catalyst_ui
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^4.0.0+1
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
