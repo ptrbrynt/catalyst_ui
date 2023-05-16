@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:equatable/equatable.dart';
 
 /// {@template badge_theme_data}
 /// The theme data for Badges.
 /// {@endtemplate}
 @immutable
-class BadgeThemeData extends Styleable<BadgeThemeData> {
+class BadgeThemeData extends Styleable<BadgeThemeData> with EquatableMixin {
   /// {@macro badge_theme_data}
   const BadgeThemeData({
     this.backgroundColor = defaultBackgroundColor,
@@ -53,22 +54,11 @@ class BadgeThemeData extends Styleable<BadgeThemeData> {
   }
 
   @override
-  bool operator ==(covariant BadgeThemeData other) {
-    if (identical(this, other)) return true;
-
-    return other.backgroundColor == backgroundColor &&
-        other.outlined == outlined &&
-        other.borderRadius == borderRadius &&
-        other.padding == padding &&
-        other.textStyle == textStyle;
-  }
-
-  @override
-  int get hashCode {
-    return backgroundColor.hashCode ^
-        outlined.hashCode ^
-        borderRadius.hashCode ^
-        padding.hashCode ^
-        textStyle.hashCode;
-  }
+  List<Object?> get props => [
+        backgroundColor,
+        outlined,
+        borderRadius,
+        padding,
+        textStyle,
+      ];
 }

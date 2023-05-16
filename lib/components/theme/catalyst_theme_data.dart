@@ -1,4 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:equatable/equatable.dart';
 
 export 'styleable.dart';
 
@@ -6,7 +7,7 @@ export 'styleable.dart';
 /// A theme that defines the configuration of the Catalyst UI library.
 /// {@endtemplate}
 @immutable
-class CatalystThemeData {
+class CatalystThemeData extends Equatable {
   /// {@macro catalyst_theme_data}
   const CatalystThemeData({
     this.avatarThemeData = const AvatarThemeData(),
@@ -20,12 +21,5 @@ class CatalystThemeData {
   final BadgeThemeData badgeThemeData;
 
   @override
-  bool operator ==(covariant CatalystThemeData other) {
-    if (identical(this, other)) return true;
-
-    return other.avatarThemeData == avatarThemeData;
-  }
-
-  @override
-  int get hashCode => avatarThemeData.hashCode;
+  List<Object?> get props => [avatarThemeData, badgeThemeData];
 }

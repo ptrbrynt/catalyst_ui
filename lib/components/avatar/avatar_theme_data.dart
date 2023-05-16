@@ -1,11 +1,12 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 /// {@template avatar_theme_data}
 /// The theme data for Avatars.
 /// {@endtemplate}
 @immutable
-class AvatarThemeData extends Styleable<AvatarThemeData> {
+class AvatarThemeData extends Styleable<AvatarThemeData> with EquatableMixin {
   /// {@macro avatar_theme_data}
   const AvatarThemeData({
     this.shape = BoxShape.circle,
@@ -79,4 +80,14 @@ class AvatarThemeData extends Styleable<AvatarThemeData> {
       backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        shape,
+        borderRadius,
+        boxShadow,
+        border,
+        size,
+        backgroundColor,
+      ];
 }
