@@ -1,5 +1,8 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
 
+export 'catalyst_theme_data.dart';
+export 'styleable.dart';
+
 /// {@template catalyst_theme}
 /// The Catalyst UI theme.
 ///

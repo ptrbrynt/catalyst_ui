@@ -1,5 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
-import 'package:example/badges/badges_example.dart';
+import 'package:example/routes.dart';
 import 'package:example/theme.dart';
 
 void main() {
@@ -11,13 +11,13 @@ class ExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CatalystApp(
-      theme: exampleTheme,
-      child: Container(
-        color: const Color(0xFFFFFFFF),
-        alignment: Alignment.center,
-        child: const BadgesExample(),
+    return WidgetsApp.router(
+      builder: (context, child) => CatalystTheme(
+        data: exampleTheme,
+        child: child!,
       ),
+      color: const Color(0xFFFF0000),
+      routerConfig: router,
     );
   }
 }
