@@ -14,7 +14,10 @@ class ExampleApp extends StatelessWidget {
     return WidgetsApp.router(
       builder: (context, child) => CatalystTheme(
         data: exampleTheme,
-        child: child!,
+        child: DefaultTextStyle(
+          style: const TextStyle(color: Color(0xFF000000)),
+          child: child!,
+        ),
       ),
       color: const Color(0xFFFF0000),
       routerConfig: router,

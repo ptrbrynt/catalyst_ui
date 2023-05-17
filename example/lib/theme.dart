@@ -1,4 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:catalyst_ui/components/input/input_decoration_theme.dart';
 
 CatalystThemeData get exampleTheme => CatalystThemeData(
       avatarThemeData: AvatarThemeData(
@@ -104,6 +105,50 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
                     ),
               ),
         },
+      ),
+      inputDecorationThemeData: InputDecorationThemeData(
+        boxDecoration: (state) => BoxDecoration(
+          border: Border.all(
+            color: switch (state) {
+              InputState.enabled => const Color(0xFF000000).withOpacity(0.5),
+              InputState.disabled => const Color(0xFFEEEEEE),
+              InputState.focused => const Color(0xFF0000FF),
+              InputState.error => const Color(0xFFFF0000),
+            },
+            width: 1.5,
+          ),
+          color: switch (state) {
+            InputState.disabled => const Color(0xFFEEEEEE).withOpacity(0.5),
+            _ => const Color(0xFFFFFFFF),
+          },
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            if (state == InputState.focused)
+              const BoxShadow(
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                color: Color(0x20000000),
+              ),
+          ],
+        ),
+        placeholderStyle: (_) => TextStyle(
+          color: const Color(0xFF000000).withOpacity(0.2),
+        ),
+        hintStyle: (_) => TextStyle(
+          color: const Color(0xFF000000).withOpacity(0.5),
+        ),
+        errorStyle: (_) => const TextStyle(
+            color: Color(0xFFFF0000), fontWeight: FontWeight.w500),
+        leadingAddOnStyle: (_) => TextStyle(
+          color: const Color(0xFF000000).withOpacity(0.5),
+          fontWeight: FontWeight.w500,
+        ),
+        trailingAddOnStyle: (_) => TextStyle(
+          color: const Color(0xFF000000).withOpacity(0.5),
+          fontWeight: FontWeight.w500,
+        ),
+        trailingIconTheme: (_) => const IconThemeData(size: 16),
+        leadingIconTheme: (_) => const IconThemeData(size: 16),
       ),
     );
 

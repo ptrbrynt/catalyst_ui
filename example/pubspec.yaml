@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^7.0.1
+  line_icons: ^2.0.1
 
 
 dev_dependencies:
