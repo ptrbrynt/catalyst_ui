@@ -1,6 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 /// {@template avatar_theme_data}
 /// The theme data for Avatars.
@@ -40,28 +39,6 @@ class AvatarThemeData extends Styleable<AvatarThemeData> with EquatableMixin {
   /// The default size for avatars if none is specified.
   static const double defaultSize = 48;
 
-  @override
-  bool operator ==(covariant AvatarThemeData other) {
-    if (identical(this, other)) return true;
-
-    return other.shape == shape &&
-        other.borderRadius == borderRadius &&
-        listEquals(other.boxShadow, boxShadow) &&
-        other.border == border &&
-        other.size == size &&
-        other.backgroundColor == backgroundColor;
-  }
-
-  @override
-  int get hashCode {
-    return shape.hashCode ^
-        borderRadius.hashCode ^
-        boxShadow.hashCode ^
-        border.hashCode ^
-        size.hashCode ^
-        backgroundColor.hashCode;
-  }
-
   /// Creates a copy of this [AvatarThemeData] but with the given fields
   AvatarThemeData copyWith({
     BoxShape? shape,
@@ -89,5 +66,6 @@ class AvatarThemeData extends Styleable<AvatarThemeData> with EquatableMixin {
         border,
         size,
         backgroundColor,
+        styles,
       ];
 }

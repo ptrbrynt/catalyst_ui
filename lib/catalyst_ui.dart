@@ -8,5 +8,7 @@ export 'package:flutter/widgets.dart';
 export 'components/avatar/avatar.dart';
 // Badge
 export 'components/badge/badge.dart';
+// Button
+export 'components/button/button.dart';
 // Theme
 export 'components/theme/catalyst_theme.dart';

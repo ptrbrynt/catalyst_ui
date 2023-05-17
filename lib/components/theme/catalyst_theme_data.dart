@@ -12,6 +12,7 @@ class CatalystThemeData extends Equatable {
   const CatalystThemeData({
     this.avatarThemeData = const AvatarThemeData(),
     this.badgeThemeData = const BadgeThemeData(),
+    this.buttonThemeData = const ButtonThemeData(),
   });
 
   /// The default [AvatarThemeData] for the [CatalystThemeData].
@@ -19,6 +20,9 @@ class CatalystThemeData extends Equatable {
 
   /// The default [BadgeThemeData] for the [CatalystThemeData].
   final BadgeThemeData badgeThemeData;
+
+  /// The default [ButtonThemeData] for the [CatalystThemeData].
+  final ButtonThemeData buttonThemeData;
 
   @override
   List<Object?> get props => [avatarThemeData, badgeThemeData];

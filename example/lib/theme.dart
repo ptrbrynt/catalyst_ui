@@ -46,6 +46,65 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
               ),
         },
       ),
+      buttonThemeData: ButtonThemeData(
+        height: 36,
+        decoration: (state) => BoxDecoration(
+          color: switch (state) {
+            ButtonState.enabled => const Color(0xFFFF0000),
+            ButtonState.disabled => const Color(0xFFEEEEEE),
+            ButtonState.pressed => const Color(0xFFDDDDDD),
+            ButtonState.hover => const Color(0xFFDDDDDD),
+          },
+          border: Border.all(
+            width: 1,
+            color: const Color(0xFF000000),
+          ),
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: [
+            if (state == ButtonState.enabled)
+              const BoxShadow(
+                blurRadius: 2,
+                offset: Offset(0, 2),
+                color: Color(0x20000000),
+              ),
+            if (state == ButtonState.pressed)
+              const BoxShadow(
+                blurRadius: 2,
+                offset: Offset(0, 1),
+                color: Color(0x20000000),
+              ),
+          ],
+        ),
+        padding: (_) => const EdgeInsets.symmetric(horizontal: 12),
+        textStyle: (_) => const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        styles: {
+          'circle': (base) => base.copyWith(
+                decoration: (state) => const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFFF0000),
+                ),
+              ),
+          'gradient': (base) => base.copyWith(
+                decoration: (state) => base.decoration?.call(state)?.copyWith(
+                      gradient: LinearGradient(
+                        colors: const [
+                          Color(0xFFFF0000),
+                          Color(0xFF0000FF),
+                        ],
+                        stops: switch (state) {
+                          ButtonState.hover => [1.0, 0.0],
+                          ButtonState.pressed => [0.0, 1.0],
+                          ButtonState.disabled => [0.0, 0.0],
+                          ButtonState.enabled => [0.0, 1.0],
+                        },
+                      ),
+                    ),
+              ),
+        },
+      ),
     );
 
 enum AvatarStyles {

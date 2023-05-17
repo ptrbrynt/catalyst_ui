@@ -60,5 +60,6 @@ class BadgeThemeData extends Styleable<BadgeThemeData> with EquatableMixin {
         borderRadius,
         padding,
         textStyle,
+        styles,
       ];
 }
