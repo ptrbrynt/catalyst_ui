@@ -35,54 +35,54 @@ class InputDecorationThemeData extends Styleable<InputDecorationThemeData>
   });
 
   /// The default content padding
-  static EdgeInsets defaultContentPadding(InputState _) =>
+  static EdgeInsets defaultContentPadding(Set<InputState> _) =>
       const EdgeInsets.fromLTRB(12, 8, 12, 8);
 
   /// The default label padding
-  static EdgeInsets defaultLabelPadding(InputState _) =>
+  static EdgeInsets defaultLabelPadding(Set<InputState> _) =>
       const EdgeInsets.only(bottom: 8);
 
   /// The default help padding
-  static EdgeInsets defaultHelpPadding(InputState _) =>
+  static EdgeInsets defaultHelpPadding(Set<InputState> _) =>
       const EdgeInsets.only(top: 8);
 
   /// The default hint padding
-  static EdgeInsets defaultHintPadding(InputState _) =>
+  static EdgeInsets defaultHintPadding(Set<InputState> _) =>
       const EdgeInsets.only(bottom: 8);
 
   /// The default error padding
-  static EdgeInsets defaultErrorPadding(InputState _) =>
+  static EdgeInsets defaultErrorPadding(Set<InputState> _) =>
       const EdgeInsets.only(top: 8);
 
   /// The default leading add on padding
-  static EdgeInsets defaultLeadingAddOnPadding(InputState _) =>
+  static EdgeInsets defaultLeadingAddOnPadding(Set<InputState> _) =>
       const EdgeInsets.only(right: 4);
 
   /// The default trailing add on padding
-  static EdgeInsets defaultTrailingAddOnPadding(InputState _) =>
+  static EdgeInsets defaultTrailingAddOnPadding(Set<InputState> _) =>
       const EdgeInsets.only(left: 4);
 
   /// The default leading icon padding
-  static EdgeInsets defaultLeadingIconPadding(InputState _) =>
+  static EdgeInsets defaultLeadingIconPadding(Set<InputState> _) =>
       const EdgeInsets.only(right: 4);
 
   /// The default trailing icon padding
-  static EdgeInsets defaultTrailingIconPadding(InputState _) =>
+  static EdgeInsets defaultTrailingIconPadding(Set<InputState> _) =>
       const EdgeInsets.only(left: 4);
 
   /// The default leading icon theme
-  static IconThemeData defaultLeadingIconTheme(InputState _) =>
+  static IconThemeData defaultLeadingIconTheme(Set<InputState> _) =>
       const IconThemeData();
 
   /// The default trailing icon theme
-  static IconThemeData defaultTrailingIconTheme(InputState _) =>
+  static IconThemeData defaultTrailingIconTheme(Set<InputState> _) =>
       const IconThemeData();
 
   /// The default cursor color
-  static Color defaultCursorColor(InputState _) => const Color(0x80808080);
+  static Color defaultCursorColor(Set<InputState> _) => const Color(0x80808080);
 
   /// The default background cursor color
-  static Color defaultBackgroundCursorColor(InputState _) =>
+  static Color defaultBackgroundCursorColor(Set<InputState> _) =>
       const Color.fromARGB(100, 0, 0, 0);
 
   /// The text style of the input content
@@ -179,7 +179,7 @@ class InputDecorationThemeData extends Styleable<InputDecorationThemeData>
 }
 
 /// A property which reacts to the state of an Input.
-typedef InputStatefulProperty<T> = T? Function(InputState state);
+typedef InputStatefulProperty<T> = T? Function(Set<InputState> state);
 
 /// Possible states for Inputs
 enum InputState {

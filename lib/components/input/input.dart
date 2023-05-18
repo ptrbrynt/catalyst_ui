@@ -29,7 +29,7 @@ class Input extends StyleableStatefulWidget {
 }
 
 class _InputState extends State<Input> {
-  late InputState _inputState;
+  final _inputStates = <InputState>{};
 
   late bool _showPlaceholder;
 
@@ -47,16 +47,22 @@ class _InputState extends State<Input> {
   }
 
   void _updateInputState() {
+    final newState = <InputState>{};
+    if (widget.decoration.errorText != null) {
+      newState.add(InputState.error);
+    }
+    if (!widget.enabled) {
+      newState.add(InputState.disabled);
+    } else {
+      newState.add(InputState.enabled);
+    }
+    if (focusNode.hasFocus) {
+      newState.add(InputState.focused);
+    }
     setState(() {
-      if (widget.decoration.errorText != null) {
-        _inputState = InputState.error;
-      } else if (!widget.enabled) {
-        _inputState = InputState.disabled;
-      } else if (focusNode.hasFocus) {
-        _inputState = InputState.focused;
-      } else {
-        _inputState = InputState.enabled;
-      }
+      _inputStates
+        ..clear()
+        ..addAll(newState);
     });
   }
 
@@ -93,8 +99,8 @@ class _InputState extends State<Input> {
         AnimatedContainer(
           duration: const Duration(milliseconds: 100),
           curve: Curves.easeInOut,
-          decoration: theme?.boxDecoration?.call(_inputState),
-          padding: theme?.contentPadding.call(_inputState),
+          decoration: theme?.boxDecoration?.call(_inputStates),
+          padding: theme?.contentPadding.call(_inputStates),
           child: Row(
             children: [
               if (widget.decoration.leadingIcon != null) _leadingIcon(theme),
@@ -116,14 +122,14 @@ class _InputState extends State<Input> {
 
   IconTheme _leadingIcon(InputDecorationThemeData? theme) {
     return IconTheme(
-      data: theme?.leadingIconTheme.call(_inputState) ??
+      data: theme?.leadingIconTheme.call(_inputStates) ??
           InputDecorationThemeData.defaultLeadingIconTheme(
-            _inputState,
+            _inputStates,
           ),
       child: Padding(
-        padding: theme?.leadingIconPadding.call(_inputState) ??
+        padding: theme?.leadingIconPadding.call(_inputStates) ??
             InputDecorationThemeData.defaultLeadingIconPadding(
-              _inputState,
+              _inputStates,
             ),
         child: widget.decoration.leadingIcon,
       ),
@@ -132,14 +138,14 @@ class _InputState extends State<Input> {
 
   IconTheme _trailingIcon(InputDecorationThemeData? theme) {
     return IconTheme(
-      data: theme?.trailingIconTheme.call(_inputState) ??
+      data: theme?.trailingIconTheme.call(_inputStates) ??
           InputDecorationThemeData.defaultTrailingIconTheme(
-            _inputState,
+            _inputStates,
           ),
       child: Padding(
-        padding: theme?.trailingIconPadding.call(_inputState) ??
+        padding: theme?.trailingIconPadding.call(_inputStates) ??
             InputDecorationThemeData.defaultTrailingIconPadding(
-              _inputState,
+              _inputStates,
             ),
         child: widget.decoration.trailingIcon,
       ),
@@ -148,35 +154,35 @@ class _InputState extends State<Input> {
 
   Padding _help(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.helpPadding.call(_inputState) ??
-          InputDecorationThemeData.defaultHelpPadding(_inputState),
+      padding: theme?.helpPadding.call(_inputStates) ??
+          InputDecorationThemeData.defaultHelpPadding(_inputStates),
       child: Text(
         widget.decoration.helpText ?? '',
-        style: theme?.helpStyle?.call(_inputState),
+        style: theme?.helpStyle?.call(_inputStates),
       ),
     );
   }
 
   Padding _error(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.errorPadding.call(_inputState) ??
-          InputDecorationThemeData.defaultErrorPadding(_inputState),
+      padding: theme?.errorPadding.call(_inputStates) ??
+          InputDecorationThemeData.defaultErrorPadding(_inputStates),
       child: Text(
         widget.decoration.errorText ?? '',
-        style: theme?.errorStyle?.call(_inputState),
+        style: theme?.errorStyle?.call(_inputStates),
       ),
     );
   }
 
   Padding _trailingAddOn(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.trailingAddOnPadding.call(_inputState) ??
+      padding: theme?.trailingAddOnPadding.call(_inputStates) ??
           InputDecorationThemeData.defaultTrailingAddOnPadding(
-            _inputState,
+            _inputStates,
           ),
       child: Text(
         widget.decoration.trailingAddOn ?? '',
-        style: theme?.trailingAddOnStyle?.call(_inputState),
+        style: theme?.trailingAddOnStyle?.call(_inputStates),
       ),
     );
   }
@@ -190,7 +196,7 @@ class _InputState extends State<Input> {
           curve: Curves.easeInOut,
           child: Text(
             widget.decoration.placeholderText ?? '',
-            style: theme?.placeholderStyle?.call(_inputState),
+            style: theme?.placeholderStyle?.call(_inputStates),
           ),
         ),
         widget.editableText,
@@ -200,35 +206,35 @@ class _InputState extends State<Input> {
 
   Padding _leadingAddOn(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.leadingAddOnPadding.call(_inputState) ??
+      padding: theme?.leadingAddOnPadding.call(_inputStates) ??
           InputDecorationThemeData.defaultLeadingAddOnPadding(
-            _inputState,
+            _inputStates,
           ),
       child: Text(
         widget.decoration.leadingAddOn ?? '',
-        style: theme?.leadingAddOnStyle?.call(_inputState),
+        style: theme?.leadingAddOnStyle?.call(_inputStates),
       ),
     );
   }
 
   Padding _hint(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.hintPadding.call(_inputState) ??
-          InputDecorationThemeData.defaultHintPadding(_inputState),
+      padding: theme?.hintPadding.call(_inputStates) ??
+          InputDecorationThemeData.defaultHintPadding(_inputStates),
       child: Text(
         widget.decoration.hintText ?? '',
-        style: theme?.hintStyle?.call(_inputState),
+        style: theme?.hintStyle?.call(_inputStates),
       ),
     );
   }
 
   Padding _label(InputDecorationThemeData? theme) {
     return Padding(
-      padding: theme?.labelPadding.call(_inputState) ??
-          InputDecorationThemeData.defaultLabelPadding(_inputState),
+      padding: theme?.labelPadding.call(_inputStates) ??
+          InputDecorationThemeData.defaultLabelPadding(_inputStates),
       child: Text(
         widget.decoration.labelText ?? '',
-        style: theme?.labelStyle?.call(_inputState),
+        style: theme?.labelStyle?.call(_inputStates),
       ),
     );
   }

@@ -112,27 +112,19 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
       inputDecorationThemeData: InputDecorationThemeData(
         boxDecoration: (state) => BoxDecoration(
           border: Border.all(
-            color: switch (state) {
-              InputState.enabled => const Color(0xFF000000).withOpacity(0.5),
-              InputState.disabled => const Color(0xFFEEEEEE),
-              InputState.focused => const Color(0xFF0000FF),
-              InputState.error => const Color(0xFFFF0000),
-            },
+            color: state.contains(InputState.error)
+                ? const Color(0xFFFF0000)
+                : state.contains(InputState.focused)
+                    ? const Color(0xFF0000FF).withOpacity(0.5)
+                    : state.contains(InputState.enabled)
+                        ? const Color(0xFF000000).withOpacity(0.2)
+                        : const Color(0xFF000000).withOpacity(0.1),
             width: 1.5,
           ),
-          color: switch (state) {
-            InputState.disabled => const Color(0xFFEEEEEE).withOpacity(0.5),
-            _ => const Color(0xFFFFFFFF),
-          },
+          color: state.contains(InputState.disabled)
+              ? const Color(0xFFEEEEEE).withOpacity(0.5)
+              : const Color(0xFFFFFFFF),
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            if (state == InputState.focused)
-              const BoxShadow(
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                color: Color(0x20000000),
-              ),
-          ],
         ),
         placeholderStyle: (_) => TextStyle(
           color: const Color(0xFF000000).withOpacity(0.2),
