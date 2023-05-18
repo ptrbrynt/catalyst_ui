@@ -1,39 +1,15 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Catalyst UI
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A non-opinionated UI component library for Flutter apps.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+**Note: The packages is currently in the very early stages of development and does _not_ have enough features for use in real apps yet.** If you're interested in contributing that would help us get to 1.0 sooner!
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Philosophy
 
-## Features
+Flutter deserves a real alternative to the Material package. Material is great, as long as you're okay to live within its contraints. But for teams with custom design languages and systems, Material is a burden. Developers have to shoehorn their own design system into the Material system, and direct translation isn't always possible.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+The purpose of Catalyst UI is to provide a **non-opinionated** set of customisable components with which teams can develop their own design systems and component libraries. It provides a number of common components out-of-the-box, and we're planning to add support for custom component types.
 
-## Getting started
+## Roadmap
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Right now I have no idea when Catalyst UI will be ready to use. It feels like a prototype at the moment which, over time, I'll add more functionality to. Contributions from the community are always appreciated.
