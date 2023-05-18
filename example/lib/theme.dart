@@ -2,6 +2,9 @@ import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:catalyst_ui/components/input/input_decoration_theme.dart';
 
 CatalystThemeData get exampleTheme => CatalystThemeData(
+      textThemeData: const TextThemeData(
+        defaultStyle: TextStyle(color: Color(0xFF000000)),
+      ),
       avatarThemeData: AvatarThemeData(
         borderRadius: BorderRadius.circular(8),
         boxShadow: [

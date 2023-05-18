@@ -14,3 +14,5 @@ export 'components/button/button.dart';
 export 'components/input/input.dart';
 // Theme
 export 'components/theme/catalyst_theme.dart';
+// Text
+export 'typography/text_theme_data.dart';
