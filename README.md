@@ -13,3 +13,7 @@ The purpose of Catalyst UI is to provide a **non-opinionated** set of customisab
 ## Roadmap
 
 Right now I have no idea when Catalyst UI will be ready to use. It feels like a prototype at the moment which, over time, I'll add more functionality to. Contributions from the community are always appreciated.
+
+## Contributing
+
+Contributions from the community are welcome and encouraged! Please see the [Contributor Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md).
