@@ -8,7 +8,7 @@ import 'package:catalyst_ui/components/widget/catalyst_widget.dart';
 class Input extends StyleableStatefulWidget {
   /// {@macro input}
   const Input({
-    required this.editableText,
+    required this.child,
     this.decoration = const InputDecoration(),
     this.enabled = true,
     super.styles = const [],
@@ -21,8 +21,11 @@ class Input extends StyleableStatefulWidget {
   /// Whether the Input is enabled.
   final bool enabled;
 
-  /// The [EditableText] widget to display within the [Input]
-  final EditableText editableText;
+  /// The widget to display within the [Input].
+  ///
+  /// If it's an [EditableText], the [Input] will react according to the state
+  /// of the [EditableText]
+  final Widget child;
 
   @override
   State<Input> createState() => _InputState();
@@ -33,17 +36,20 @@ class _InputState extends State<Input> {
 
   late bool _showPlaceholder;
 
-  TextEditingController get controller => widget.editableText.controller;
+  EditableText? get _editableText =>
+      widget.child is EditableText ? widget.child as EditableText : null;
 
-  FocusNode get focusNode => widget.editableText.focusNode;
+  TextEditingController? get controller => _editableText?.controller;
+
+  FocusNode? get focusNode => _editableText?.focusNode;
 
   @override
   void initState() {
     super.initState();
     _updateInputState();
-    _showPlaceholder = controller.text.isEmpty;
-    focusNode.addListener(_updateInputState);
-    controller.addListener(_onControllerUpdated);
+    _showPlaceholder = controller?.text.isEmpty ?? true;
+    focusNode?.addListener(_updateInputState);
+    controller?.addListener(_onControllerUpdated);
   }
 
   void _updateInputState() {
@@ -56,7 +62,7 @@ class _InputState extends State<Input> {
     } else {
       newState.add(InputState.enabled);
     }
-    if (focusNode.hasFocus) {
+    if (focusNode?.hasFocus ?? false) {
       newState.add(InputState.focused);
     }
     setState(() {
@@ -68,7 +74,7 @@ class _InputState extends State<Input> {
 
   void _onControllerUpdated() {
     setState(() {
-      _showPlaceholder = controller.text.isEmpty;
+      _showPlaceholder = controller?.text.isEmpty ?? true;
     });
   }
 
@@ -199,7 +205,7 @@ class _InputState extends State<Input> {
             style: theme?.placeholderStyle?.call(_inputStates),
           ),
         ),
-        widget.editableText,
+        widget.child,
       ],
     );
   }
@@ -241,8 +247,8 @@ class _InputState extends State<Input> {
 
   @override
   void dispose() {
-    focusNode.removeListener(_updateInputState);
-    controller.removeListener(_onControllerUpdated);
+    focusNode?.removeListener(_updateInputState);
+    controller?.removeListener(_onControllerUpdated);
     super.dispose();
   }
 }

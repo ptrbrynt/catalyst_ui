@@ -30,7 +30,7 @@ class InputsExample extends StatelessWidget {
               helpText: 'Must be a valid price',
               trailingIcon: Icon(LineIcons.moon),
             ),
-            editableText: _editableText(context),
+            child: _editableText(context),
           ),
           const SizedBox(height: 20),
           Input(
@@ -43,7 +43,7 @@ class InputsExample extends StatelessWidget {
               helpText: 'Must be a valid price',
               errorText: 'Invalid price',
             ),
-            editableText: _editableText(context),
+            child: _editableText(context),
           ),
           const SizedBox(height: 20),
           Input(
@@ -56,7 +56,7 @@ class InputsExample extends StatelessWidget {
               hintText: 'Enter a price',
               helpText: 'Must be a valid price',
             ),
-            editableText: _editableText(context),
+            child: _editableText(context),
           ),
         ],
       ),
