@@ -65,7 +65,7 @@ class ButtonThemeData extends Styleable<ButtonThemeData> with EquatableMixin {
 }
 
 /// A property which reacts to the state of a button.
-typedef ButtonStatefulProperty<T> = T? Function(ButtonState state);
+typedef ButtonStatefulProperty<T> = T? Function(Set<ButtonState> state);
 
 /// Possible states for a button.
 enum ButtonState {

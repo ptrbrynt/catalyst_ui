@@ -53,25 +53,26 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
       buttonThemeData: ButtonThemeData(
         height: 36,
         decoration: (state) => BoxDecoration(
-          color: switch (state) {
-            ButtonState.enabled => const Color(0xFFFF0000),
-            ButtonState.disabled => const Color(0xFFEEEEEE),
-            ButtonState.pressed => const Color(0xFFDDDDDD),
-            ButtonState.hover => const Color(0xFFDDDDDD),
-          },
+          color: state.contains(ButtonState.disabled)
+              ? const Color(0xFFEEEEEE)
+              : state.contains(ButtonState.pressed)
+                  ? const Color(0xFFDDDDDD)
+                  : state.contains(ButtonState.hover)
+                      ? const Color(0xFFDDDDDD)
+                      : const Color(0xFFFF0000),
           border: Border.all(
             width: 1,
             color: const Color(0xFF000000),
           ),
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
-            if (state == ButtonState.enabled)
+            if (state.contains(ButtonState.enabled))
               const BoxShadow(
                 blurRadius: 2,
                 offset: Offset(0, 2),
                 color: Color(0x20000000),
-              ),
-            if (state == ButtonState.pressed)
+              )
+            else if (state.contains(ButtonState.pressed))
               const BoxShadow(
                 blurRadius: 2,
                 offset: Offset(0, 1),
@@ -98,12 +99,11 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
                           Color(0xFFFF0000),
                           Color(0xFF0000FF),
                         ],
-                        stops: switch (state) {
-                          ButtonState.hover => [1.0, 0.0],
-                          ButtonState.pressed => [0.0, 1.0],
-                          ButtonState.disabled => [0.0, 0.0],
-                          ButtonState.enabled => [0.0, 1.0],
-                        },
+                        stops: state.contains(ButtonState.disabled)
+                            ? [0.0, 0.0]
+                            : state.contains(ButtonState.pressed)
+                                ? [0.0, 1.0]
+                                : [0.5, 1.0],
                       ),
                     ),
               ),

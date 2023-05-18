@@ -32,21 +32,25 @@ class Button extends StyleableStatefulWidget {
 }
 
 class _ButtonState extends State<Button> {
-  late ButtonState _buttonState;
+  final _buttonState = <ButtonState>{};
 
   bool get enabled => widget.onPressed != null;
 
   @override
   void initState() {
     super.initState();
-    _buttonState = enabled ? ButtonState.enabled : ButtonState.disabled;
+    _buttonState
+      ..clear()
+      ..add(enabled ? ButtonState.enabled : ButtonState.disabled);
   }
 
   @override
   void didUpdateWidget(Button oldWidget) {
     super.didUpdateWidget(oldWidget);
     setState(() {
-      _buttonState = enabled ? ButtonState.enabled : ButtonState.disabled;
+      _buttonState
+        ..clear()
+        ..add(enabled ? ButtonState.enabled : ButtonState.disabled);
     });
   }
 
@@ -62,19 +66,12 @@ class _ButtonState extends State<Button> {
 
     return MouseRegion(
       cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
-      onEnter: enabled
-          ? (_) => setState(() => _buttonState = ButtonState.hover)
-          : null,
-      onExit: enabled
-          ? (_) => setState(() => _buttonState = ButtonState.enabled)
-          : null,
+      onEnter: (_) => setState(() => _buttonState.add(ButtonState.hover)),
+      onExit: (_) => setState(() => _buttonState.remove(ButtonState.hover)),
       child: GestureDetector(
-        onTapDown: enabled
-            ? (_) => setState(() => _buttonState = ButtonState.pressed)
-            : null,
-        onTapUp: enabled
-            ? (_) => setState(() => _buttonState = ButtonState.hover)
-            : null,
+        onTapDown: (_) => setState(() => _buttonState.add(ButtonState.pressed)),
+        onTapUp: (_) =>
+            setState(() => _buttonState.remove(ButtonState.pressed)),
         onTap: widget.onPressed,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
