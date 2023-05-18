@@ -145,6 +145,25 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
         trailingIconTheme: (_) => const IconThemeData(size: 16),
         leadingIconTheme: (_) => const IconThemeData(size: 16),
       ),
+      dropdownThemeData: DropdownThemeData(
+        dropdownItemBuilder: (context, label) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(label),
+          );
+        },
+        popupDecoration: BoxDecoration(
+          color: const Color(0xFFFFFFFF),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF000000).withOpacity(0.25),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     );
 
 enum AvatarStyles {

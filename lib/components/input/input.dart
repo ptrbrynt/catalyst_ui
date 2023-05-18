@@ -4,6 +4,10 @@ import 'package:catalyst_ui/components/widget/catalyst_widget.dart';
 
 /// {@template input}
 /// An input field.
+///
+/// Can contain any [Widget] as its child, but is designed to work with:
+/// * [EditableText]s
+/// * [Dropdown]s
 /// {@endtemplate}
 class Input extends StyleableStatefulWidget {
   /// {@macro input}

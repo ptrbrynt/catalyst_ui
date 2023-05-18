@@ -16,6 +16,7 @@ class CatalystThemeData extends Equatable {
     this.buttonThemeData = const ButtonThemeData(),
     this.inputDecorationThemeData = const InputDecorationThemeData(),
     this.textThemeData = const TextThemeData(),
+    this.dropdownThemeData = const DropdownThemeData(),
   });
 
   /// The [AvatarThemeData] for the [CatalystThemeData].
@@ -33,6 +34,9 @@ class CatalystThemeData extends Equatable {
   /// The [TextThemeData] for the [CatalystThemeData]
   final TextThemeData textThemeData;
 
+  /// The [DropdownThemeData] for the [CatalystThemeData]
+  final DropdownThemeData dropdownThemeData;
+
   @override
   List<Object?> get props => [
         avatarThemeData,
@@ -40,5 +44,6 @@ class CatalystThemeData extends Equatable {
         buttonThemeData,
         inputDecorationThemeData,
         textThemeData,
+        dropdownThemeData,
       ];
 }

@@ -10,6 +10,8 @@ export 'components/avatar/avatar.dart';
 export 'components/badge/badge.dart';
 // Button
 export 'components/button/button.dart';
+// Dropdown
+export 'components/dropdown/dropdown.dart';
 // Input
 export 'components/input/input.dart';
 // Theme
