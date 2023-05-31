@@ -59,7 +59,7 @@ class _DropdownExampleState extends State<DropdownExample> {
 
 enum _ExampleItem {
   item1("Item 1"),
-  item2("Item 2"),
+  item2("Item 2 with a longer name"),
   item3("Item 3");
 
   const _ExampleItem(this.label);

@@ -8,6 +8,8 @@ export 'dropdown_theme_data.dart';
 /// {@template dropdown}
 /// A dropdown widget.
 /// {@endtemplate}
+///
+/// TODO: Animate the dropdown
 class Dropdown<T> extends StyleableStatefulWidget {
   /// {@macro dropdown}
   const Dropdown({
@@ -58,28 +60,41 @@ class _DropdownState<T> extends State<Dropdown<T>> {
     return OverlayPortal(
       overlayChildBuilder: (context) {
         final position = _buttonPosition;
-        return Positioned(
-          width: 200,
-          left: position?.dx,
-          top: position?.dy,
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 100),
-            decoration: theme?.popupDecoration,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (final item in widget.items)
-                  GestureDetector(
-                    onTap: () {
-                      widget.onChanged?.call(item);
-                      setState(_portalController.hide);
-                    },
-                    child: itemBuilder(context, _formatItem(item)),
-                  ),
-              ],
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(_portalController.hide);
+              },
+              child: const ColoredBox(color: Color(0x00000000)),
             ),
-          ),
+            Positioned(
+              left: position?.dx,
+              top: position?.dy,
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: theme?.maxDropdownWidth ??
+                      DropdownThemeData.defaultMaxDropdownWidth,
+                ),
+                decoration: theme?.popupDecoration,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (final item in widget.items)
+                      GestureDetector(
+                        onTap: () {
+                          widget.onChanged?.call(item);
+                          setState(_portalController.hide);
+                        },
+                        child: itemBuilder(context, _formatItem(item)),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
       controller: _portalController,

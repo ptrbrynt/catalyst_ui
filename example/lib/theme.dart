@@ -146,6 +146,7 @@ CatalystThemeData get exampleTheme => CatalystThemeData(
         leadingIconTheme: (_) => const IconThemeData(size: 16),
       ),
       dropdownThemeData: DropdownThemeData(
+        maxDropdownWidth: 150,
         dropdownItemBuilder: (context, label) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

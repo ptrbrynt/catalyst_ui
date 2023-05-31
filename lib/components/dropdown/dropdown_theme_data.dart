@@ -11,6 +11,7 @@ class DropdownThemeData extends Styleable<DropdownThemeData>
   const DropdownThemeData({
     this.popupDecoration,
     this.dropdownItemBuilder = defaultDropdownItemBuilder,
+    this.maxDropdownWidth = defaultMaxDropdownWidth,
     super.styles = const {},
   });
 
@@ -19,6 +20,9 @@ class DropdownThemeData extends Styleable<DropdownThemeData>
 
   /// The builder for the dropdown items.
   final Widget Function(BuildContext, String) dropdownItemBuilder;
+
+  /// The maximum width of the dropdown popup.
+  final double maxDropdownWidth;
 
   /// The default [dropdownItemBuilder].
   static Widget defaultDropdownItemBuilder(
@@ -31,10 +35,14 @@ class DropdownThemeData extends Styleable<DropdownThemeData>
     );
   }
 
+  /// The default [maxDropdownWidth].
+  static const double defaultMaxDropdownWidth = 200;
+
   @override
   List<Object?> get props => [
         popupDecoration,
         dropdownItemBuilder,
+        maxDropdownWidth,
         styles,
       ];
 }
