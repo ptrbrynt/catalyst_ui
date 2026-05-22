@@ -85,21 +85,27 @@ class CatalystProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return CatalystTheme(
       data: _effectiveTheme(context),
-      child: CatalystSnackbarHandler(
-        child: Builder(
-          builder: (context) {
-            return DefaultTextStyle(
-              style: context.typography.body,
-              child: IconTheme(
-                data: IconThemeData(color: context.colorScheme.text),
-                child: ColoredBox(
-                  color: context.colorScheme.canvas,
-                  child: Builder(builder: (c) => child),
-                ),
+      child: Overlay(
+        initialEntries: [
+          OverlayEntry(
+            builder: (_) => CatalystSnackbarHandler(
+              child: Builder(
+                builder: (context) {
+                  return DefaultTextStyle(
+                    style: context.typography.body,
+                    child: IconTheme(
+                      data: IconThemeData(color: context.colorScheme.text),
+                      child: ColoredBox(
+                        color: context.colorScheme.canvas,
+                        child: child,
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
