@@ -106,23 +106,26 @@ class SnackbarHandlerState extends State<CatalystSnackbarHandler>
     final themeData = CatalystTheme.of(callerContext);
 
     _entry = OverlayEntry(
-      builder: (_) => CatalystTheme(
-        data: themeData,
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: FadeTransition(
-            opacity: _animation,
-            child: ScaleTransition(
-              scale:
-                  Tween<double>(begin: 0.9, end: 1).animate(_animation),
-              child: Padding(
-                padding: const EdgeInsets.all(CatalystSpacing.s4),
-                child: snackbar,
+      builder:
+          (_) => CatalystTheme(
+            data: themeData,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FadeTransition(
+                opacity: _animation,
+                child: ScaleTransition(
+                  scale: Tween<double>(begin: 0.9, end: 1).animate(_animation),
+                  child: SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.all(CatalystSpacing.s4),
+                      child: snackbar,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
     );
 
     Overlay.of(context).insert(_entry!);
