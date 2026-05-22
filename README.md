@@ -127,13 +127,54 @@ The `on*` colours are automatically computed using WCAG luminance contrast — y
 
 ### Typography
 
-Supply a `fontFamily` name matching what you have declared in your app's `pubspec.yaml`. Catalyst ships no fonts.
+Catalyst ships no fonts — supply font family names that match what you have declared in your app's `pubspec.yaml`.
+
+**Single font family (shorthand):**
 
 ```dart
 CatalystThemeData.light(fontFamily: 'Inter')
 ```
 
-The scale covers `display` / `h1` / `h2` / `h3` / `p1` / `p2` / `body` / `p3` / `caption` / `micro`. Access via `context.typography`:
+**Separate font families for headers and body:**
+
+```dart
+CatalystThemeData.light(
+  typography: CatalystTypography(
+    colorScheme: const CatalystColorScheme.light(),
+    fontFamily: 'Inter',
+    headerFontFamily: 'Playfair Display',
+  ),
+)
+```
+
+`headerFontFamily` applies to `display`, `h1`, `h2`, and `h3`. Body styles (`p1`, `p2`, `body`, `p3`, `caption`, `micro`) always use `fontFamily`. When `headerFontFamily` is omitted, both groups use `fontFamily`.
+
+**Override individual styles:**
+
+```dart
+CatalystThemeData.light(
+  typography: CatalystTypography(
+    colorScheme: const CatalystColorScheme.light(),
+    display: TextStyle(fontSize: 48, fontWeight: FontWeight.w800),
+    body: TextStyle(fontSize: 15, height: 1.6),
+  ),
+)
+```
+
+Overridden styles are used verbatim — `fontFamily`, `headerFontFamily`, and the colour scheme text colour are not merged in.
+
+**Patch a style on an existing theme:**
+
+```dart
+final base = CatalystThemeData.light(fontFamily: 'Inter');
+base.copyWith(
+  typography: base.typography.copyWith(
+    caption: TextStyle(fontSize: 11, letterSpacing: 0.4),
+  ),
+)
+```
+
+The full scale — `display` / `h1` / `h2` / `h3` / `p1` / `p2` / `body` / `p3` / `caption` / `micro` — is accessible via `context.typography`:
 
 ```dart
 Text('Hello', style: context.typography.h2)

@@ -25,41 +25,74 @@ import 'typography.dart';
 /// ```dart
 /// CatalystThemeData.light(fontFamily: 'Poppins')
 /// ```
+///
+/// **Override individual text styles:**
+/// ```dart
+/// final base = CatalystThemeData.light();
+/// base.copyWith(
+///   typography: base.typography.copyWith(
+///     display: TextStyle(fontSize: 48, fontWeight: FontWeight.w800),
+///   ),
+/// )
+/// ```
 class CatalystThemeData {
   /// Creates a light-mode theme.
   ///
   /// Supply [colorScheme] to override colours, [fontFamily] to change the
-  /// typeface, or [motion] / [shadows] / [breakpoints] for further control.
-  CatalystThemeData.light({
+  /// typeface, [typography] to fully customise text styles, or
+  /// [motion] / [shadows] / [breakpoints] for further control.
+  ///
+  /// When [typography] is provided, [fontFamily] is ignored — pass
+  /// [fontFamily] directly to the [CatalystTypography] constructor instead.
+  factory CatalystThemeData.light({
     CatalystColorScheme? colorScheme,
     String? fontFamily,
+    CatalystTypography? typography,
     CatalystMotion? motion,
     CatalystShadows? shadows,
     CatalystBreakpoints? breakpoints,
-  }) : colorScheme = colorScheme ?? const CatalystColorScheme.light(),
-       motion = motion ?? const CatalystMotion(),
-       shadows = shadows ?? const CatalystShadows(),
-       breakpoints = breakpoints ?? const CatalystBreakpoints(),
-       typography = CatalystTypography(
-         colorScheme: colorScheme ?? const CatalystColorScheme.light(),
-         fontFamily: fontFamily,
-       );
+  }) {
+    final cs = colorScheme ?? const CatalystColorScheme.light();
+    final typo = (typography ??
+            CatalystTypography(colorScheme: cs, fontFamily: fontFamily))
+        .withColorScheme(cs);
+    return CatalystThemeData.raw(
+      colorScheme: cs,
+      typography: typo,
+      motion: motion ?? const CatalystMotion(),
+      shadows: shadows ?? const CatalystShadows(),
+      breakpoints: breakpoints ?? const CatalystBreakpoints(),
+    );
+  }
 
   /// Creates a dark-mode theme.
-  CatalystThemeData.dark({
+  ///
+  /// Supply [colorScheme] to override colours, [fontFamily] to change the
+  /// typeface, [typography] to fully customise text styles, or
+  /// [motion] / [shadows] / [breakpoints] for further control.
+  ///
+  /// When [typography] is provided, [fontFamily] is ignored — pass
+  /// [fontFamily] directly to the [CatalystTypography] constructor instead.
+  factory CatalystThemeData.dark({
     CatalystColorScheme? colorScheme,
     String? fontFamily,
+    CatalystTypography? typography,
     CatalystMotion? motion,
     CatalystShadows? shadows,
     CatalystBreakpoints? breakpoints,
-  }) : colorScheme = colorScheme ?? const CatalystColorScheme.dark(),
-       motion = motion ?? const CatalystMotion(),
-       shadows = shadows ?? const CatalystShadows(),
-       breakpoints = breakpoints ?? const CatalystBreakpoints(),
-       typography = CatalystTypography(
-         colorScheme: colorScheme ?? const CatalystColorScheme.dark(),
-         fontFamily: fontFamily,
-       );
+  }) {
+    final cs = colorScheme ?? const CatalystColorScheme.dark();
+    final typo = (typography ??
+            CatalystTypography(colorScheme: cs, fontFamily: fontFamily))
+        .withColorScheme(cs);
+    return CatalystThemeData.raw(
+      colorScheme: cs,
+      typography: typo,
+      motion: motion ?? const CatalystMotion(),
+      shadows: shadows ?? const CatalystShadows(),
+      breakpoints: breakpoints ?? const CatalystBreakpoints(),
+    );
+  }
 
   /// Creates a theme from fully explicit sub-objects.
   CatalystThemeData.raw({

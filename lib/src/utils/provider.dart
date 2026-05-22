@@ -88,22 +88,24 @@ class CatalystProvider extends StatelessWidget {
       child: Overlay(
         initialEntries: [
           OverlayEntry(
-            builder: (_) => CatalystSnackbarHandler(
-              child: Builder(
-                builder: (context) {
-                  return DefaultTextStyle(
-                    style: context.typography.body,
-                    child: IconTheme(
-                      data: IconThemeData(color: context.colorScheme.text),
-                      child: ColoredBox(
-                        color: context.colorScheme.canvas,
-                        child: child,
+            builder: (_) {
+              return CatalystSnackbarHandler(
+                child: Builder(
+                  builder: (context) {
+                    return DefaultTextStyle(
+                      style: context.typography.defaultStyle,
+                      child: IconTheme(
+                        data: IconThemeData(color: context.colorScheme.text),
+                        child: ColoredBox(
+                          color: context.colorScheme.canvas,
+                          child: child,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

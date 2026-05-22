@@ -72,6 +72,18 @@ context.shadows       // CatalystShadows
 context.breakpoints   // CatalystBreakpoints
 ```
 
+### `CatalystTypography`
+
+`CatalystTypography` supports three levels of customisation, in ascending specificity:
+
+1. **`fontFamily`** — applies to all non-overridden body styles (`p1`, `p2`, `body`, `p3`, `caption`, `micro`).
+2. **`headerFontFamily`** — applies to heading styles (`display`, `h1`, `h2`, `h3`); falls back to `fontFamily` when `null`.
+3. **Per-style `TextStyle` overrides** — individual constructor parameters (`display:`, `h1:`, …, `micro:`) stored as private fields. A getter returns the override if set, otherwise falls back to the computed default via `_style(base, size, weight, height: h)`.
+
+Internally, `_bodyBase` and `_headerBase` are the two base `TextStyle` getters that embed the appropriate font family and colour scheme text colour. The private `_style` helper takes the base as its first argument.
+
+Both `copyWith` and `withColorScheme` must thread **all** fields — `fontFamily`, `headerFontFamily`, and every `_*` override — through to the new instance. Neither method should silently drop any field.
+
 ### `color_utils.dart`
 
 `catalystTextColorFor(Color bg)` is a free function (not a static method on `CatalystThemeData`) to avoid a circular dependency: `CatalystColorScheme` needs it for its `on*` computed getters, but `CatalystColorScheme` is imported by `CatalystThemeData`. Keeping it in a standalone file breaks the cycle.
@@ -175,6 +187,11 @@ If a new token belongs on an existing sub-object (`CatalystColorScheme`, `Cataly
 1. Add the field (required or with a default).
 2. Add it to the corresponding `copyWith` and factory constructors.
 3. Update both `.light()` and `.dark()` factories in `CatalystColorScheme`, or the defaults in `CatalystMotion` / `CatalystShadows`.
+
+For a new **text style** in `CatalystTypography` specifically, the checklist is longer:
+- Add a private `TextStyle? _foo` field and a `TextStyle? foo` constructor parameter wired via the initializer list.
+- Add a `foo` getter that returns `_foo ?? _style(_headerBase or _bodyBase, size, weight, height: h)` — use `_headerBase` for heading-level styles, `_bodyBase` for body-level styles.
+- Thread `foo: foo ?? _foo` through both `copyWith` and `withColorScheme`.
 
 If it's a new category of token, add a new class and wire it into `CatalystThemeData` (field + `copyWith` + factory constructors) and `extensions.dart` (`context.newThing` getter).
 
