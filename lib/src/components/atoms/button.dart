@@ -174,7 +174,7 @@ class _SuccessButtonVariant extends ButtonVariant {
 /// Controls the height, padding, and font size of a [Button].
 enum ButtonSize {
   /// 16px tall; 15 sp text; 20 px icons;
-  link(height: 16, horizontalPadding: 0, fontSize: 15, iconSize: 20, gap: 8),
+  link(height: null, horizontalPadding: 0, fontSize: 15, iconSize: 20, gap: 8),
 
   /// 36 px tall; 14 sp text; 16 px icons.
   small(height: 36, horizontalPadding: 14, fontSize: 14, iconSize: 16, gap: 6),
@@ -203,7 +203,7 @@ enum ButtonSize {
   });
 
   /// The total height of the button in logical pixels.
-  final double height;
+  final double? height;
 
   /// Horizontal padding inside the button.
   final double horizontalPadding;
