@@ -1,8 +1,5 @@
+import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:flutter/widgets.dart';
-
-import '../theme/theme.dart';
-import '../theme/theme_data.dart';
-import 'snackbar_handler.dart';
 
 /// Controls which theme [CatalystProvider] applies when both [theme] and
 /// [darkTheme] are supplied.
@@ -88,7 +85,22 @@ class CatalystProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return CatalystTheme(
       data: _effectiveTheme(context),
-      child: CatalystSnackbarHandler(child: child),
+      child: CatalystSnackbarHandler(
+        child: Builder(
+          builder: (context) {
+            return DefaultTextStyle(
+              style: context.typography.body,
+              child: IconTheme(
+                data: IconThemeData(color: context.colorScheme.text),
+                child: ColoredBox(
+                  color: context.colorScheme.canvas,
+                  child: Builder(builder: (c) => child),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
