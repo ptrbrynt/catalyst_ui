@@ -173,6 +173,9 @@ class _SuccessButtonVariant extends ButtonVariant {
 
 /// Controls the height, padding, and font size of a [Button].
 enum ButtonSize {
+  /// 16px tall; 15 sp text; 20 px icons;
+  link(height: 16, horizontalPadding: 0, fontSize: 15, iconSize: 20, gap: 8),
+
   /// 36 px tall; 14 sp text; 16 px icons.
   small(height: 36, horizontalPadding: 14, fontSize: 14, iconSize: 16, gap: 6),
 
@@ -345,9 +348,10 @@ class _ButtonState extends State<Button> {
           child: MouseRegion(
             onEnter: (_) => _controller.update(WidgetState.hovered, true),
             onExit: (_) => _controller.update(WidgetState.hovered, false),
-            cursor: isDisabled || widget.loading
-                ? SystemMouseCursors.forbidden
-                : SystemMouseCursors.click,
+            cursor:
+                isDisabled || widget.loading
+                    ? SystemMouseCursors.forbidden
+                    : SystemMouseCursors.click,
             child: Focus(
               onFocusChange: (f) => _controller.update(WidgetState.focused, f),
               child: _buildContainer(style, isDisabled, isPressed),
@@ -373,14 +377,16 @@ class _ButtonState extends State<Button> {
       decoration: BoxDecoration(
         borderRadius: CatalystRadius.lgAll,
         boxShadow: widget.elevated ? (style.shadows ?? []) : null,
-        border: style.borderColor != null
-            ? Border.all(color: style.borderColor!)
-            : null,
+        border:
+            style.borderColor != null
+                ? Border.all(color: style.borderColor!)
+                : null,
         color: style.backgroundColor?.withAlpha(isDisabled ? 20 : 255),
       ),
-      padding: widget._isSquare
-          ? null
-          : EdgeInsets.symmetric(horizontal: widget.size.horizontalPadding),
+      padding:
+          widget._isSquare
+              ? null
+              : EdgeInsets.symmetric(horizontal: widget.size.horizontalPadding),
       child: Stack(
         alignment: Alignment.center,
         children: [
