@@ -30,6 +30,7 @@ class CatalystTextField extends StatefulWidget {
     this.controller,
     this.initialValue,
     this.onChanged,
+    this.onSubmitted,
     this.placeholder,
     this.helper,
     this.error,
@@ -69,6 +70,10 @@ class CatalystTextField extends StatefulWidget {
 
   /// Called whenever the text changes.
   final ValueChanged<String>? onChanged;
+
+  /// Called when the user indicates that they are done editing
+  /// the text in the field.
+  final void Function(String)? onSubmitted;
 
   /// Hint text shown when the field is empty.
   final String? placeholder;
@@ -305,6 +310,7 @@ class _CatalystTextFieldState extends State<CatalystTextField> {
                             controller: _controller,
                             focusNode: _focusNode,
                             onChanged: widget.onChanged,
+                            onSubmitted: widget.onSubmitted,
                             style: typo.body.copyWith(color: cs.text),
                             cursorColor: cs.brand,
                             backgroundCursorColor: cs.border,
