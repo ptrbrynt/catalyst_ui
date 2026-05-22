@@ -167,8 +167,9 @@ class _CatalystTextFieldState extends State<CatalystTextField> {
   void didUpdateWidget(CatalystTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
-      (oldWidget.focusNode ?? _internalFocusNode)
-          ?.removeListener(_onFocusChange);
+      (oldWidget.focusNode ?? _internalFocusNode)?.removeListener(
+        _onFocusChange,
+      );
       _focusNode.addListener(_onFocusChange);
     }
   }
@@ -222,128 +223,136 @@ class _CatalystTextFieldState extends State<CatalystTextField> {
       boxShadow = [];
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.label != null) ...[
-          Text.rich(
-            TextSpan(
-              text: widget.label,
-              style: typo.p3.copyWith(
-                fontWeight: FontWeight.w500,
-                color: cs.text,
+    return AnimatedSize(
+      duration: motion.standard.duration,
+      curve: motion.standard.curve,
+      alignment: Alignment.topCenter,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.label != null) ...[
+            Text.rich(
+              TextSpan(
+                text: widget.label,
+                style: typo.p3.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: cs.text,
+                ),
+                children:
+                    widget.required
+                        ? [
+                          TextSpan(
+                            text: ' *',
+                            style: TextStyle(color: cs.danger),
+                          ),
+                        ]
+                        : null,
               ),
-              children: widget.required
-                  ? [
-                      TextSpan(
-                        text: ' *',
-                        style: TextStyle(color: cs.danger),
-                      ),
-                    ]
-                  : null,
             ),
-          ),
-          const SizedBox(height: 6),
-        ],
-        AbsorbPointer(
-          absorbing: !widget.enabled,
-          child: AnimatedOpacity(
-            opacity: widget.enabled ? 1 : 0.7,
-            duration: motion.standard.duration,
-            curve: motion.standard.curve,
-            child: AnimatedContainer(
+            const SizedBox(height: 6),
+          ],
+          AbsorbPointer(
+            absorbing: !widget.enabled,
+            child: AnimatedOpacity(
+              opacity: widget.enabled ? 1 : 0.7,
               duration: motion.standard.duration,
               curve: motion.standard.curve,
-              height: height,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              decoration: BoxDecoration(
-                color: widget.enabled ? cs.surface : cs.muted,
-                borderRadius: CatalystRadius.lgAll,
-                border: Border.all(color: borderColor),
-                boxShadow: boxShadow,
-              ),
-              child: Row(
-                children: [
-                  if (widget.leading != null) ...[
-                    IconTheme(
-                      data: IconThemeData(color: cs.textMuted),
-                      child: DefaultTextStyle(
-                        style: TextStyle(color: cs.textMuted),
-                        child: widget.leading!,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                  Expanded(
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        if (widget.placeholder != null)
-                          ValueListenableBuilder<TextEditingValue>(
-                            valueListenable: _controller,
-                            builder: (_, value, _) => value.text.isEmpty
-                                ? Text(
-                                    widget.placeholder!,
-                                    style: typo.body.copyWith(
-                                      color: cs.textSubtle,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  )
-                                : const SizedBox.shrink(),
-                          ),
-                        EditableText(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                          onChanged: widget.onChanged,
-                          style: typo.body.copyWith(color: cs.text),
-                          cursorColor: cs.brand,
-                          backgroundCursorColor: cs.border,
-                          selectionColor: cs.brand.withValues(alpha: 0.2),
-                          keyboardType: widget.keyboardType,
-                          obscureText: widget.obscureText,
-                          readOnly: widget.readOnly || !widget.enabled,
-                          textInputAction: widget.textInputAction,
-                          autocorrect: widget.autocorrect,
-                          smartDashesType: widget.smartDashesType,
-                          smartQuotesType: widget.smartQuotesType,
-                          maxLines: widget.maxLines,
-                          minLines: widget.minLines,
-                          expands: widget.expands,
-                          autofocus: widget.autofocus,
-                          textCapitalization: widget.textCapitalization,
-                          inputFormatters: widget.inputFormatters,
-                          autofillHints: widget.autofillHints,
+              child: AnimatedContainer(
+                duration: motion.standard.duration,
+                curve: motion.standard.curve,
+                height: height,
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: widget.enabled ? cs.surface : cs.muted,
+                  borderRadius: CatalystRadius.lgAll,
+                  border: Border.all(color: borderColor),
+                  boxShadow: boxShadow,
+                ),
+                child: Row(
+                  children: [
+                    if (widget.leading != null) ...[
+                      IconTheme(
+                        data: IconThemeData(color: cs.textMuted),
+                        child: DefaultTextStyle(
+                          style: TextStyle(color: cs.textMuted),
+                          child: widget.leading!,
                         ),
-                      ],
-                    ),
-                  ),
-                  if (widget.trailing != null) ...[
-                    const SizedBox(width: 8),
-                    IconTheme(
-                      data: IconThemeData(color: cs.textMuted),
-                      child: DefaultTextStyle(
-                        style: TextStyle(color: cs.textMuted),
-                        child: widget.trailing!,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Expanded(
+                      child: Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          if (widget.placeholder != null)
+                            ValueListenableBuilder<TextEditingValue>(
+                              valueListenable: _controller,
+                              builder:
+                                  (_, value, _) =>
+                                      value.text.isEmpty
+                                          ? Text(
+                                            widget.placeholder!,
+                                            style: typo.body.copyWith(
+                                              color: cs.textSubtle,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                          : const SizedBox.shrink(),
+                            ),
+                          EditableText(
+                            controller: _controller,
+                            focusNode: _focusNode,
+                            onChanged: widget.onChanged,
+                            style: typo.body.copyWith(color: cs.text),
+                            cursorColor: cs.brand,
+                            backgroundCursorColor: cs.border,
+                            selectionColor: cs.brand.withValues(alpha: 0.2),
+                            keyboardType: widget.keyboardType,
+                            obscureText: widget.obscureText,
+                            readOnly: widget.readOnly || !widget.enabled,
+                            textInputAction: widget.textInputAction,
+                            autocorrect: widget.autocorrect,
+                            smartDashesType: widget.smartDashesType,
+                            smartQuotesType: widget.smartQuotesType,
+                            maxLines: widget.maxLines,
+                            minLines: widget.minLines,
+                            expands: widget.expands,
+                            autofocus: widget.autofocus,
+                            textCapitalization: widget.textCapitalization,
+                            inputFormatters: widget.inputFormatters,
+                            autofillHints: widget.autofillHints,
+                          ),
+                        ],
                       ),
                     ),
+                    if (widget.trailing != null) ...[
+                      const SizedBox(width: 8),
+                      IconTheme(
+                        data: IconThemeData(color: cs.textMuted),
+                        child: DefaultTextStyle(
+                          style: TextStyle(color: cs.textMuted),
+                          child: widget.trailing!,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),
-        ),
-        if (widget.helper != null || errored) ...[
-          const SizedBox(height: 6),
-          Text(
-            widget.error ?? widget.helper!,
-            style: typo.caption.copyWith(
-              color: errored ? cs.danger : cs.textMuted,
+          if (widget.helper != null || errored) ...[
+            const SizedBox(height: 6),
+            Text(
+              widget.error ?? widget.helper!,
+              style: typo.caption.copyWith(
+                color: errored ? cs.danger : cs.textMuted,
+              ),
             ),
-          ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
