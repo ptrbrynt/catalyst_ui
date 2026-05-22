@@ -1,0 +1,198 @@
+import 'package:flutter/widgets.dart';
+
+import '../../theme/extensions.dart';
+import '../../tokens/radius.dart';
+import '../../tokens/spacing.dart';
+import '../atoms/badge.dart';
+
+/// Base class for items that can appear in a [SideNav].
+sealed class SideNavItem<T> {}
+
+/// A tappable navigation destination in a [SideNav].
+@immutable
+class SideNavDestination<T> extends SideNavItem<T> {
+  /// Creates a side nav destination.
+  SideNavDestination({
+    required this.value,
+    required this.icon,
+    required this.label,
+    this.badge,
+  });
+
+  /// The value identifying this destination.
+  final T value;
+
+  /// The icon shown in collapsed and expanded states.
+  final Widget icon;
+
+  /// The label shown when expanded.
+  final Widget label;
+
+  /// An optional [Badge] at the trailing edge (expanded only).
+  final Badge? badge;
+}
+
+/// A non-interactive group heading between destinations.
+@immutable
+class SideNavGroupTitle<T> extends SideNavItem<T> {
+  /// Creates a side nav group title.
+  SideNavGroupTitle(this.title);
+
+  /// The group label displayed above the section.
+  final String title;
+}
+
+/// A collapsible vertical navigation rail for desktop/web layouts.
+///
+/// When [isExpanded] is `true` the nav shows icon + label (240 px wide).
+/// When `false` it collapses to icon-only (64 px wide).
+class SideNav<T> extends StatelessWidget {
+  /// Creates a side nav.
+  const SideNav({
+    required this.selectedItem,
+    required this.onItemSelected,
+    required this.items,
+    this.isExpanded = true,
+    super.key,
+  });
+
+  /// The currently selected destination value.
+  final T selectedItem;
+
+  /// Called when the user taps a destination.
+  final ValueChanged<T> onItemSelected;
+
+  /// The ordered list of destinations and group titles.
+  final List<SideNavItem<T>> items;
+
+  /// When `true`, renders icon + label (240 px). When `false`, icon-only.
+  final bool isExpanded;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.colorScheme;
+    final motion = context.motion;
+
+    return AnimatedContainer(
+      duration: motion.standard.duration,
+      curve: motion.standard.curve,
+      width: isExpanded ? 240 : 64,
+      decoration: BoxDecoration(
+        color: cs.surface,
+        border: Border(right: BorderSide(color: cs.border)),
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: CatalystSpacing.s2,
+          vertical: CatalystSpacing.s3,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final item in items)
+              switch (item) {
+                SideNavGroupTitle<T>() => _buildGroupTitle(context, item),
+                SideNavDestination<T>() => _buildDestination(context, item),
+              },
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGroupTitle(BuildContext context, SideNavGroupTitle<T> title) {
+    final motion = context.motion;
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        final show = isExpanded && constraints.maxWidth >= 180;
+        return AnimatedContainer(
+          duration: motion.micro.duration,
+          curve: motion.micro.curve,
+          padding: show
+              ? const EdgeInsets.only(
+                  top: CatalystSpacing.s3,
+                  left: 10,
+                  right: 10,
+                  bottom: 6,
+                )
+              : EdgeInsets.zero,
+          child: show
+              ? Text(
+                  title.title.toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: context.typography.fontFamily,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 10,
+                    height: 1,
+                    color: context.colorScheme.textMuted,
+                  ),
+                )
+              : const SizedBox.shrink(),
+        );
+      },
+    );
+  }
+
+  Widget _buildDestination(
+    BuildContext context,
+    SideNavDestination<T> destination,
+  ) {
+    final isSelected = selectedItem == destination.value;
+    final motion = context.motion;
+    final cs = context.colorScheme;
+    final itemColor = isSelected ? cs.brand : cs.text;
+
+    return AnimatedDefaultTextStyle(
+      key: ValueKey(destination),
+      duration: motion.micro.duration,
+      curve: motion.micro.curve,
+      style: TextStyle(
+        fontFamily: context.typography.fontFamily,
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+        height: 1,
+        color: itemColor,
+      ),
+      child: IconTheme(
+        data: IconThemeData(color: itemColor, size: 18),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => onItemSelected(destination.value),
+            child: LayoutBuilder(
+              builder: (_, constraints) {
+                final showExpanded = isExpanded && constraints.maxWidth >= 180;
+                return AnimatedContainer(
+                  duration: motion.micro.duration,
+                  curve: motion.micro.curve,
+                  padding: showExpanded
+                      ? const EdgeInsets.symmetric(
+                          vertical: 9,
+                          horizontal: CatalystSpacing.s3,
+                        )
+                      : const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? cs.brand.withValues(alpha: 0.10)
+                        : null,
+                    borderRadius: CatalystRadius.mdAll,
+                  ),
+                  child: Row(
+                    spacing: CatalystSpacing.s3,
+                    children: [
+                      destination.icon,
+                      if (showExpanded) ...[
+                        Expanded(child: destination.label),
+                        if (destination.badge != null) destination.badge!,
+                      ],
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

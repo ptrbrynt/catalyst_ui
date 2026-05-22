@@ -1,0 +1,14 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  errors:
+    # Relative imports within the package are fine
+    always_use_package_imports: ignore
+    # Comment refs to names only visible once barrel is assembled
+    comment_references: ignore
+
+linter:
+  rules:
+    public_member_api_docs: true
+    # Relative imports are fine for internal files
+    always_use_package_imports: false
