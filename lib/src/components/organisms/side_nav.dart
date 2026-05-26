@@ -46,6 +46,10 @@ class SideNavGroupTitle<T> extends SideNavItem<T> {
 ///
 /// When [isExpanded] is `true` the nav shows icon + label (240 px wide).
 /// When `false` it collapses to icon-only (64 px wide).
+///
+/// An optional [header] is pinned above the scrollable item list and an
+/// optional [footer] is pinned below it, both visible regardless of scroll
+/// position.
 class SideNav<T> extends StatelessWidget {
   /// Creates a side nav.
   const SideNav({
@@ -53,6 +57,8 @@ class SideNav<T> extends StatelessWidget {
     required this.onItemSelected,
     required this.items,
     this.isExpanded = true,
+    this.header,
+    this.footer,
     super.key,
   });
 
@@ -68,6 +74,16 @@ class SideNav<T> extends StatelessWidget {
   /// When `true`, renders icon + label (240 px). When `false`, icon-only.
   final bool isExpanded;
 
+  /// An optional widget pinned above the scrollable item list.
+  ///
+  /// Useful for branding, logos, or a collapse toggle.
+  final Widget? header;
+
+  /// An optional widget pinned below the scrollable item list.
+  ///
+  /// Useful for account menus, settings shortcuts, or version info.
+  final Widget? footer;
+
   @override
   Widget build(BuildContext context) {
     final cs = context.colorScheme;
@@ -81,21 +97,31 @@ class SideNav<T> extends StatelessWidget {
         color: cs.surface,
         border: Border(right: BorderSide(color: cs.border)),
       ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: CatalystSpacing.s2,
-          vertical: CatalystSpacing.s3,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final item in items)
-              switch (item) {
-                SideNavGroupTitle<T>() => _buildGroupTitle(context, item),
-                SideNavDestination<T>() => _buildDestination(context, item),
-              },
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (header != null) header!,
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: CatalystSpacing.s2,
+                vertical: CatalystSpacing.s3,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final item in items)
+                    switch (item) {
+                      SideNavGroupTitle<T>() => _buildGroupTitle(context, item),
+                      SideNavDestination<T>() =>
+                        _buildDestination(context, item),
+                    },
+                ],
+              ),
+            ),
+          ),
+          if (footer != null) footer!,
+        ],
       ),
     );
   }
