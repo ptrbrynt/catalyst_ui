@@ -5,16 +5,30 @@ import '../../tokens/radius.dart';
 import '../../tokens/spacing.dart';
 
 /// A single option in a [SegmentedControl].
+///
+/// Supply [label], [icon], or both. At least one must be provided.
 @immutable
 class SegmentedControlOption<T> {
   /// Creates a segmented control option.
-  const SegmentedControlOption({required this.value, required this.label});
+  ///
+  /// At least one of [label] or [icon] must be non-null.
+  const SegmentedControlOption({
+    required this.value,
+    this.label,
+    this.icon,
+  }) : assert(
+          label != null || icon != null,
+          'Either label or icon must be provided.',
+        );
 
   /// The value associated with this option.
   final T value;
 
-  /// The text label displayed for this option.
-  final String label;
+  /// The text label displayed for this option, or `null` for icon-only.
+  final String? label;
+
+  /// The icon displayed for this option, or `null` for text-only.
+  final IconData? icon;
 }
 
 /// A horizontal group of mutually exclusive toggle buttons.
@@ -127,6 +141,18 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
     );
   }
 
+  Widget _buildContent(SegmentedControlOption<T> option) {
+    if (option.icon != null && option.label != null) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: CatalystSpacing.s1,
+        children: [Icon(option.icon), Text(option.label!)],
+      );
+    }
+    if (option.icon != null) return Icon(option.icon);
+    return Text(option.label!);
+  }
+
   Widget _buildOption(
     BuildContext context,
     SegmentedControlOption<T> option,
@@ -164,7 +190,16 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
               borderRadius: CatalystRadius.smAll,
               color: isSelected ? cs.surface : null,
             ),
-            child: Text(option.label),
+            child: Builder(
+            builder: (context) {
+              final color = DefaultTextStyle.of(context).style.color;
+              final iconSize = widget.size < 40 ? 14.0 : 16.0;
+              return IconTheme(
+                data: IconThemeData(color: color, size: iconSize),
+                child: _buildContent(option),
+              );
+            },
+          ),
           ),
         ),
       ),
