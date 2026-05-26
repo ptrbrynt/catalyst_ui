@@ -206,9 +206,6 @@ class SideNav<T> extends StatelessWidget {
                     final centerOffset =
                         ((contentWidth - iconSize) / 2 * (1 - t))
                             .clamp(0.0, double.infinity);
-                    final labelWidth =
-                        (contentWidth - iconSize)
-                            .clamp(0.0, double.infinity);
 
                     return DecoratedBox(
                       decoration: BoxDecoration(
@@ -226,27 +223,24 @@ class SideNav<T> extends StatelessWidget {
                           children: [
                             SizedBox(width: centerOffset),
                             destination.icon,
-                            ClipRect(
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                widthFactor: t,
-                                child: Opacity(
-                                  opacity: t,
-                                  child: SizedBox(
-                                    width: labelWidth,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: CatalystSpacing.s3,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: destination.label,
-                                          ),
-                                          if (destination.badge != null)
-                                            destination.badge!,
-                                        ],
-                                      ),
+                            Expanded(
+                              child: Opacity(
+                                opacity: t,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: CatalystSpacing.s3 * t,
+                                  ),
+                                  child: DefaultTextStyle.merge(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: destination.label,
+                                        ),
+                                        if (destination.badge != null)
+                                          destination.badge!,
+                                      ],
                                     ),
                                   ),
                                 ),
