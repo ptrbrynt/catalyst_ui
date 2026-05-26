@@ -208,6 +208,9 @@ class SideNav<T> extends StatelessWidget {
                   ),
                   child: Row(
                     spacing: CatalystSpacing.s3,
+                    mainAxisAlignment: showExpanded
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
                     children: [
                       destination.icon,
                       if (showExpanded) ...[
