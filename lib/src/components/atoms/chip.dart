@@ -172,7 +172,6 @@ class _ChipState extends State<Chip> {
       style: TextStyle(
         fontFamily: context.typography.fontFamily,
         fontSize: 13,
-        height: 1,
         fontWeight: FontWeight.w500,
         color: style.foregroundColor,
       ),
