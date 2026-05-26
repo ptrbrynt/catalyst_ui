@@ -185,40 +185,78 @@ class SideNav<T> extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () => onItemSelected(destination.value),
-            child: LayoutBuilder(
-              builder: (_, constraints) {
-                final showExpanded = isExpanded && constraints.maxWidth >= 180;
-                return AnimatedContainer(
-                  duration: motion.micro.duration,
-                  curve: motion.micro.curve,
-                  padding: showExpanded
-                      ? const EdgeInsets.symmetric(
-                          vertical: 9,
-                          horizontal: CatalystSpacing.s3,
-                        )
-                      : const EdgeInsets.symmetric(
-                          vertical: 9,
-                          horizontal: 10,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(
+                begin: isExpanded ? 1.0 : 0.0,
+                end: isExpanded ? 1.0 : 0.0,
+              ),
+              duration: motion.micro.duration,
+              curve: motion.micro.curve,
+              builder: (context, t, _) {
+                return LayoutBuilder(
+                  builder: (_, constraints) {
+                    const vertPad = 9.0;
+                    const iconSize = 18.0;
+                    final hPad =
+                        10.0 + (CatalystSpacing.s3 - 10.0) * t;
+                    final contentWidth =
+                        constraints.maxWidth - hPad * 2;
+                    // Shrinks to zero as the nav expands, centering
+                    // the icon in the collapsed rail.
+                    final centerOffset =
+                        ((contentWidth - iconSize) / 2 * (1 - t))
+                            .clamp(0.0, double.infinity);
+                    final labelWidth =
+                        (contentWidth - iconSize)
+                            .clamp(0.0, double.infinity);
+
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? cs.brand.withValues(alpha: 0.10)
+                            : null,
+                        borderRadius: CatalystRadius.mdAll,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: vertPad,
+                          horizontal: hPad,
                         ),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? cs.brand.withValues(alpha: 0.10)
-                        : null,
-                    borderRadius: CatalystRadius.mdAll,
-                  ),
-                  child: Row(
-                    spacing: CatalystSpacing.s3,
-                    mainAxisAlignment: showExpanded
-                        ? MainAxisAlignment.start
-                        : MainAxisAlignment.center,
-                    children: [
-                      destination.icon,
-                      if (showExpanded) ...[
-                        Expanded(child: destination.label),
-                        if (destination.badge != null) destination.badge!,
-                      ],
-                    ],
-                  ),
+                        child: Row(
+                          children: [
+                            SizedBox(width: centerOffset),
+                            destination.icon,
+                            ClipRect(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: t,
+                                child: Opacity(
+                                  opacity: t,
+                                  child: SizedBox(
+                                    width: labelWidth,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: CatalystSpacing.s3,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: destination.label,
+                                          ),
+                                          if (destination.badge != null)
+                                            destination.badge!,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
