@@ -196,7 +196,10 @@ class SideNav<T> extends StatelessWidget {
                           vertical: 9,
                           horizontal: CatalystSpacing.s3,
                         )
-                      : const EdgeInsets.all(10),
+                      : const EdgeInsets.symmetric(
+                          vertical: 9,
+                          horizontal: 10,
+                        ),
                   decoration: BoxDecoration(
                     color: isSelected
                         ? cs.brand.withValues(alpha: 0.10)
