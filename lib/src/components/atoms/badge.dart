@@ -237,7 +237,7 @@ class Badge extends StatelessWidget {
               ),
               const SizedBox(width: 6),
             ],
-            child,
+            Flexible(child: child),
           ],
         ),
       ),
