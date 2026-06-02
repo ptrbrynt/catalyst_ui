@@ -118,7 +118,6 @@ class Avatar extends StatelessWidget {
                       fontFamily: context.typography.fontFamily,
                       fontWeight: FontWeight.w600,
                       fontSize: size * 0.4,
-                      height: 1,
                       color:
                           CatalystThemeData.textColorFor(_effectiveColor),
                     ),

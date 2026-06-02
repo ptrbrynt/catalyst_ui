@@ -54,7 +54,6 @@ class CatalystDrawer extends StatelessWidget {
                       fontFamily: typo.fontFamily,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      height: 1,
                       color: cs.text,
                     ),
                     child: title,

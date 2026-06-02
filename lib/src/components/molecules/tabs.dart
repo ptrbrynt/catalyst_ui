@@ -103,7 +103,6 @@ class _CatalystTabsState<T> extends State<CatalystTabs<T>> {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w600,
         fontSize: 14,
-        height: 1,
         color: isSelected ? cs.text : cs.textMuted,
       ),
       child: MouseRegion(

@@ -45,7 +45,6 @@ class CatalystAppBar extends StatelessWidget {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w600,
         fontSize: 17,
-        height: 1,
         color: cs.text,
       ),
       child: IconTheme(

@@ -197,7 +197,6 @@ class CatalystSnackbar extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
-                            height: 1,
                           ),
                         ),
                       ),

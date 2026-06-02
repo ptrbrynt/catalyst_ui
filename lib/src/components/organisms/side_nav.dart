@@ -149,7 +149,6 @@ class SideNav<T> extends StatelessWidget {
                     fontFamily: context.typography.fontFamily,
                     fontWeight: FontWeight.w700,
                     fontSize: 10,
-                    height: 1,
                     color: context.colorScheme.textMuted,
                   ),
                 )
@@ -176,7 +175,6 @@ class SideNav<T> extends StatelessWidget {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 14,
-        height: 1,
         color: itemColor,
       ),
       child: IconTheme(

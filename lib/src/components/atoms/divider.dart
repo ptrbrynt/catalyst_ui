@@ -56,7 +56,6 @@ class CatalystDivider extends StatelessWidget {
         style: TextStyle(
           fontFamily: context.typography.fontFamily,
           fontWeight: FontWeight.w500,
-          height: 1,
           fontSize: 12,
           color: context.colorScheme.borderStrong,
         ),

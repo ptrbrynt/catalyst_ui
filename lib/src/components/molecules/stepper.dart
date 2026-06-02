@@ -111,7 +111,6 @@ class _CatalystStepperState extends State<CatalystStepper> {
             fontFamily: typo.fontFamily,
             fontWeight: FontWeight.w600,
             fontSize: 12,
-            height: 1,
             color: indicatorFg,
           ),
           child: AnimatedContainer(

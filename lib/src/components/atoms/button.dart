@@ -332,7 +332,6 @@ class _ButtonState extends State<Button> {
         fontFamily: context.typography.fontFamily,
         fontSize: widget.size.fontSize,
         fontWeight: FontWeight.w500,
-        height: 1,
         color: style.foregroundColor,
       ),
       child: IconTheme(

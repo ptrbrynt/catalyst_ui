@@ -155,7 +155,6 @@ class ActionTile extends StatelessWidget {
               fontFamily: typo.fontFamily,
               fontWeight: FontWeight.w500,
               fontSize: 11,
-              height: 1,
               color: cs.textSubtle,
             ),
             child: Row(

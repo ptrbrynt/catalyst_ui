@@ -55,7 +55,6 @@ class AvatarStack extends StatelessWidget {
                     fontFamily: context.typography.fontFamily,
                     fontWeight: FontWeight.w400,
                     fontSize: _size * 0.4,
-                    height: 1,
                     color: cs.onMuted,
                   ),
                 ),

@@ -205,7 +205,6 @@ class _ProgressBarState extends State<ProgressBar>
             style: TextStyle(
               fontFamily: context.typography.fontFamily,
               fontSize: 12,
-              height: 1,
               fontWeight: FontWeight.w500,
               color: context.colorScheme.textMuted,
             ),

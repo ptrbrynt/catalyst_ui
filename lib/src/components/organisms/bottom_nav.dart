@@ -81,7 +81,6 @@ class BottomNav<T> extends StatelessWidget {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 11,
-        height: 1,
         color: itemColor,
       ),
       child: MouseRegion(

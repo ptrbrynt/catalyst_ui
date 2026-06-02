@@ -49,7 +49,6 @@ class _BreadcrumbState extends State<Breadcrumb> {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 13,
-        height: 1,
       ),
       child: AnimatedSize(
         alignment: Alignment.centerLeft,

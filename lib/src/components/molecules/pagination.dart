@@ -103,7 +103,6 @@ class _PaginationState extends State<Pagination> {
                           color: context.colorScheme.textMuted,
                           fontWeight: FontWeight.w500,
                           fontSize: 13,
-                          height: 1,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -136,7 +135,6 @@ class _PaginationState extends State<Pagination> {
         color: isCurrent ? cs.onBrand : cs.text,
         fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w500,
         fontSize: 13,
-        height: 1,
       ),
       child: MouseRegion(
         cursor: isCurrent ? MouseCursor.defer : SystemMouseCursors.click,

@@ -212,7 +212,6 @@ class Badge extends StatelessWidget {
         fontFamily: context.typography.fontFamily,
         fontSize: size.fontSize,
         fontWeight: FontWeight.w600,
-        height: 1,
         color: style.foregroundColor,
       ),
       child: AnimatedContainer(

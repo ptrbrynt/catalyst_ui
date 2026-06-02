@@ -168,7 +168,6 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
         fontFamily: context.typography.fontFamily,
         fontWeight: FontWeight.w500,
         fontSize: 13,
-        height: 1,
         color: isSelected ? cs.text : cs.textMuted,
       ),
       child: MouseRegion(
