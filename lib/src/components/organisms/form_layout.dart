@@ -71,11 +71,6 @@ class FormLayout extends StatelessWidget {
             style == FormLayoutStyle.twoColumnWithCards
                 ? context.colorScheme.subtle
                 : context.colorScheme.canvas,
-        borderRadius: Radii.lgAll,
-        border:
-            style == FormLayoutStyle.twoColumnWithCards
-                ? BoxBorder.all(color: context.colorScheme.border)
-                : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

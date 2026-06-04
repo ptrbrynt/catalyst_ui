@@ -20,19 +20,9 @@ class ShowcasePage extends StatelessWidget {
     final cs = context.colorScheme;
     final ty = context.typography;
 
-    final previewChild = DecoratedBox(
-      decoration: BoxDecoration(
-        color: cs.surface,
-        border: Border.all(color: cs.borderSubtle),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Center(child: preview),
-        ),
-      ),
+    final previewChild = SizedBox(
+      width: double.infinity,
+      child: Center(child: preview),
     );
 
     return ColoredBox(
@@ -58,13 +48,10 @@ class ShowcasePage extends StatelessWidget {
                       const SizedBox(height: 24),
                       Text('Properties', style: ty.h3),
                       const SizedBox(height: 4),
-                      Divider(
-                        margin: const EdgeInsets.symmetric(vertical: 12),
-                      ),
+                      Divider(margin: const EdgeInsets.symmetric(vertical: 12)),
                       for (var i = 0; i < controls.length; i++) ...[
                         controls[i],
-                        if (i < controls.length - 1)
-                          const SizedBox(height: 16),
+                        if (i < controls.length - 1) const SizedBox(height: 16),
                       ],
                       const SizedBox(height: 16),
                     ],
