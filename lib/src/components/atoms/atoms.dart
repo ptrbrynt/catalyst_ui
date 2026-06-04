@@ -7,6 +7,7 @@ export 'chip.dart';
 export 'divider.dart';
 export 'progress_bar.dart';
 export 'radio.dart';
+export 'slider.dart';
 export 'spinner.dart';
 export 'status_dot.dart';
 export 'switch.dart';
