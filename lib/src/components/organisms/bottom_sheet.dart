@@ -60,7 +60,7 @@ class BottomSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (showDragHandle)
-                const DragHandle()
+                const _DragHandle()
               else
                 const SizedBox(height: Spacing.s4),
               DefaultTextStyle(
@@ -103,16 +103,14 @@ class BottomSheet extends StatelessWidget {
   }
 }
 
-class DragHandle extends StatefulWidget {
-  const DragHandle({
-    super.key,
-  });
+class _DragHandle extends StatefulWidget {
+  const _DragHandle();
 
   @override
-  State<DragHandle> createState() => _DragHandleState();
+  State<_DragHandle> createState() => _DragHandleState();
 }
 
-class _DragHandleState extends State<DragHandle> {
+class _DragHandleState extends State<_DragHandle> {
   bool _isDragging = false;
   bool _isHovered = false;
   @override

@@ -1,5 +1,5 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide RadioGroup;
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../widgets/controls.dart';
@@ -31,15 +31,14 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
               AppBar(
                 automaticallyImplyLeading: false,
                 title: _hasTitle ? const Text('Page Title') : null,
-                trailing:
-                    _hasTrailing
-                        ? Button.icon(
-                          icon: const Icon(LucideIcons.bell),
-                          variant: ButtonVariant.ghost,
-                          size: ButtonSize.medium,
-                          onPressed: () {},
-                        )
-                        : null,
+                trailing: _hasTrailing
+                    ? Button.icon(
+                        icon: const Icon(LucideIcons.bell),
+                        variant: ButtonVariant.ghost,
+                        size: ButtonSize.medium,
+                        onPressed: () {},
+                      )
+                    : null,
               ),
               ColoredBox(
                 color: context.colorScheme.canvas,
@@ -255,31 +254,29 @@ class _EmptyStateShowcaseState extends State<EmptyStateShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    final action =
-        _hasAction
-            ? Button(label: const Text('Create project'), onPressed: () {})
-            : null;
+    final action = _hasAction
+        ? Button(label: const Text('Create project'), onPressed: () {})
+        : null;
 
     return ShowcasePage(
       title: 'EmptyState',
-      preview:
-          _large
-              ? EmptyState.large(
-                icon: LucideIcons.folderOpen,
-                title: const Text('No projects yet'),
-                description: const Text(
-                  'Create your first project to get started.',
-                ),
-                action: action,
-              )
-              : EmptyState(
-                icon: LucideIcons.folderOpen,
-                title: const Text('No projects yet'),
-                description: const Text(
-                  'Create your first project to get started.',
-                ),
-                action: action,
+      preview: _large
+          ? EmptyState.large(
+              icon: LucideIcons.folderOpen,
+              title: const Text('No projects yet'),
+              description: const Text(
+                'Create your first project to get started.',
               ),
+              action: action,
+            )
+          : EmptyState(
+              icon: LucideIcons.folderOpen,
+              title: const Text('No projects yet'),
+              description: const Text(
+                'Create your first project to get started.',
+              ),
+              action: action,
+            ),
       controls: [
         BoolControl(
           label: 'Large',
@@ -311,28 +308,21 @@ class _ErrorStateShowcaseState extends State<ErrorStateShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    final base =
-        _large
-            ? ErrorState.large(
-              title: const Text('Something went wrong'),
-              description:
-                  _hasDescription
-                      ? const Text(
-                        'We could not load your data. Please try again.',
-                      )
-                      : null,
-              onRetry: _hasRetry ? () {} : null,
-            )
-            : ErrorState(
-              title: const Text('Something went wrong'),
-              description:
-                  _hasDescription
-                      ? const Text(
-                        'We could not load your data. Please try again.',
-                      )
-                      : null,
-              onRetry: _hasRetry ? () {} : null,
-            );
+    final base = _large
+        ? ErrorState.large(
+            title: const Text('Something went wrong'),
+            description: _hasDescription
+                ? const Text('We could not load your data. Please try again.')
+                : null,
+            onRetry: _hasRetry ? () {} : null,
+          )
+        : ErrorState(
+            title: const Text('Something went wrong'),
+            description: _hasDescription
+                ? const Text('We could not load your data. Please try again.')
+                : null,
+            onRetry: _hasRetry ? () {} : null,
+          );
 
     return ShowcasePage(
       title: 'ErrorState',
@@ -447,21 +437,20 @@ class _ModalShowcaseState extends State<ModalShowcase> {
         body: const Text(
           'Are you sure you want to delete this project? This action cannot be undone and all data will be permanently removed.',
         ),
-        actions:
-            _hasActions
-                ? [
-                  Button(
-                    label: const Text('Cancel'),
-                    variant: ButtonVariant.secondary,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  Button(
-                    label: const Text('Delete'),
-                    variant: ButtonVariant.destructive,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ]
-                : [],
+        actions: _hasActions
+            ? [
+                Button(
+                  label: const Text('Cancel'),
+                  variant: ButtonVariant.secondary,
+                  onPressed: () => Navigator.pop(context),
+                ),
+                Button(
+                  label: const Text('Delete'),
+                  variant: ButtonVariant.destructive,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ]
+            : [],
       ),
     );
   }
@@ -485,7 +474,106 @@ class _ModalShowcaseState extends State<ModalShowcase> {
   }
 }
 
-// ─── SideNav ──────────────────────────────────────────────────────────────────
+// ─── RadioGroup ──────────────────────────────────────────────────────────────
+
+class RadioGroupShowcase extends StatefulWidget {
+  const RadioGroupShowcase({super.key});
+
+  @override
+  State<RadioGroupShowcase> createState() => _RadioGroupShowcaseState();
+}
+
+class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
+  String? selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShowcasePage(title: 'RadioGroup', preview: _panel());
+  }
+
+  Widget _panel() {
+    return RadioGroup<String>.panel(
+      value: selectedValue,
+      onOptionSelected: (value) {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      options: <String>['Email', 'Phone (SMS)', 'Push notification']
+          .map(
+            (i) => RadioGroupSimpleOptionWithDescription(
+              value: i,
+              label: Text(i),
+              description: Text('Some more information'),
+            ),
+          )
+          .toList(),
+      title: Text('Notifications'),
+      subtitle: Text('How do you prefer to receive notifications?'),
+    );
+  }
+
+  Widget _table() {
+    return RadioGroup<String>.table(
+      value: selectedValue,
+      onOptionSelected: (value) {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      options: [
+        RadioGroupTableRowOption(
+          value: 'Startup',
+          columns: [
+            Text('Startup'),
+            Text('\$29 / mo'),
+            Text('Up to 5 active job postings'),
+          ],
+        ),
+        RadioGroupTableRowOption(
+          value: 'Business',
+          columns: [
+            Text('Business'),
+            Text('\$99 / mo'),
+            Text('Up to 50 active job postings'),
+          ],
+        ),
+        RadioGroupTableRowOption(
+          value: 'Enterprise',
+          columns: [
+            Text('Enterprise'),
+            Text('\$249 / mo'),
+            Text('Up to 1000 active job postings'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _listWithTrailingRadio() {
+    return RadioGroup<String>.listWithTrailingRadio(
+      value: selectedValue,
+      onOptionSelected: (value) {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      options: <String>['Email', 'Phone (SMS)', 'Push notification']
+          .map(
+            (i) => RadioGroupSimpleOptionWithDescription(
+              value: i,
+              label: Text(i),
+              description: Text('Some more information'),
+            ),
+          )
+          .toList(),
+      title: Text('Notifications'),
+      subtitle: Text('How do you prefer to receive notifications?'),
+    );
+  }
+}
+
+// ─── SideNav ─────────────────────────────────────────────────────────────────
 
 class SideNavShowcase extends StatefulWidget {
   const SideNavShowcase({super.key});
@@ -576,33 +664,31 @@ class _TopBarShowcaseState extends State<TopBarShowcase> {
         ],
         selectedItem: _selected,
         onItemSelected: (v) => setState(() => _selected = v),
-        leading:
-            _hasLeading
-                ? const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Acme',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-                  ),
-                )
-                : null,
-        actions:
-            _hasActions
-                ? [
-                  Button.icon(
-                    icon: const Icon(LucideIcons.bell),
-                    variant: ButtonVariant.ghost,
-                    size: ButtonSize.medium,
-                    onPressed: () {},
-                  ),
-                  Button.icon(
-                    icon: const Icon(LucideIcons.user),
-                    variant: ButtonVariant.ghost,
-                    size: ButtonSize.medium,
-                    onPressed: () {},
-                  ),
-                ]
-                : [],
+        leading: _hasLeading
+            ? const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Acme',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                ),
+              )
+            : null,
+        actions: _hasActions
+            ? [
+                Button.icon(
+                  icon: const Icon(LucideIcons.bell),
+                  variant: ButtonVariant.ghost,
+                  size: ButtonSize.medium,
+                  onPressed: () {},
+                ),
+                Button.icon(
+                  icon: const Icon(LucideIcons.user),
+                  variant: ButtonVariant.ghost,
+                  size: ButtonSize.medium,
+                  onPressed: () {},
+                ),
+              ]
+            : [],
       ),
       controls: [
         BoolControl(

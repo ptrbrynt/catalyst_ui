@@ -6,5 +6,6 @@ export 'empty_state.dart';
 export 'error_state.dart';
 export 'form_layout.dart';
 export 'modal.dart';
+export 'radio_group.dart';
 export 'side_nav.dart';
 export 'top_bar.dart';
