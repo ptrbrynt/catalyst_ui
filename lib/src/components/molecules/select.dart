@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/color_scheme.dart';
 import '../../theme/extensions.dart';
@@ -50,6 +49,8 @@ enum SelectSize {
 class Select<T> extends StatefulWidget {
   /// Creates a select field.
   const Select({
+    required this.trailingIcon,
+    required this.checkIcon,
     super.key,
     this.label,
     this.value,
@@ -89,6 +90,16 @@ class Select<T> extends StatefulWidget {
   /// The height variant.
   final SelectSize size;
 
+  /// Icon to display at the end of this [Select].
+  ///
+  /// Typically a downward chevron.
+  final IconData trailingIcon;
+
+  /// Icon to display on selected options.
+  ///
+  /// Typically a check.
+  final IconData checkIcon;
+
   @override
   State<Select<T>> createState() => _SelectState<T>();
 }
@@ -118,22 +129,22 @@ class _SelectState<T> extends State<Select<T>> {
     final showAbove = spaceBelow < dropdownMaxHeight;
 
     _overlay = OverlayEntry(
-      builder:
-          (_) => _SelectDropdown<T>(
-            layerLink: _link,
-            triggerWidth: renderBox.size.width,
-            options: widget.options,
-            value: widget.value,
-            colorScheme: cs,
-            typography: typo,
-            shadows: sh,
-            showAbove: showAbove,
-            onSelect: (v) {
-              widget.onChanged?.call(v);
-              _close();
-            },
-            onDismiss: _close,
-          ),
+      builder: (_) => _SelectDropdown<T>(
+        layerLink: _link,
+        triggerWidth: renderBox.size.width,
+        options: widget.options,
+        value: widget.value,
+        colorScheme: cs,
+        typography: typo,
+        shadows: sh,
+        showAbove: showAbove,
+        onSelect: (v) {
+          widget.onChanged?.call(v);
+          _close();
+        },
+        checkIcon: widget.checkIcon,
+        onDismiss: _close,
+      ),
     );
     Overlay.of(context).insert(_overlay!);
     setState(() {});
@@ -164,8 +175,9 @@ class _SelectState<T> extends State<Select<T>> {
     final motion = context.motion;
     final hasError = widget.error != null;
 
-    final selected =
-        widget.options.where((o) => o.value == widget.value).firstOrNull;
+    final selected = widget.options
+        .where((o) => o.value == widget.value)
+        .firstOrNull;
 
     final Color borderColor;
     final List<BoxShadow> boxShadow;
@@ -204,10 +216,9 @@ class _SelectState<T> extends State<Select<T>> {
           child: GestureDetector(
             onTap: _toggle,
             child: MouseRegion(
-              cursor:
-                  widget.disabled
-                      ? SystemMouseCursors.forbidden
-                      : SystemMouseCursors.click,
+              cursor: widget.disabled
+                  ? SystemMouseCursors.forbidden
+                  : SystemMouseCursors.click,
               child: AnimatedOpacity(
                 duration: motion.standard.duration,
                 curve: motion.standard.curve,
@@ -241,7 +252,7 @@ class _SelectState<T> extends State<Select<T>> {
                         duration: motion.micro.duration,
                         curve: motion.micro.curve,
                         child: Icon(
-                          LucideIcons.chevronDown,
+                          widget.trailingIcon,
                           size: 18,
                           color: cs.textMuted,
                         ),
@@ -279,6 +290,7 @@ class _SelectDropdown<T> extends StatelessWidget {
     required this.showAbove,
     required this.onSelect,
     required this.onDismiss,
+    required this.checkIcon,
   });
 
   final LayerLink layerLink;
@@ -294,6 +306,8 @@ class _SelectDropdown<T> extends StatelessWidget {
 
   final ValueChanged<T> onSelect;
   final VoidCallback onDismiss;
+
+  final IconData checkIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -312,8 +326,9 @@ class _SelectDropdown<T> extends StatelessWidget {
             link: layerLink,
             showWhenUnlinked: false,
             targetAnchor: showAbove ? Alignment.topLeft : Alignment.bottomLeft,
-            followerAnchor:
-                showAbove ? Alignment.bottomLeft : Alignment.topLeft,
+            followerAnchor: showAbove
+                ? Alignment.bottomLeft
+                : Alignment.topLeft,
             offset: Offset(0, showAbove ? -4 : 4),
             child: SizedBox(
               width: triggerWidth,
@@ -338,6 +353,7 @@ class _SelectDropdown<T> extends StatelessWidget {
                             onTap: () => onSelect(opt.value),
                             colorScheme: colorScheme,
                             typography: typography,
+                            checkIcon: checkIcon,
                           ),
                       ],
                     ),
@@ -359,6 +375,7 @@ class _SelectOptionRow<T> extends StatefulWidget {
     required this.onTap,
     required this.colorScheme,
     required this.typography,
+    required this.checkIcon,
   });
 
   final SelectOption<T> option;
@@ -366,6 +383,7 @@ class _SelectOptionRow<T> extends StatefulWidget {
   final VoidCallback onTap;
   final ColorScheme colorScheme;
   final Typography typography;
+  final IconData checkIcon;
 
   @override
   State<_SelectOptionRow<T>> createState() => _SelectOptionRowState<T>();
@@ -385,10 +403,9 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 120),
           curve: Curves.easeOut,
-          color:
-              (widget.isSelected || _hovered)
-                  ? widget.colorScheme.subtle
-                  : null,
+          color: (widget.isSelected || _hovered)
+              ? widget.colorScheme.subtle
+              : null,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: Row(
             children: [
@@ -403,7 +420,7 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
               if (widget.isSelected) ...[
                 const SizedBox(width: 8),
                 Icon(
-                  LucideIcons.check,
+                  widget.checkIcon,
                   size: 16,
                   color: widget.colorScheme.brand,
                 ),

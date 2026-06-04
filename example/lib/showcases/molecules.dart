@@ -28,7 +28,13 @@ class _ActionTileShowcaseState extends State<ActionTileShowcase> {
         title: const Text('Introduction to Design'),
         subtitle: _hasSubtitle ? const Text('Learn the basics of UI/UX') : null,
         badge: _hasBadge ? const Badge(child: Text('New')) : null,
-        trailing: _trailing,
+        trailing: _trailing
+            ? Icon(
+                LucideIcons.chevronRight,
+                size: 18,
+                color: context.colorScheme.textMuted,
+              )
+            : null,
         onTap: () {},
       ),
       controls: [
@@ -72,36 +78,34 @@ class _AlertShowcaseState extends State<AlertShowcase> {
   Widget build(BuildContext context) {
     return ShowcasePage(
       title: 'Alert',
-      preview:
-          _visible
-              ? Alert(
-                tone: _tone,
-                title: _hasTitle ? const Text('Heads up') : null,
-                children:
-                    _hasBody
-                        ? const [
-                          Text(
-                            'This is an important message that requires your attention.',
-                          ),
-                        ]
-                        : null,
-                action:
-                    _hasAction
-                        ? Button(
-                          label: const Text('Learn more'),
-                          variant: ButtonVariant.secondary,
-                          size: ButtonSize.small,
-                          onPressed: () {},
-                        )
-                        : null,
-                onDismiss:
-                    _hasDismiss ? () => setState(() => _visible = false) : null,
-              )
-              : Button(
-                label: const Text('Reset'),
-                variant: ButtonVariant.secondary,
-                onPressed: () => setState(() => _visible = true),
-              ),
+      preview: _visible
+          ? Alert(
+              tone: _tone,
+              title: _hasTitle ? const Text('Heads up') : null,
+              children: _hasBody
+                  ? const [
+                      Text(
+                        'This is an important message that requires your attention.',
+                      ),
+                    ]
+                  : null,
+              action: _hasAction
+                  ? Button(
+                      label: const Text('Learn more'),
+                      variant: ButtonVariant.secondary,
+                      size: ButtonSize.small,
+                      onPressed: () {},
+                    )
+                  : null,
+              onDismiss: _hasDismiss
+                  ? () => setState(() => _visible = false)
+                  : null,
+            )
+          : Button(
+              label: const Text('Reset'),
+              variant: ButtonVariant.secondary,
+              onPressed: () => setState(() => _visible = true),
+            ),
       controls: [
         SelectControl<AlertTone>(
           label: 'Tone',
@@ -165,6 +169,7 @@ class _BreadcrumbShowcaseState extends State<BreadcrumbShowcase> {
       preview: Breadcrumb(
         items: _segments.take(_depth).toList(),
         onItemTapped: (_) {},
+        separatorIcon: LucideIcons.chevronRight,
       ),
       controls: [
         IntControl(
@@ -267,10 +272,9 @@ class _ListItemShowcaseState extends State<ListItemShowcase> {
               title: const Text('First item'),
               leading: _hasLeading ? const Icon(LucideIcons.inbox) : null,
               subtitle: _hasSubtitle ? const Text('Secondary line') : null,
-              trailing:
-                  _hasTrailing
-                      ? const Icon(LucideIcons.chevronRight, size: 16)
-                      : null,
+              trailing: _hasTrailing
+                  ? const Icon(LucideIcons.chevronRight, size: 16)
+                  : null,
               divider: _hasDivider,
               onTap: _tappable ? () {} : null,
             ),
@@ -278,10 +282,9 @@ class _ListItemShowcaseState extends State<ListItemShowcase> {
               title: const Text('Second item'),
               leading: _hasLeading ? const Icon(LucideIcons.star) : null,
               subtitle: _hasSubtitle ? const Text('Another line') : null,
-              trailing:
-                  _hasTrailing
-                      ? const Icon(LucideIcons.chevronRight, size: 16)
-                      : null,
+              trailing: _hasTrailing
+                  ? const Icon(LucideIcons.chevronRight, size: 16)
+                  : null,
               divider: false,
               onTap: _tappable ? () {} : null,
             ),
@@ -339,6 +342,8 @@ class _PaginationShowcaseState extends State<PaginationShowcase> {
         currentPage: _page,
         pageCount: _pageCount,
         onChanged: (p) => setState(() => _page = p),
+        forwardIcon: LucideIcons.chevronRight,
+        backIcon: LucideIcons.chevronLeft,
       ),
       controls: [
         IntControl(
@@ -346,11 +351,10 @@ class _PaginationShowcaseState extends State<PaginationShowcase> {
           value: _pageCount + 1,
           min: 2,
           max: 20,
-          onChanged:
-              (v) => setState(() {
-                _pageCount = v - 1;
-                if (_page > _pageCount) _page = _pageCount;
-              }),
+          onChanged: (v) => setState(() {
+            _pageCount = v - 1;
+            if (_page > _pageCount) _page = _pageCount;
+          }),
         ),
       ],
     );
@@ -436,6 +440,8 @@ class _SelectShowcaseState extends State<SelectShowcase> {
             SelectOption(value: 'de', label: 'Germany'),
           ],
           onChanged: _disabled ? null : (v) => setState(() => _value = v),
+          trailingIcon: LucideIcons.chevronDown,
+          checkIcon: LucideIcons.check,
         ),
       ),
       controls: [
@@ -498,28 +504,25 @@ class _SnackbarShowcaseState extends State<SnackbarShowcase> {
             message: const Text('Your changes have been saved'),
             tone: _tone,
             icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
-            action:
-                _hasAction
-                    ? SnackbarAction(label: 'Undo', onPressed: () {})
-                    : null,
+            action: _hasAction
+                ? SnackbarAction(label: 'Undo', onPressed: () {})
+                : null,
           ),
           const SizedBox(height: 16),
           Button(
             label: const Text('Show as toast'),
             variant: ButtonVariant.secondary,
             size: ButtonSize.small,
-            onPressed:
-                () => context.showSnackbar(
-                  Snackbar(
-                    message: const Text('Your changes have been saved'),
-                    tone: _tone,
-                    icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
-                    action:
-                        _hasAction
-                            ? SnackbarAction(label: 'Undo', onPressed: () {})
-                            : null,
-                  ),
-                ),
+            onPressed: () => context.showSnackbar(
+              Snackbar(
+                message: const Text('Your changes have been saved'),
+                tone: _tone,
+                icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
+                action: _hasAction
+                    ? SnackbarAction(label: 'Undo', onPressed: () {})
+                    : null,
+              ),
+            ),
           ),
         ],
       ),
@@ -628,7 +631,7 @@ class _StepperShowcaseState extends State<StepperShowcase> {
       preview: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stepper(current: current, steps: steps),
+          Stepper(current: current, steps: steps, checkIcon: LucideIcons.check),
           const SizedBox(height: 20),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -637,19 +640,17 @@ class _StepperShowcaseState extends State<StepperShowcase> {
                 label: const Text('Back'),
                 variant: ButtonVariant.secondary,
                 size: ButtonSize.small,
-                onPressed:
-                    current > 0
-                        ? () => setState(() => _current = current - 1)
-                        : null,
+                onPressed: current > 0
+                    ? () => setState(() => _current = current - 1)
+                    : null,
               ),
               const SizedBox(width: 8),
               Button(
                 label: const Text('Next'),
                 size: ButtonSize.small,
-                onPressed:
-                    current < _stepCount - 1
-                        ? () => setState(() => _current = current + 1)
-                        : null,
+                onPressed: current < _stepCount - 1
+                    ? () => setState(() => _current = current + 1)
+                    : null,
               ),
             ],
           ),
@@ -661,11 +662,10 @@ class _StepperShowcaseState extends State<StepperShowcase> {
           value: _stepCount,
           min: 2,
           max: 5,
-          onChanged:
-              (v) => setState(() {
-                _stepCount = v;
-                if (_current >= v) _current = v - 1;
-              }),
+          onChanged: (v) => setState(() {
+            _stepCount = v;
+            if (_current >= v) _current = v - 1;
+          }),
         ),
       ],
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/color_scheme.dart';
 import '../../theme/extensions.dart';
@@ -95,19 +94,23 @@ class Chip extends StatefulWidget {
   const Chip({
     required this.isSelected,
     required this.child,
+    required IconData this.checkIcon,
     this.onTap,
     this.variant = ChipVariant.standard,
     super.key,
-  }) : isRemovable = false;
+  }) : isRemovable = false,
+       removeIcon = null;
 
   /// Creates a removable chip that shows a close (×) icon.
   const Chip.removable({
     required this.child,
+    required IconData this.removeIcon,
     this.onTap,
     this.variant = ChipVariant.standard,
     super.key,
   }) : isRemovable = true,
-       isSelected = false;
+       isSelected = false,
+       checkIcon = null;
 
   /// Called when the chip is tapped. Pass `null` to disable.
   final VoidCallback? onTap;
@@ -120,6 +123,12 @@ class Chip extends StatefulWidget {
 
   /// The visual variant. Defaults to [ChipVariant.standard].
   final ChipVariant variant;
+
+  /// The icon to display when checked.
+  final IconData? checkIcon;
+
+  /// The icon to display when removable.
+  final IconData? removeIcon;
 
   /// The label content, typically a [Text] widget.
   final Widget child;
@@ -185,48 +194,48 @@ class _ChipState extends State<Chip> {
           child: MouseRegion(
             onEnter: (_) => _controller.update(WidgetState.hovered, true),
             onExit: (_) => _controller.update(WidgetState.hovered, false),
-            cursor:
-                states.contains(WidgetState.disabled)
-                    ? SystemMouseCursors.forbidden
-                    : SystemMouseCursors.click,
+            cursor: states.contains(WidgetState.disabled)
+                ? SystemMouseCursors.forbidden
+                : SystemMouseCursors.click,
             child: Focus(
               onFocusChange: (f) => _controller.update(WidgetState.focused, f),
               child: AnimatedOpacity(
                 opacity: states.contains(WidgetState.disabled) ? 0.5 : 1,
                 duration: motion.micro.duration,
                 curve: motion.micro.curve,
-                child: AnimatedContainer(
-                  duration: motion.micro.duration,
-                  curve: motion.micro.curve,
-                  height: 32,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: Radii.pillAll,
-                    border: Border.all(color: style.borderColor),
-                    color: style.backgroundColor,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (widget.isSelected) ...[
-                        const Icon(LucideIcons.check),
-                        const SizedBox(width: 6),
-                      ] else
-                        const SizedBox(width: 4),
-                      widget.child,
-                      if (widget.isRemovable) ...[
-                        const SizedBox(width: 6),
-                        const Icon(LucideIcons.x),
-                      ] else
-                        const SizedBox(width: 4),
-                    ],
-                  ),
-                ).withBrightness(
-                  states.contains(WidgetState.pressed) &&
-                          !states.contains(WidgetState.disabled)
-                      ? 0.92
-                      : 1,
-                ),
+                child:
+                    AnimatedContainer(
+                      duration: motion.micro.duration,
+                      curve: motion.micro.curve,
+                      height: 32,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: Radii.pillAll,
+                        border: Border.all(color: style.borderColor),
+                        color: style.backgroundColor,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (widget.isSelected) ...[
+                            Icon(widget.checkIcon),
+                            const SizedBox(width: 6),
+                          ] else
+                            const SizedBox(width: 4),
+                          widget.child,
+                          if (widget.isRemovable) ...[
+                            const SizedBox(width: 6),
+                            Icon(widget.removeIcon),
+                          ] else
+                            const SizedBox(width: 4),
+                        ],
+                      ),
+                    ).withBrightness(
+                      states.contains(WidgetState.pressed) &&
+                              !states.contains(WidgetState.disabled)
+                          ? 0.92
+                          : 1,
+                    ),
               ),
             ),
           ),

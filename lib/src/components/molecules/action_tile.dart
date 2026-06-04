@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../../theme/theme_data.dart';
@@ -28,8 +27,7 @@ class ActionTile extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.subtitle,
-    this.trailing = true,
-
+    this.trailing,
     this.badge,
     super.key,
   });
@@ -46,8 +44,8 @@ class ActionTile extends StatelessWidget {
   /// An optional secondary line below [title].
   final Widget? subtitle;
 
-  /// Whether to show a chevron arrow at the trailing edge.
-  final bool trailing;
+  /// Optional widget to display at the end of the tile.
+  final Widget? trailing;
 
   /// An optional [Badge] shown next to [title].
   final Badge? badge;
@@ -78,8 +76,7 @@ class ActionTile extends StatelessWidget {
             children: [
               _buildIcon(context),
               Expanded(child: _buildContent(context)),
-              if (trailing)
-                Icon(LucideIcons.chevronRight, size: 18, color: cs.textMuted),
+              ?trailing,
             ],
           ),
         ),

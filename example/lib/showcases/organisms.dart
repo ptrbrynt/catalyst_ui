@@ -29,6 +29,7 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
             mainAxisSize: MainAxisSize.min,
             children: [
               AppBar(
+                backIcon: LucideIcons.chevronLeft,
                 automaticallyImplyLeading: false,
                 title: _hasTitle ? const Text('Page Title') : null,
                 trailing: _hasTrailing
@@ -190,6 +191,7 @@ class DrawerShowcase extends StatelessWidget {
     showDrawer(
       context,
       (_) => Drawer(
+        closeIcon: LucideIcons.x,
         title: const Text('Settings'),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,6 +312,7 @@ class _ErrorStateShowcaseState extends State<ErrorStateShowcase> {
   Widget build(BuildContext context) {
     final base = _large
         ? ErrorState.large(
+            icon: LucideIcons.triangleAlert,
             title: const Text('Something went wrong'),
             description: _hasDescription
                 ? const Text('We could not load your data. Please try again.')
@@ -317,6 +320,7 @@ class _ErrorStateShowcaseState extends State<ErrorStateShowcase> {
             onRetry: _hasRetry ? () {} : null,
           )
         : ErrorState(
+            icon: LucideIcons.triangleAlert,
             title: const Text('Something went wrong'),
             description: _hasDescription
                 ? const Text('We could not load your data. Please try again.')
@@ -384,11 +388,13 @@ class _FormLayoutShowcaseState extends State<FormLayoutShowcase> {
                 value: true,
                 label: const Text('Receive marketing emails'),
                 onChanged: (_) {},
+                checkIcon: LucideIcons.check,
               ),
               Checkbox(
                 value: false,
                 label: const Text('Enable two-factor authentication'),
                 onChanged: (_) {},
+                checkIcon: LucideIcons.check,
               ),
             ],
           ),

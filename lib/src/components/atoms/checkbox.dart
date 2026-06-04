@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
@@ -37,6 +36,7 @@ class Checkbox extends StatelessWidget {
   const Checkbox({
     required this.value,
     required this.onChanged,
+    required this.checkIcon,
     this.size = CheckboxSize.medium,
     this.label,
     super.key,
@@ -54,16 +54,18 @@ class Checkbox extends StatelessWidget {
   /// The size variant.
   final CheckboxSize size;
 
+  /// The icon to display when checked.
+  final IconData checkIcon;
+
   @override
   Widget build(BuildContext context) {
     final motion = context.motion;
     final cs = context.colorScheme;
 
     return MouseRegion(
-      cursor:
-          onChanged != null
-              ? SystemMouseCursors.click
-              : SystemMouseCursors.forbidden,
+      cursor: onChanged != null
+          ? SystemMouseCursors.click
+          : SystemMouseCursors.forbidden,
       child: GestureDetector(
         onTap: () => onChanged?.call(!value),
         child: AnimatedDefaultTextStyle(
@@ -94,15 +96,13 @@ class Checkbox extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: value ? cs.brand : cs.surface,
                       borderRadius: Radii.smAll,
-                      border:
-                          value
-                              ? null
-                              : Border.all(width: 1.5, color: cs.border),
+                      border: value
+                          ? null
+                          : Border.all(width: 1.5, color: cs.border),
                     ),
-                    child:
-                        value
-                            ? Icon(LucideIcons.check, size: size.dimension - 6)
-                            : null,
+                    child: value
+                        ? Icon(checkIcon, size: size.dimension - 6)
+                        : null,
                   ),
                   ?label,
                 ],

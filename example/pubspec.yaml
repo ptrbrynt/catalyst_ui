@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   catalyst_ui:
     path: ../
-  lucide_icons_flutter: ^3.1.13
+  lucide_icons_flutter: ^3.1.14+2
 
 flutter:
   uses-material-design: false

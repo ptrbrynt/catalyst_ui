@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 
@@ -19,6 +18,7 @@ class Breadcrumb extends StatefulWidget {
   const Breadcrumb({
     required this.items,
     required this.onItemTapped,
+    required this.separatorIcon,
     super.key,
   });
 
@@ -27,6 +27,9 @@ class Breadcrumb extends StatefulWidget {
 
   /// Called with the index of a tapped ancestor item.
   final void Function(int index) onItemTapped;
+
+  /// Icon to display between the items.
+  final IconData separatorIcon;
 
   @override
   State<Breadcrumb> createState() => _BreadcrumbState();
@@ -62,7 +65,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
               _buildItem(i, context, cs),
               if (i < widget.items.length - 1)
                 Icon(
-                  LucideIcons.chevronRight,
+                  widget.separatorIcon,
                   size: 14,
                   color: cs.textSubtle,
                 ),
@@ -89,8 +92,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
                 : _hovered == i
                 ? context.colorScheme.brand
                 : context.colorScheme.textMuted,
-            fontWeight:
-                isCurrent ? FontWeight.w600 : FontWeight.w500,
+            fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w500,
           ),
         ),
       ),

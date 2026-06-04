@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.20.2
-  lucide_icons_flutter: ^3.1.13
   time: ^2.1.6
 
 dev_dependencies:

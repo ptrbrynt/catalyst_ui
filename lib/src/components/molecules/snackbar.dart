@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/color_scheme.dart';
 import '../../theme/extensions.dart';
@@ -119,16 +118,16 @@ class Snackbar extends StatelessWidget {
   /// Creates a green success snackbar.
   const Snackbar.success({
     required this.message,
+    required this.icon,
     this.action,
-    this.icon = const Icon(LucideIcons.circleCheckBig),
     super.key,
   }) : tone = SnackbarTone.success;
 
   /// Creates a red error snackbar.
   const Snackbar.danger({
     required this.message,
+    required this.icon,
     this.action,
-    this.icon = const Icon(LucideIcons.circleX),
     super.key,
   }) : tone = SnackbarTone.danger;
 

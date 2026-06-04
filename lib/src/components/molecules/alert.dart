@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/color_scheme.dart';
 import '../../theme/extensions.dart';
@@ -15,7 +14,6 @@ class AlertToneStyle {
   const AlertToneStyle({
     required this.backgroundColor,
     required this.accentColor,
-    required this.icon,
   });
 
   /// The tinted banner background.
@@ -23,9 +21,6 @@ class AlertToneStyle {
 
   /// The icon and border-tint colour.
   final Color accentColor;
-
-  /// The leading icon.
-  final IconData icon;
 }
 
 /// Defines the colour and icon of an [Alert].
@@ -72,7 +67,6 @@ class _InfoAlertTone extends AlertTone {
   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.infoSoft,
     accentColor: cs.info,
-    icon: LucideIcons.info,
   );
 }
 
@@ -83,7 +77,6 @@ class _SuccessAlertTone extends AlertTone {
   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.successSoft,
     accentColor: cs.success,
-    icon: LucideIcons.circleCheckBig,
   );
 }
 
@@ -94,7 +87,6 @@ class _WarningAlertTone extends AlertTone {
   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.warningSoft,
     accentColor: cs.warning,
-    icon: LucideIcons.triangleAlert,
   );
 }
 
@@ -105,7 +97,6 @@ class _DangerAlertTone extends AlertTone {
   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.dangerSoft,
     accentColor: cs.danger,
-    icon: LucideIcons.circleX,
   );
 }
 
@@ -124,8 +115,13 @@ class Alert extends StatelessWidget {
     this.children,
     this.action,
     this.onDismiss,
+    this.dismissIcon,
+    this.icon,
     super.key,
-  });
+  }) : assert(
+         !(onDismiss != null && dismissIcon == null),
+         'Must provide a dismissIcon when onDismiss is provided.',
+       );
 
   /// The semantic colour and icon of the alert.
   final AlertTone tone;
@@ -139,8 +135,14 @@ class Alert extends StatelessWidget {
   /// An optional action widget (e.g. a button) below the body.
   final Widget? action;
 
+  /// An optional icon to display at the start of the alert.
+  final Widget? icon;
+
   /// When provided, shows a dismiss button in the top-right corner.
   final VoidCallback? onDismiss;
+
+  /// Icon to display on the Dismiss button.
+  final IconData? dismissIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +164,11 @@ class Alert extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: Spacing.s3,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 1),
-            child: Icon(style.icon, color: style.accentColor, size: 18),
-          ),
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 1),
+              child: icon,
+            ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +214,7 @@ class Alert extends StatelessWidget {
               onTap: onDismiss,
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(LucideIcons.x, size: 16, color: cs.textMuted),
+                child: Icon(dismissIcon, size: 16, color: cs.textMuted),
               ),
             ),
         ],

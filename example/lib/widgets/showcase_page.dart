@@ -1,5 +1,6 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ShowcasePage extends StatelessWidget {
   const ShowcasePage({
@@ -30,7 +31,7 @@ class ShowcasePage extends StatelessWidget {
       child: SizedBox.expand(
         child: Column(
           children: [
-            AppBar(title: Text(title)),
+            AppBar(backIcon: LucideIcons.chevronLeft, title: Text(title)),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),

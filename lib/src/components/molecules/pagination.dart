@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
@@ -24,6 +23,8 @@ class Pagination extends StatefulWidget {
     required this.currentPage,
     required this.pageCount,
     required this.onChanged,
+    required this.forwardIcon,
+    required this.backIcon,
     super.key,
   });
 
@@ -35,6 +36,12 @@ class Pagination extends StatefulWidget {
 
   /// Called with the zero-based index of the newly selected page.
   final ValueChanged<int> onChanged;
+
+  /// Icon to display on the "next page" button
+  final IconData forwardIcon;
+
+  /// Icon to display on the "previous page" button
+  final IconData backIcon;
 
   @override
   State<Pagination> createState() => _PaginationState();
@@ -84,40 +91,38 @@ class _PaginationState extends State<Pagination> {
         spacing: Spacing.s1,
         children: [
           Button.icon(
-            icon: const Icon(LucideIcons.chevronLeft, size: 16),
+            icon: Icon(widget.backIcon, size: 16),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
-            onPressed:
-                widget.currentPage > 0
-                    ? () => widget.onChanged(widget.currentPage - 1)
-                    : null,
+            onPressed: widget.currentPage > 0
+                ? () => widget.onChanged(widget.currentPage - 1)
+                : null,
           ),
           for (final page in _pages)
             page == '...'
                 ? SizedBox(
-                  width: Spacing.s8,
-                  child: Center(
-                    child: Text(
-                      '…',
-                      style: TextStyle(
-                        fontFamily: context.typography.fontFamily,
-                        color: context.colorScheme.textMuted,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
+                    width: Spacing.s8,
+                    child: Center(
+                      child: Text(
+                        '…',
+                        style: TextStyle(
+                          fontFamily: context.typography.fontFamily,
+                          color: context.colorScheme.textMuted,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                )
+                  )
                 : _buildPageButton(context, int.parse(page)),
           Button.icon(
-            icon: const Icon(LucideIcons.chevronRight, size: 16),
+            icon: Icon(widget.forwardIcon, size: 16),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
-            onPressed:
-                widget.currentPage < widget.pageCount
-                    ? () => widget.onChanged(widget.currentPage + 1)
-                    : null,
+            onPressed: widget.currentPage < widget.pageCount
+                ? () => widget.onChanged(widget.currentPage + 1)
+                : null,
           ),
         ],
       ),

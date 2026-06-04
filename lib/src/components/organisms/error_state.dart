@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../atoms/button.dart';
@@ -18,8 +17,8 @@ class ErrorState extends StatelessWidget {
   /// Creates a standard-sized error state (64 px icon circle).
   const ErrorState({
     required this.title,
+    required this.icon,
     this.description,
-    this.icon = LucideIcons.triangleAlert,
     this.onRetry,
     super.key,
   }) : _large = false;
@@ -27,8 +26,8 @@ class ErrorState extends StatelessWidget {
   /// Creates a large error state (88 px icon circle).
   const ErrorState.large({
     required this.title,
+    required this.icon,
     this.description,
-    this.icon = LucideIcons.triangleAlert,
     this.onRetry,
     super.key,
   }) : _large = true;

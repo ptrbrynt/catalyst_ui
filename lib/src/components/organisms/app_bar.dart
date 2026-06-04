@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/spacing.dart';
@@ -14,6 +12,7 @@ import '../atoms/button.dart';
 class AppBar extends StatelessWidget {
   /// Creates an app bar.
   const AppBar({
+    required this.backIcon,
     super.key,
     this.title,
     this.automaticallyImplyLeading = true,
@@ -32,6 +31,9 @@ class AppBar extends StatelessWidget {
 
   /// An optional trailing action widget.
   final Widget? trailing;
+
+  /// Icon to display on the default back button.
+  final IconData backIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +91,8 @@ class AppBar extends StatelessWidget {
     if (!(ModalRoute.canPopOf(context) ?? false)) {
       return const SizedBox.shrink();
     }
-    final isIOS = defaultTargetPlatform == TargetPlatform.iOS;
     return Button.icon(
-      icon: Icon(isIOS ? LucideIcons.chevronLeft : LucideIcons.arrowLeft),
+      icon: Icon(backIcon),
       variant: ButtonVariant.ghost,
       onPressed: () => Navigator.pop(context),
       size: ButtonSize.medium,

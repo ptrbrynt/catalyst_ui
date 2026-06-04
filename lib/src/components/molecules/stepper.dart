@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
@@ -21,6 +20,7 @@ class Stepper extends StatefulWidget {
   const Stepper({
     required this.current,
     required this.steps,
+    required this.checkIcon,
     super.key,
   });
 
@@ -29,6 +29,9 @@ class Stepper extends StatefulWidget {
 
   /// The ordered list of step labels.
   final List<String> steps;
+
+  /// Icon to display on completed steps.
+  final IconData checkIcon;
 
   @override
   State<Stepper> createState() => _StepperState();
@@ -73,10 +76,9 @@ class _StepperState extends State<Stepper> {
                     bottom: 18,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        i < _current
-                            ? context.colorScheme.brand
-                            : context.colorScheme.border,
+                    color: i < _current
+                        ? context.colorScheme.brand
+                        : context.colorScheme.border,
                     borderRadius: Radii.pillAll,
                   ),
                 ),
@@ -95,12 +97,11 @@ class _StepperState extends State<Stepper> {
     final isDone = i < _current;
     final isActive = i == _current;
 
-    final indicatorFg =
-        isDone
-            ? cs.onBrand
-            : isActive
-            ? cs.brand
-            : cs.textMuted;
+    final indicatorFg = isDone
+        ? cs.onBrand
+        : isActive
+        ? cs.brand
+        : cs.textMuted;
 
     return Column(
       spacing: 6,
@@ -127,21 +128,19 @@ class _StepperState extends State<Stepper> {
                 width: 1.5,
                 color: (isDone || isActive) ? cs.brand : cs.border,
               ),
-              color:
-                  isDone
-                      ? cs.brand
-                      : isActive
-                      ? cs.surface
-                      : cs.subtle,
+              color: isDone
+                  ? cs.brand
+                  : isActive
+                  ? cs.surface
+                  : cs.subtle,
             ),
             child: AnimatedSwitcher(
               duration: motion.micro.duration,
               switchInCurve: motion.micro.curve,
               switchOutCurve: motion.micro.curve,
-              child:
-                  isDone
-                      ? Icon(LucideIcons.check, size: 14, color: indicatorFg)
-                      : Text('${i + 1}'),
+              child: isDone
+                  ? Icon(widget.checkIcon, size: 14, color: indicatorFg)
+                  : Text('${i + 1}'),
             ),
           ),
         ),

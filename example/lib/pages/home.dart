@@ -18,10 +18,9 @@ class HomePage extends StatelessWidget {
         pageBuilder: (context, animation, secondaryAnimation) => entry.build(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
-            position: Tween(
-              begin: const Offset(1, 0),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: const Cubic(0.2, 0, 0, 1))).animate(animation),
+            position: Tween(begin: const Offset(1, 0), end: Offset.zero)
+                .chain(CurveTween(curve: const Cubic(0.2, 0, 0, 1)))
+                .animate(animation),
             child: child,
           );
         },
@@ -58,13 +57,12 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             AppBar(
+              backIcon: LucideIcons.chevronLeft,
               title: const Text('Catalyst UI'),
               automaticallyImplyLeading: false,
               trailing: _ThemeToggle(),
             ),
-            Expanded(
-              child: ListView(children: items),
-            ),
+            Expanded(child: ListView(children: items)),
           ],
         ),
       ),
@@ -99,7 +97,8 @@ class _ThemeToggle extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeMode,
       builder: (context, mode, _) {
-        final isDark = mode == ThemeMode.dark ||
+        final isDark =
+            mode == ThemeMode.dark ||
             (mode == ThemeMode.system &&
                 MediaQuery.platformBrightnessOf(context) == Brightness.dark);
         return Button.icon(
@@ -107,8 +106,7 @@ class _ThemeToggle extends StatelessWidget {
           variant: ButtonVariant.ghost,
           size: ButtonSize.medium,
           onPressed: () {
-            themeMode.value =
-                isDark ? ThemeMode.light : ThemeMode.dark;
+            themeMode.value = isDark ? ThemeMode.light : ThemeMode.dark;
           },
         );
       },

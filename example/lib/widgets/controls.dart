@@ -54,6 +54,8 @@ class SelectControl<T> extends StatelessWidget {
               .toList(),
           onChanged: onChanged,
           size: SelectSize.small,
+          trailingIcon: LucideIcons.chevronDown,
+          checkIcon: LucideIcons.check,
         ),
       ],
     );
@@ -79,7 +81,9 @@ class SliderControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWhole = value == value.roundToDouble();
-    final display = isWhole ? value.toInt().toString() : value.toStringAsFixed(2);
+    final display = isWhole
+        ? value.toInt().toString()
+        : value.toStringAsFixed(2);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -87,7 +91,12 @@ class SliderControl extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(label, style: context.typography.p2),
-            Text(display, style: context.typography.p2.copyWith(color: context.colorScheme.textSubtle)),
+            Text(
+              display,
+              style: context.typography.p2.copyWith(
+                color: context.colorScheme.textSubtle,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 4),

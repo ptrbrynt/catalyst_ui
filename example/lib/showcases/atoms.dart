@@ -32,13 +32,29 @@ class _AvatarShowcaseState extends State<AvatarShowcase> {
   Widget build(BuildContext context) {
     return ShowcasePage(
       title: 'Avatar',
-      preview: Avatar(name: 'Jane Smith', size: _size, status: _status, shape: _shape),
+      preview: Avatar(
+        name: 'Jane Smith',
+        size: _size,
+        status: _status,
+        shape: _shape,
+      ),
       controls: [
-        SliderControl(label: 'Size', value: _size, min: 24, max: 80, onChanged: (v) => setState(() => _size = v)),
+        SliderControl(
+          label: 'Size',
+          value: _size,
+          min: 24,
+          max: 80,
+          onChanged: (v) => setState(() => _size = v),
+        ),
         SelectControl<String>(
           label: 'Status',
           value: _statusKey,
-          options: const [('none', 'None'), ('online', 'Online'), ('busy', 'Busy'), ('away', 'Away')],
+          options: const [
+            ('none', 'None'),
+            ('online', 'Online'),
+            ('busy', 'Busy'),
+            ('away', 'Away'),
+          ],
           onChanged: (v) => setState(() => _statusKey = v),
         ),
         SelectControl<String>(
@@ -70,7 +86,13 @@ class _AvatarStackShowcaseState extends State<AvatarStackShowcase> {
     _ => null,
   };
 
-  static const _names = ['Alice Brown', 'Bob Smith', 'Carol White', 'Dan Jones', 'Eve Davis'];
+  static const _names = [
+    'Alice Brown',
+    'Bob Smith',
+    'Carol White',
+    'Dan Jones',
+    'Eve Davis',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +103,13 @@ class _AvatarStackShowcaseState extends State<AvatarStackShowcase> {
         maxCount: _maxCount,
       ),
       controls: [
-        IntControl(label: 'Count', value: _count, min: 2, max: 5, onChanged: (v) => setState(() => _count = v)),
+        IntControl(
+          label: 'Count',
+          value: _count,
+          min: 2,
+          max: 5,
+          onChanged: (v) => setState(() => _count = v),
+        ),
         SelectControl<String>(
           label: 'Max count',
           value: _maxKey,
@@ -133,10 +161,18 @@ class _BadgeShowcaseState extends State<BadgeShowcase> {
         SelectControl<BadgeSize>(
           label: 'Size',
           value: _size,
-          options: const [(BadgeSize.small, 'Small'), (BadgeSize.medium, 'Medium'), (BadgeSize.large, 'Large')],
+          options: const [
+            (BadgeSize.small, 'Small'),
+            (BadgeSize.medium, 'Medium'),
+            (BadgeSize.large, 'Large'),
+          ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Show dot', value: _showDot, onChanged: (v) => setState(() => _showDot = v)),
+        BoolControl(
+          label: 'Show dot',
+          value: _showDot,
+          onChanged: (v) => setState(() => _showDot = v),
+        ),
       ],
     );
   }
@@ -200,12 +236,36 @@ class _ButtonShowcaseState extends State<ButtonShowcase> {
           ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Loading', value: _loading, onChanged: (v) => setState(() => _loading = v)),
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
-        BoolControl(label: 'Full width', value: _fullWidth, onChanged: (v) => setState(() => _fullWidth = v)),
-        BoolControl(label: 'Elevated', value: _elevated, onChanged: (v) => setState(() => _elevated = v)),
-        BoolControl(label: 'Leading icon', value: _leadingIcon, onChanged: (v) => setState(() => _leadingIcon = v)),
-        BoolControl(label: 'Trailing icon', value: _trailingIcon, onChanged: (v) => setState(() => _trailingIcon = v)),
+        BoolControl(
+          label: 'Loading',
+          value: _loading,
+          onChanged: (v) => setState(() => _loading = v),
+        ),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
+        BoolControl(
+          label: 'Full width',
+          value: _fullWidth,
+          onChanged: (v) => setState(() => _fullWidth = v),
+        ),
+        BoolControl(
+          label: 'Elevated',
+          value: _elevated,
+          onChanged: (v) => setState(() => _elevated = v),
+        ),
+        BoolControl(
+          label: 'Leading icon',
+          value: _leadingIcon,
+          onChanged: (v) => setState(() => _leadingIcon = v),
+        ),
+        BoolControl(
+          label: 'Trailing icon',
+          value: _trailingIcon,
+          onChanged: (v) => setState(() => _trailingIcon = v),
+        ),
       ],
     );
   }
@@ -233,18 +293,37 @@ class _CheckboxShowcaseState extends State<CheckboxShowcase> {
         value: _value,
         size: _size,
         label: _hasLabel ? const Text('Accept terms and conditions') : null,
-        onChanged: _disabled ? null : (v) => setState(() => _value = v ?? false),
+        onChanged: _disabled
+            ? null
+            : (v) => setState(() => _value = v ?? false),
+        checkIcon: LucideIcons.check,
       ),
       controls: [
-        BoolControl(label: 'Checked', value: _value, onChanged: (v) => setState(() => _value = v)),
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
+        BoolControl(
+          label: 'Checked',
+          value: _value,
+          onChanged: (v) => setState(() => _value = v),
+        ),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
         SelectControl<CheckboxSize>(
           label: 'Size',
           value: _size,
-          options: const [(CheckboxSize.small, 'Small'), (CheckboxSize.medium, 'Medium'), (CheckboxSize.large, 'Large')],
+          options: const [
+            (CheckboxSize.small, 'Small'),
+            (CheckboxSize.medium, 'Medium'),
+            (CheckboxSize.large, 'Large'),
+          ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Has label', value: _hasLabel, onChanged: (v) => setState(() => _hasLabel = v)),
+        BoolControl(
+          label: 'Has label',
+          value: _hasLabel,
+          onChanged: (v) => setState(() => _hasLabel = v),
+        ),
       ],
     );
   }
@@ -276,16 +355,19 @@ class _ChipShowcaseState extends State<ChipShowcase> {
             isSelected: _selected1,
             onTap: () => setState(() => _selected1 = !_selected1),
             child: const Text('Design'),
+            checkIcon: LucideIcons.check,
           ),
           Chip(
             isSelected: _selected2,
             onTap: () => setState(() => _selected2 = !_selected2),
             child: const Text('Engineering'),
+            checkIcon: LucideIcons.check,
           ),
           Chip(
             isSelected: _selected3,
             onTap: () => setState(() => _selected3 = !_selected3),
             child: const Text('Product'),
+            checkIcon: LucideIcons.check,
           ),
         ],
       ),
@@ -310,10 +392,7 @@ class _DividerShowcaseState extends State<DividerShowcase> {
   Widget build(BuildContext context) {
     Widget divider;
     if (_vertical) {
-      divider = SizedBox(
-        height: 60,
-        child: Divider.vertical(),
-      );
+      divider = SizedBox(height: 60, child: Divider.vertical());
     } else {
       divider = SizedBox(
         width: 240,
@@ -325,9 +404,17 @@ class _DividerShowcaseState extends State<DividerShowcase> {
       title: 'Divider',
       preview: divider,
       controls: [
-        BoolControl(label: 'Vertical', value: _vertical, onChanged: (v) => setState(() => _vertical = v)),
+        BoolControl(
+          label: 'Vertical',
+          value: _vertical,
+          onChanged: (v) => setState(() => _vertical = v),
+        ),
         if (!_vertical)
-          BoolControl(label: 'Has label', value: _hasLabel, onChanged: (v) => setState(() => _hasLabel = v)),
+          BoolControl(
+            label: 'Has label',
+            value: _hasLabel,
+            onChanged: (v) => setState(() => _hasLabel = v),
+          ),
       ],
     );
   }
@@ -359,11 +446,19 @@ class _ProgressBarShowcaseState extends State<ProgressBarShowcase> {
           tone: _tone,
           size: _size,
           title: _hasTitle ? const Text('Loading…') : null,
-          valueLabel: _hasValueLabel ? Text('${(_value * 100).round()}%') : null,
+          valueLabel: _hasValueLabel
+              ? Text('${(_value * 100).round()}%')
+              : null,
         ),
       ),
       controls: [
-        SliderControl(label: 'Value', value: _value, min: 0, max: 1, onChanged: (v) => setState(() => _value = v)),
+        SliderControl(
+          label: 'Value',
+          value: _value,
+          min: 0,
+          max: 1,
+          onChanged: (v) => setState(() => _value = v),
+        ),
         SelectControl<ProgressBarTone>(
           label: 'Tone',
           value: _tone,
@@ -385,8 +480,16 @@ class _ProgressBarShowcaseState extends State<ProgressBarShowcase> {
           ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Has title', value: _hasTitle, onChanged: (v) => setState(() => _hasTitle = v)),
-        BoolControl(label: 'Has value label', value: _hasValueLabel, onChanged: (v) => setState(() => _hasValueLabel = v)),
+        BoolControl(
+          label: 'Has title',
+          value: _hasTitle,
+          onChanged: (v) => setState(() => _hasTitle = v),
+        ),
+        BoolControl(
+          label: 'Has value label',
+          value: _hasValueLabel,
+          onChanged: (v) => setState(() => _hasValueLabel = v),
+        ),
       ],
     );
   }
@@ -437,14 +540,26 @@ class _RadioShowcaseState extends State<RadioShowcase> {
         ],
       ),
       controls: [
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
         SelectControl<RadioSize>(
           label: 'Size',
           value: _size,
-          options: const [(RadioSize.small, 'Small'), (RadioSize.medium, 'Medium'), (RadioSize.large, 'Large')],
+          options: const [
+            (RadioSize.small, 'Small'),
+            (RadioSize.medium, 'Medium'),
+            (RadioSize.large, 'Large'),
+          ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Has label', value: _hasLabel, onChanged: (v) => setState(() => _hasLabel = v)),
+        BoolControl(
+          label: 'Has label',
+          value: _hasLabel,
+          onChanged: (v) => setState(() => _hasLabel = v),
+        ),
       ],
     );
   }
@@ -479,12 +594,18 @@ class _SliderShowcaseState extends State<SliderShowcase> {
           const SizedBox(height: 8),
           Text(
             _value.toStringAsFixed(2),
-            style: context.typography.p3.copyWith(color: context.colorScheme.textSubtle),
+            style: context.typography.p3.copyWith(
+              color: context.colorScheme.textSubtle,
+            ),
           ),
         ],
       ),
       controls: [
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
       ],
     );
   }
@@ -508,7 +629,12 @@ class SpinnerShowcase extends StatelessWidget {
             children: [
               Spinner.small(),
               const SizedBox(height: 8),
-              Text('Small', style: context.typography.caption.copyWith(color: context.colorScheme.textSubtle)),
+              Text(
+                'Small',
+                style: context.typography.caption.copyWith(
+                  color: context.colorScheme.textSubtle,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 28),
@@ -517,7 +643,12 @@ class SpinnerShowcase extends StatelessWidget {
             children: [
               Spinner(),
               const SizedBox(height: 8),
-              Text('Default', style: context.typography.caption.copyWith(color: context.colorScheme.textSubtle)),
+              Text(
+                'Default',
+                style: context.typography.caption.copyWith(
+                  color: context.colorScheme.textSubtle,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 28),
@@ -526,7 +657,12 @@ class SpinnerShowcase extends StatelessWidget {
             children: [
               Spinner.large(),
               const SizedBox(height: 8),
-              Text('Large', style: context.typography.caption.copyWith(color: context.colorScheme.textSubtle)),
+              Text(
+                'Large',
+                style: context.typography.caption.copyWith(
+                  color: context.colorScheme.textSubtle,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 28),
@@ -535,7 +671,12 @@ class SpinnerShowcase extends StatelessWidget {
             children: [
               Spinner.extraLarge(),
               const SizedBox(height: 8),
-              Text('XL', style: context.typography.caption.copyWith(color: context.colorScheme.textSubtle)),
+              Text(
+                'XL',
+                style: context.typography.caption.copyWith(
+                  color: context.colorScheme.textSubtle,
+                ),
+              ),
             ],
           ),
         ],
@@ -583,7 +724,11 @@ class _StatusDotShowcaseState extends State<StatusDotShowcase> {
           ],
           onChanged: (v) => setState(() => _toneKey = v),
         ),
-        BoolControl(label: 'Pulse', value: _pulse, onChanged: (v) => setState(() => _pulse = v)),
+        BoolControl(
+          label: 'Pulse',
+          value: _pulse,
+          onChanged: (v) => setState(() => _pulse = v),
+        ),
       ],
     );
   }
@@ -612,12 +757,24 @@ class _SwitchShowcaseState extends State<SwitchShowcase> {
         onChanged: _disabled ? null : (v) => setState(() => _value = v),
       ),
       controls: [
-        BoolControl(label: 'On', value: _value, onChanged: (v) => setState(() => _value = v)),
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
+        BoolControl(
+          label: 'On',
+          value: _value,
+          onChanged: (v) => setState(() => _value = v),
+        ),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
         SelectControl<SwitchSize>(
           label: 'Size',
           value: _size,
-          options: const [(SwitchSize.small, 'Small'), (SwitchSize.medium, 'Medium'), (SwitchSize.large, 'Large')],
+          options: const [
+            (SwitchSize.small, 'Small'),
+            (SwitchSize.medium, 'Medium'),
+            (SwitchSize.large, 'Large'),
+          ],
           onChanged: (v) => setState(() => _size = v),
         ),
       ],
