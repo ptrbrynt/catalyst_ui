@@ -89,7 +89,7 @@ class StatCard extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 220),
       child: Card(
-        tone: primary ? CardTone.brand : CardTone.subtle,
+        tone: primary ? CardTone.brand : CardTone.surface,
         padding: const EdgeInsets.all(Spacing.s4),
         child: IconTheme(
           data: IconThemeData(color: iconColor, size: 18),
