@@ -8,7 +8,7 @@ import '../../tokens/spacing.dart';
 import '../atoms/badge.dart';
 
 /// A tappable tile with a circular icon, title, optional subtitle, and
-/// optional badge and duration metadata.
+/// optional badge.
 ///
 /// Commonly used to represent a navigable action, appointment, or task.
 ///
@@ -29,7 +29,7 @@ class ActionTile extends StatelessWidget {
     required this.onTap,
     this.subtitle,
     this.trailing = true,
-    this.duration,
+
     this.badge,
     super.key,
   });
@@ -48,9 +48,6 @@ class ActionTile extends StatelessWidget {
 
   /// Whether to show a chevron arrow at the trailing edge.
   final bool trailing;
-
-  /// An optional duration label shown below [subtitle].
-  final Widget? duration;
 
   /// An optional [Badge] shown next to [title].
   final Badge? badge;
@@ -148,24 +145,6 @@ class ActionTile extends StatelessWidget {
             ),
             child: subtitle!,
           ),
-        if (duration != null) ...[
-          const SizedBox(height: 2),
-          DefaultTextStyle(
-            style: TextStyle(
-              fontFamily: typo.fontFamily,
-              fontWeight: FontWeight.w500,
-              fontSize: 11,
-              color: cs.textSubtle,
-            ),
-            child: Row(
-              spacing: 4,
-              children: [
-                const Icon(LucideIcons.clock, size: 12),
-                duration!,
-              ],
-            ),
-          ),
-        ],
       ],
     );
   }

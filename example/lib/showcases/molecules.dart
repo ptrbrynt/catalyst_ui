@@ -15,7 +15,6 @@ class ActionTileShowcase extends StatefulWidget {
 
 class _ActionTileShowcaseState extends State<ActionTileShowcase> {
   bool _hasSubtitle = true;
-  bool _hasDuration = false;
   bool _hasBadge = false;
   bool _trailing = true;
 
@@ -28,16 +27,26 @@ class _ActionTileShowcaseState extends State<ActionTileShowcase> {
         iconBackgroundColor: const Color(0xFF6366F1),
         title: const Text('Introduction to Design'),
         subtitle: _hasSubtitle ? const Text('Learn the basics of UI/UX') : null,
-        duration: _hasDuration ? const Text('12 min') : null,
         badge: _hasBadge ? const Badge(child: Text('New')) : null,
         trailing: _trailing,
         onTap: () {},
       ),
       controls: [
-        BoolControl(label: 'Subtitle', value: _hasSubtitle, onChanged: (v) => setState(() => _hasSubtitle = v)),
-        BoolControl(label: 'Duration', value: _hasDuration, onChanged: (v) => setState(() => _hasDuration = v)),
-        BoolControl(label: 'Badge', value: _hasBadge, onChanged: (v) => setState(() => _hasBadge = v)),
-        BoolControl(label: 'Trailing chevron', value: _trailing, onChanged: (v) => setState(() => _trailing = v)),
+        BoolControl(
+          label: 'Subtitle',
+          value: _hasSubtitle,
+          onChanged: (v) => setState(() => _hasSubtitle = v),
+        ),
+        BoolControl(
+          label: 'Badge',
+          value: _hasBadge,
+          onChanged: (v) => setState(() => _hasBadge = v),
+        ),
+        BoolControl(
+          label: 'Trailing chevron',
+          value: _trailing,
+          onChanged: (v) => setState(() => _trailing = v),
+        ),
       ],
     );
   }
@@ -63,28 +72,36 @@ class _AlertShowcaseState extends State<AlertShowcase> {
   Widget build(BuildContext context) {
     return ShowcasePage(
       title: 'Alert',
-      preview: _visible
-          ? Alert(
-              tone: _tone,
-              title: _hasTitle ? const Text('Heads up') : null,
-              children: _hasBody
-                  ? const [Text('This is an important message that requires your attention.')]
-                  : null,
-              action: _hasAction
-                  ? Button(
-                      label: const Text('Learn more'),
-                      variant: ButtonVariant.secondary,
-                      size: ButtonSize.small,
-                      onPressed: () {},
-                    )
-                  : null,
-              onDismiss: _hasDismiss ? () => setState(() => _visible = false) : null,
-            )
-          : Button(
-              label: const Text('Reset'),
-              variant: ButtonVariant.secondary,
-              onPressed: () => setState(() => _visible = true),
-            ),
+      preview:
+          _visible
+              ? Alert(
+                tone: _tone,
+                title: _hasTitle ? const Text('Heads up') : null,
+                children:
+                    _hasBody
+                        ? const [
+                          Text(
+                            'This is an important message that requires your attention.',
+                          ),
+                        ]
+                        : null,
+                action:
+                    _hasAction
+                        ? Button(
+                          label: const Text('Learn more'),
+                          variant: ButtonVariant.secondary,
+                          size: ButtonSize.small,
+                          onPressed: () {},
+                        )
+                        : null,
+                onDismiss:
+                    _hasDismiss ? () => setState(() => _visible = false) : null,
+              )
+              : Button(
+                label: const Text('Reset'),
+                variant: ButtonVariant.secondary,
+                onPressed: () => setState(() => _visible = true),
+              ),
       controls: [
         SelectControl<AlertTone>(
           label: 'Tone',
@@ -97,10 +114,26 @@ class _AlertShowcaseState extends State<AlertShowcase> {
           ],
           onChanged: (v) => setState(() => _tone = v),
         ),
-        BoolControl(label: 'Has title', value: _hasTitle, onChanged: (v) => setState(() => _hasTitle = v)),
-        BoolControl(label: 'Has body', value: _hasBody, onChanged: (v) => setState(() => _hasBody = v)),
-        BoolControl(label: 'Has action', value: _hasAction, onChanged: (v) => setState(() => _hasAction = v)),
-        BoolControl(label: 'Dismissible', value: _hasDismiss, onChanged: (v) => setState(() => _hasDismiss = v)),
+        BoolControl(
+          label: 'Has title',
+          value: _hasTitle,
+          onChanged: (v) => setState(() => _hasTitle = v),
+        ),
+        BoolControl(
+          label: 'Has body',
+          value: _hasBody,
+          onChanged: (v) => setState(() => _hasBody = v),
+        ),
+        BoolControl(
+          label: 'Has action',
+          value: _hasAction,
+          onChanged: (v) => setState(() => _hasAction = v),
+        ),
+        BoolControl(
+          label: 'Dismissible',
+          value: _hasDismiss,
+          onChanged: (v) => setState(() => _hasDismiss = v),
+        ),
       ],
     );
   }
@@ -117,7 +150,13 @@ class BreadcrumbShowcase extends StatefulWidget {
 class _BreadcrumbShowcaseState extends State<BreadcrumbShowcase> {
   int _depth = 3;
 
-  static const _segments = ['Home', 'Library', 'Documents', 'Reports', 'Q4 2024'];
+  static const _segments = [
+    'Home',
+    'Library',
+    'Documents',
+    'Reports',
+    'Q4 2024',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +167,13 @@ class _BreadcrumbShowcaseState extends State<BreadcrumbShowcase> {
         onItemTapped: (_) {},
       ),
       controls: [
-        IntControl(label: 'Depth', value: _depth, min: 2, max: 5, onChanged: (v) => setState(() => _depth = v)),
+        IntControl(
+          label: 'Depth',
+          value: _depth,
+          min: 2,
+          max: 5,
+          onChanged: (v) => setState(() => _depth = v),
+        ),
       ],
     );
   }
@@ -164,7 +209,9 @@ class _CardShowcaseState extends State<CardShowcase> {
               const SizedBox(height: 4),
               Text(
                 'A flexible container for displaying grouped content.',
-                style: context.typography.p2.copyWith(color: context.colorScheme.textSubtle),
+                style: context.typography.p2.copyWith(
+                  color: context.colorScheme.textSubtle,
+                ),
               ),
             ],
           ),
@@ -182,7 +229,11 @@ class _CardShowcaseState extends State<CardShowcase> {
           ],
           onChanged: (v) => setState(() => _tone = v),
         ),
-        BoolControl(label: 'Interactive', value: _interactive, onChanged: (v) => setState(() => _interactive = v)),
+        BoolControl(
+          label: 'Interactive',
+          value: _interactive,
+          onChanged: (v) => setState(() => _interactive = v),
+        ),
       ],
     );
   }
@@ -216,7 +267,10 @@ class _ListItemShowcaseState extends State<ListItemShowcase> {
               title: const Text('First item'),
               leading: _hasLeading ? const Icon(LucideIcons.inbox) : null,
               subtitle: _hasSubtitle ? const Text('Secondary line') : null,
-              trailing: _hasTrailing ? const Icon(LucideIcons.chevronRight, size: 16) : null,
+              trailing:
+                  _hasTrailing
+                      ? const Icon(LucideIcons.chevronRight, size: 16)
+                      : null,
               divider: _hasDivider,
               onTap: _tappable ? () {} : null,
             ),
@@ -224,7 +278,10 @@ class _ListItemShowcaseState extends State<ListItemShowcase> {
               title: const Text('Second item'),
               leading: _hasLeading ? const Icon(LucideIcons.star) : null,
               subtitle: _hasSubtitle ? const Text('Another line') : null,
-              trailing: _hasTrailing ? const Icon(LucideIcons.chevronRight, size: 16) : null,
+              trailing:
+                  _hasTrailing
+                      ? const Icon(LucideIcons.chevronRight, size: 16)
+                      : null,
               divider: false,
               onTap: _tappable ? () {} : null,
             ),
@@ -232,11 +289,31 @@ class _ListItemShowcaseState extends State<ListItemShowcase> {
         ),
       ),
       controls: [
-        BoolControl(label: 'Leading icon', value: _hasLeading, onChanged: (v) => setState(() => _hasLeading = v)),
-        BoolControl(label: 'Subtitle', value: _hasSubtitle, onChanged: (v) => setState(() => _hasSubtitle = v)),
-        BoolControl(label: 'Trailing icon', value: _hasTrailing, onChanged: (v) => setState(() => _hasTrailing = v)),
-        BoolControl(label: 'Divider', value: _hasDivider, onChanged: (v) => setState(() => _hasDivider = v)),
-        BoolControl(label: 'Tappable', value: _tappable, onChanged: (v) => setState(() => _tappable = v)),
+        BoolControl(
+          label: 'Leading icon',
+          value: _hasLeading,
+          onChanged: (v) => setState(() => _hasLeading = v),
+        ),
+        BoolControl(
+          label: 'Subtitle',
+          value: _hasSubtitle,
+          onChanged: (v) => setState(() => _hasSubtitle = v),
+        ),
+        BoolControl(
+          label: 'Trailing icon',
+          value: _hasTrailing,
+          onChanged: (v) => setState(() => _hasTrailing = v),
+        ),
+        BoolControl(
+          label: 'Divider',
+          value: _hasDivider,
+          onChanged: (v) => setState(() => _hasDivider = v),
+        ),
+        BoolControl(
+          label: 'Tappable',
+          value: _tappable,
+          onChanged: (v) => setState(() => _tappable = v),
+        ),
       ],
     );
   }
@@ -269,10 +346,11 @@ class _PaginationShowcaseState extends State<PaginationShowcase> {
           value: _pageCount + 1,
           min: 2,
           max: 20,
-          onChanged: (v) => setState(() {
-            _pageCount = v - 1;
-            if (_page > _pageCount) _page = _pageCount;
-          }),
+          onChanged:
+              (v) => setState(() {
+                _pageCount = v - 1;
+                if (_page > _pageCount) _page = _pageCount;
+              }),
         ),
       ],
     );
@@ -284,7 +362,8 @@ class _PaginationShowcaseState extends State<PaginationShowcase> {
 class SegmentedControlShowcase extends StatefulWidget {
   const SegmentedControlShowcase({super.key});
   @override
-  State<SegmentedControlShowcase> createState() => _SegmentedControlShowcaseState();
+  State<SegmentedControlShowcase> createState() =>
+      _SegmentedControlShowcaseState();
 }
 
 class _SegmentedControlShowcaseState extends State<SegmentedControlShowcase> {
@@ -309,7 +388,11 @@ class _SegmentedControlShowcaseState extends State<SegmentedControlShowcase> {
         onChanged: (v) => setState(() => _value = v),
       ),
       controls: [
-        BoolControl(label: 'Full width', value: _fullWidth, onChanged: (v) => setState(() => _fullWidth = v)),
+        BoolControl(
+          label: 'Full width',
+          value: _fullWidth,
+          onChanged: (v) => setState(() => _fullWidth = v),
+        ),
       ],
     );
   }
@@ -359,13 +442,33 @@ class _SelectShowcaseState extends State<SelectShowcase> {
         SelectControl<SelectSize>(
           label: 'Size',
           value: _size,
-          options: const [(SelectSize.small, 'Small'), (SelectSize.medium, 'Medium'), (SelectSize.large, 'Large')],
+          options: const [
+            (SelectSize.small, 'Small'),
+            (SelectSize.medium, 'Medium'),
+            (SelectSize.large, 'Large'),
+          ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
-        BoolControl(label: 'Has label', value: _hasLabel, onChanged: (v) => setState(() => _hasLabel = v)),
-        BoolControl(label: 'Has helper', value: _hasHelper, onChanged: (v) => setState(() => _hasHelper = v)),
-        BoolControl(label: 'Show error', value: _hasError, onChanged: (v) => setState(() => _hasError = v)),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
+        BoolControl(
+          label: 'Has label',
+          value: _hasLabel,
+          onChanged: (v) => setState(() => _hasLabel = v),
+        ),
+        BoolControl(
+          label: 'Has helper',
+          value: _hasHelper,
+          onChanged: (v) => setState(() => _hasHelper = v),
+        ),
+        BoolControl(
+          label: 'Show error',
+          value: _hasError,
+          onChanged: (v) => setState(() => _hasError = v),
+        ),
       ],
     );
   }
@@ -395,25 +498,28 @@ class _SnackbarShowcaseState extends State<SnackbarShowcase> {
             message: const Text('Your changes have been saved'),
             tone: _tone,
             icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
-            action: _hasAction
-                ? SnackbarAction(label: 'Undo', onPressed: () {})
-                : null,
+            action:
+                _hasAction
+                    ? SnackbarAction(label: 'Undo', onPressed: () {})
+                    : null,
           ),
           const SizedBox(height: 16),
           Button(
             label: const Text('Show as toast'),
             variant: ButtonVariant.secondary,
             size: ButtonSize.small,
-            onPressed: () => context.showSnackbar(
-              Snackbar(
-                message: const Text('Your changes have been saved'),
-                tone: _tone,
-                icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
-                action: _hasAction
-                    ? SnackbarAction(label: 'Undo', onPressed: () {})
-                    : null,
-              ),
-            ),
+            onPressed:
+                () => context.showSnackbar(
+                  Snackbar(
+                    message: const Text('Your changes have been saved'),
+                    tone: _tone,
+                    icon: _hasIcon ? const Icon(LucideIcons.circleCheck) : null,
+                    action:
+                        _hasAction
+                            ? SnackbarAction(label: 'Undo', onPressed: () {})
+                            : null,
+                  ),
+                ),
           ),
         ],
       ),
@@ -428,8 +534,16 @@ class _SnackbarShowcaseState extends State<SnackbarShowcase> {
           ],
           onChanged: (v) => setState(() => _tone = v),
         ),
-        BoolControl(label: 'Has action', value: _hasAction, onChanged: (v) => setState(() => _hasAction = v)),
-        BoolControl(label: 'Has icon', value: _hasIcon, onChanged: (v) => setState(() => _hasIcon = v)),
+        BoolControl(
+          label: 'Has action',
+          value: _hasAction,
+          onChanged: (v) => setState(() => _hasAction = v),
+        ),
+        BoolControl(
+          label: 'Has icon',
+          value: _hasIcon,
+          onChanged: (v) => setState(() => _hasIcon = v),
+        ),
       ],
     );
   }
@@ -474,7 +588,11 @@ class _StatCardShowcaseState extends State<StatCardShowcase> {
           ],
           onChanged: (v) => setState(() => _delta = v),
         ),
-        BoolControl(label: 'Primary', value: _primary, onChanged: (v) => setState(() => _primary = v)),
+        BoolControl(
+          label: 'Primary',
+          value: _primary,
+          onChanged: (v) => setState(() => _primary = v),
+        ),
       ],
     );
   }
@@ -492,7 +610,13 @@ class _StepperShowcaseState extends State<StepperShowcase> {
   int _current = 1;
   int _stepCount = 4;
 
-  static const _allSteps = ['Account', 'Profile', 'Preferences', 'Review', 'Confirm'];
+  static const _allSteps = [
+    'Account',
+    'Profile',
+    'Preferences',
+    'Review',
+    'Confirm',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -513,13 +637,19 @@ class _StepperShowcaseState extends State<StepperShowcase> {
                 label: const Text('Back'),
                 variant: ButtonVariant.secondary,
                 size: ButtonSize.small,
-                onPressed: current > 0 ? () => setState(() => _current = current - 1) : null,
+                onPressed:
+                    current > 0
+                        ? () => setState(() => _current = current - 1)
+                        : null,
               ),
               const SizedBox(width: 8),
               Button(
                 label: const Text('Next'),
                 size: ButtonSize.small,
-                onPressed: current < _stepCount - 1 ? () => setState(() => _current = current + 1) : null,
+                onPressed:
+                    current < _stepCount - 1
+                        ? () => setState(() => _current = current + 1)
+                        : null,
               ),
             ],
           ),
@@ -531,10 +661,11 @@ class _StepperShowcaseState extends State<StepperShowcase> {
           value: _stepCount,
           min: 2,
           max: 5,
-          onChanged: (v) => setState(() {
-            _stepCount = v;
-            if (_current >= v) _current = v - 1;
-          }),
+          onChanged:
+              (v) => setState(() {
+                _stepCount = v;
+                if (_current >= v) _current = v - 1;
+              }),
         ),
       ],
     );
@@ -561,14 +692,26 @@ class _TabsShowcaseState extends State<TabsShowcase> {
         value: _value,
         options: [
           const TabOption(value: 'all', label: 'All'),
-          TabOption(value: 'active', label: 'Active', badge: _hasBadge ? '3' : null),
-          TabOption(value: 'draft', label: 'Draft', badge: _hasBadge ? '12' : null),
+          TabOption(
+            value: 'active',
+            label: 'Active',
+            badge: _hasBadge ? '3' : null,
+          ),
+          TabOption(
+            value: 'draft',
+            label: 'Draft',
+            badge: _hasBadge ? '12' : null,
+          ),
           const TabOption(value: 'archived', label: 'Archived'),
         ],
         onChanged: (v) => setState(() => _value = v),
       ),
       controls: [
-        BoolControl(label: 'Show badges', value: _hasBadge, onChanged: (v) => setState(() => _hasBadge = v)),
+        BoolControl(
+          label: 'Show badges',
+          value: _hasBadge,
+          onChanged: (v) => setState(() => _hasBadge = v),
+        ),
       ],
     );
   }
@@ -625,15 +768,51 @@ class _TextFieldShowcaseState extends State<TextFieldShowcase> {
           ],
           onChanged: (v) => setState(() => _size = v),
         ),
-        BoolControl(label: 'Disabled', value: _disabled, onChanged: (v) => setState(() => _disabled = v)),
-        BoolControl(label: 'Has label', value: _hasLabel, onChanged: (v) => setState(() => _hasLabel = v)),
-        BoolControl(label: 'Has helper', value: _hasHelper, onChanged: (v) => setState(() => _hasHelper = v)),
-        BoolControl(label: 'Show error', value: _hasError, onChanged: (v) => setState(() => _hasError = v)),
-        BoolControl(label: 'Required', value: _required, onChanged: (v) => setState(() => _required = v)),
-        BoolControl(label: 'Obscure text', value: _obscureText, onChanged: (v) => setState(() => _obscureText = v)),
-        BoolControl(label: 'Leading icon', value: _hasLeading, onChanged: (v) => setState(() => _hasLeading = v)),
-        BoolControl(label: 'Trailing icon', value: _hasTrailing, onChanged: (v) => setState(() => _hasTrailing = v)),
-        BoolControl(label: 'Multi-line', value: _multiLine, onChanged: (v) => setState(() => _multiLine = v)),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
+        BoolControl(
+          label: 'Has label',
+          value: _hasLabel,
+          onChanged: (v) => setState(() => _hasLabel = v),
+        ),
+        BoolControl(
+          label: 'Has helper',
+          value: _hasHelper,
+          onChanged: (v) => setState(() => _hasHelper = v),
+        ),
+        BoolControl(
+          label: 'Show error',
+          value: _hasError,
+          onChanged: (v) => setState(() => _hasError = v),
+        ),
+        BoolControl(
+          label: 'Required',
+          value: _required,
+          onChanged: (v) => setState(() => _required = v),
+        ),
+        BoolControl(
+          label: 'Obscure text',
+          value: _obscureText,
+          onChanged: (v) => setState(() => _obscureText = v),
+        ),
+        BoolControl(
+          label: 'Leading icon',
+          value: _hasLeading,
+          onChanged: (v) => setState(() => _hasLeading = v),
+        ),
+        BoolControl(
+          label: 'Trailing icon',
+          value: _hasTrailing,
+          onChanged: (v) => setState(() => _hasTrailing = v),
+        ),
+        BoolControl(
+          label: 'Multi-line',
+          value: _multiLine,
+          onChanged: (v) => setState(() => _multiLine = v),
+        ),
       ],
     );
   }
@@ -667,7 +846,10 @@ class _TooltipShowcaseState extends State<TooltipShowcase> {
         SelectControl<TooltipSide>(
           label: 'Side',
           value: _side,
-          options: const [(TooltipSide.top, 'Top'), (TooltipSide.bottom, 'Bottom')],
+          options: const [
+            (TooltipSide.top, 'Top'),
+            (TooltipSide.bottom, 'Bottom'),
+          ],
           onChanged: (v) => setState(() => _side = v),
         ),
       ],
@@ -703,7 +885,11 @@ class _ValueRowShowcaseState extends State<ValueRowShowcase> {
         ),
       ),
       controls: [
-        BoolControl(label: 'Dividers', value: _divider, onChanged: (v) => setState(() => _divider = v)),
+        BoolControl(
+          label: 'Dividers',
+          value: _divider,
+          onChanged: (v) => setState(() => _divider = v),
+        ),
       ],
     );
   }
