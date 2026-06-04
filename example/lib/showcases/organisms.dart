@@ -488,7 +488,7 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    return ShowcasePage(title: 'RadioGroup', preview: _panel());
+    return ShowcasePage(title: 'RadioGroup', preview: _cards());
   }
 
   Widget _panel() {
@@ -501,7 +501,7 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
       },
       options: <String>['Email', 'Phone (SMS)', 'Push notification']
           .map(
-            (i) => RadioGroupSimpleOptionWithDescription(
+            (i) => RadioGroupOption(
               value: i,
               label: Text(i),
               description: Text('Some more information'),
@@ -521,8 +521,8 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
           selectedValue = value;
         });
       },
-      options: [
-        RadioGroupTableRowOption(
+      tableOptions: [
+        RadioGroupTableOption(
           value: 'Startup',
           columns: [
             Text('Startup'),
@@ -530,7 +530,7 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
             Text('Up to 5 active job postings'),
           ],
         ),
-        RadioGroupTableRowOption(
+        RadioGroupTableOption(
           value: 'Business',
           columns: [
             Text('Business'),
@@ -538,13 +538,39 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
             Text('Up to 50 active job postings'),
           ],
         ),
-        RadioGroupTableRowOption(
+        RadioGroupTableOption(
           value: 'Enterprise',
           columns: [
             Text('Enterprise'),
             Text('\$249 / mo'),
             Text('Up to 1000 active job postings'),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _cards() {
+    return RadioGroup<String>.cards(
+      stacked: false,
+      value: selectedValue,
+      onOptionSelected: (value) {
+        setState(() {
+          selectedValue = value;
+        });
+      },
+      cardOptions: [
+        RadioGroupCardOption(
+          value: 'Startup',
+          childBuilder: (context, isSelected) => Text('Startup'),
+        ),
+        RadioGroupCardOption(
+          value: 'Business',
+          childBuilder: (context, isSelected) => Text('Business'),
+        ),
+        RadioGroupCardOption(
+          value: 'Enterprise',
+          childBuilder: (context, isSelected) => Text('Enterprise'),
         ),
       ],
     );
@@ -560,7 +586,7 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
       },
       options: <String>['Email', 'Phone (SMS)', 'Push notification']
           .map(
-            (i) => RadioGroupSimpleOptionWithDescription(
+            (i) => RadioGroupOption(
               value: i,
               label: Text(i),
               description: Text('Some more information'),

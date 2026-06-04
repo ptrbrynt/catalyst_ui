@@ -1,199 +1,230 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:flutter/widgets.dart';
 
-/// An option for a [RadioGroup]
-sealed class RadioGroupOption<T> {
-  const RadioGroupOption({required this.value});
+/// An option for a [RadioGroup] with a label and optional description.
+///
+/// Use with [RadioGroup.simpleList], [RadioGroup.simpleListWithTrailingRadio],
+/// [RadioGroup.listWithDescription], [RadioGroup.listWithTrailingRadio], and
+/// [RadioGroup.panel].
+@immutable
+class RadioGroupOption<T> {
+  /// Creates a [RadioGroupOption].
+  const RadioGroupOption({
+    required this.value,
+    required this.label,
+    this.description,
+  });
 
-  /// The value of this option
+  /// The value represented by this option.
   final T value;
-}
 
-/// A simple [RadioGroupOption] with a [label]
-@immutable
-class RadioGroupSimpleOption<T> extends RadioGroupOption<T> {
-  /// Creates a [RadioGroupSimpleOption]
-  const RadioGroupSimpleOption({
-    required super.value,
-    required this.label,
-  });
-
-  /// The main label. Typically a [Text] widget.
-  final Widget label;
-}
-
-/// A simple [RadioGroupOption] with a [label] and [description]
-@immutable
-class RadioGroupSimpleOptionWithDescription<T> extends RadioGroupOption<T> {
-  /// Creates a [RadioGroupSimpleOptionWithDescription]
-  const RadioGroupSimpleOptionWithDescription({
-    required super.value,
-    required this.label,
-    required this.description,
-  });
-
-  /// The main label. Typically a [Text] widget.
+  /// The primary label. Typically a [Text] widget.
   final Widget label;
 
-  /// The description. Typically a [Text] widget.
-  final Widget description;
+  /// An optional description. Typically a [Text] widget.
+  final Widget? description;
 }
 
-/// A [RadioGroupOption] which is displayed as a table row.
-class RadioGroupTableRowOption<T> extends RadioGroupOption<T> {
-  /// Creates a [RadioGroupTableRowOption]
-  const RadioGroupTableRowOption({required super.value, required this.columns});
+/// An option for a [RadioGroup] displayed as a table row.
+///
+/// Use with [RadioGroup.table].
+@immutable
+class RadioGroupTableOption<T> {
+  /// Creates a [RadioGroupTableOption].
+  const RadioGroupTableOption({
+    required this.value,
+    required this.columns,
+  });
+
+  /// The value represented by this option.
+  final T value;
 
   /// The columns to display in this row.
   final List<Widget> columns;
 }
 
-/// A [RadioGroupOption] which is rendered by calling a [builder] function.
-class RadioGroupCustomOption<T> extends RadioGroupOption<T> {
-  /// Creates a [RadioGroupCustomOption]
-  const RadioGroupCustomOption({required super.value, required this.builder});
+/// An option for a [RadioGroup] displayed as a card.
+///
+/// Use with [RadioGroup.cards].
+@immutable
+class RadioGroupCardOption<T> {
+  /// Creates a [RadioGroupCardOption].
+  const RadioGroupCardOption({
+    required this.value,
+    required this.childBuilder,
+  });
 
-  /// Renders this option
+  /// The value represented by this option.
+  final T value;
+
+  /// The columns to display in this row.
   // ignore: avoid_positional_boolean_parameters
-  final Widget Function(BuildContext context, bool isSelected) builder;
+  final Widget Function(BuildContext context, bool isSelected) childBuilder;
 }
 
-/// Styles for [RadioGroup]
-enum RadioGroupStyle {
-  /// Options are displayed in a simple vertical list.
+enum _RadioGroupStyle {
   simpleList,
-
-  /// Options are displayed in a horizonal list.
   simpleListInline,
-
-  /// Options are displayed in a vertical list with the radio button aligned
-  /// at the end.
   simpleListWithTrailingRadio,
-
-  /// Options are displayed in a vertical list with descriptions below the
-  /// titles.
   listWithDescription,
-
-  /// Options are displayed in a vertical list, with descriptions
-  /// in-line with the title.
   listWithInlineDescription,
-
-  /// Options are displayed in a vertical list with the radio button aligned
-  /// at the end.
   listWithTrailingRadio,
-
-  /// Options are displayed in a table.
   table,
-
-  /// Options are displayed in a bordered panel.
   panel,
-
-  /// Options are displayed as cards in a horizontal row.
   cards,
-
-  /// Options are displayed as cards in a vertical column.
   stackedCards,
 }
 
-/// A collection of [RadioGroupOption]s.
+/// A collection of selectable options rendered as a radio group.
 class RadioGroup<T> extends StatelessWidget {
-  const RadioGroup._({
-    required this.options,
-    required this.style,
-    this.title,
-    this.subtitle,
-    this.value,
-    this.onOptionSelected,
-    super.key,
-  }) : assert(
-         !(subtitle != null && title == null),
-         'Cannot have a subtitle without a title',
-       );
-
+  /// A simple vertical list of options.
+  ///
+  /// Set [inline] to `true` to display options in a horizontal wrap layout.
   const RadioGroup.simpleList({
-    required List<RadioGroupSimpleOption<T>> this.options,
+    required List<RadioGroupOption<T>> this.options,
     bool inline = false,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = inline
-           ? RadioGroupStyle.simpleListInline
-           : RadioGroupStyle.simpleList;
+  }) : tableOptions = null,
+       cardOptions = null,
+       _style = inline
+           ? _RadioGroupStyle.simpleListInline
+           : _RadioGroupStyle.simpleList,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// A simple vertical list of options with the radio indicator on the right.
   const RadioGroup.simpleListWithTrailingRadio({
-    required List<RadioGroupSimpleOption<T>> this.options,
+    required List<RadioGroupOption<T>> this.options,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = RadioGroupStyle.simpleListWithTrailingRadio;
+  }) : tableOptions = null,
+       cardOptions = null,
+       _style = _RadioGroupStyle.simpleListWithTrailingRadio,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// A vertical list of options with descriptions.
+  ///
+  /// Set [inlineDescription] to `true` to display the description alongside
+  /// the label instead of below it.
   const RadioGroup.listWithDescription({
-    required List<RadioGroupSimpleOptionWithDescription<T>> this.options,
+    required List<RadioGroupOption<T>> this.options,
     bool inlineDescription = false,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = inlineDescription
-           ? RadioGroupStyle.listWithInlineDescription
-           : RadioGroupStyle.listWithDescription;
+  }) : tableOptions = null,
+       cardOptions = null,
+       _style = inlineDescription
+           ? _RadioGroupStyle.listWithInlineDescription
+           : _RadioGroupStyle.listWithDescription,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// A vertical list of options with descriptions and the radio indicator on
+  /// the right.
   const RadioGroup.listWithTrailingRadio({
-    required List<RadioGroupSimpleOptionWithDescription<T>> this.options,
+    required List<RadioGroupOption<T>> this.options,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = RadioGroupStyle.listWithTrailingRadio;
+  }) : tableOptions = null,
+       cardOptions = null,
+       _style = _RadioGroupStyle.listWithTrailingRadio,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// Options displayed in a bordered table with multiple columns per row.
   const RadioGroup.table({
-    required List<RadioGroupTableRowOption<T>> this.options,
+    required List<RadioGroupTableOption<T>> this.tableOptions,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = RadioGroupStyle.table;
+  }) : options = null,
+       cardOptions = null,
+       _style = _RadioGroupStyle.table,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// Options displayed in a bordered panel.
   const RadioGroup.panel({
-    required List<RadioGroupSimpleOptionWithDescription<T>> this.options,
+    required List<RadioGroupOption<T>> this.options,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = RadioGroupStyle.panel;
+  }) : tableOptions = null,
+       cardOptions = null,
+       _style = _RadioGroupStyle.panel,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
+  /// Options displayed as cards.
+  ///
+  /// Set [stacked] to `true` to display cards in a vertical column instead of
+  /// a horizontal row.
   const RadioGroup.cards({
-    required List<RadioGroupTableRowOption<T>> this.options,
+    required List<RadioGroupCardOption<T>> this.cardOptions,
     bool stacked = false,
     this.title,
     this.subtitle,
     this.value,
     this.onOptionSelected,
     super.key,
-  }) : style = stacked ? RadioGroupStyle.stackedCards : RadioGroupStyle.cards;
+  }) : options = null,
+       tableOptions = null,
+       _style = stacked
+           ? _RadioGroupStyle.stackedCards
+           : _RadioGroupStyle.cards,
+       assert(
+         !(subtitle != null && title == null),
+         'Cannot have a subtitle without a title',
+       );
 
-  /// The style of this group
-  final RadioGroupStyle style;
+  /// Options for list and panel layouts. Null when using table or card layouts.
+  final List<RadioGroupOption<T>>? options;
 
-  /// An optional title. Typically a [Text]
+  /// Options for table and card layouts. Null when using other layouts.
+  final List<RadioGroupTableOption<T>>? tableOptions;
+
+  final List<RadioGroupCardOption<T>>? cardOptions;
+
+  final _RadioGroupStyle _style;
+
+  /// An optional title. Typically a [Text].
   final Widget? title;
 
   /// An optional subtitle. Typically a [Text].
   final Widget? subtitle;
 
-  /// The currently selected value of this radio group.
+  /// The currently selected value.
   final T? value;
-
-  /// The options to display
-  final List<RadioGroupOption<T>> options;
 
   /// Called when an option is selected.
   final ValueChanged<T?>? onOptionSelected;
@@ -207,7 +238,7 @@ class RadioGroup<T> extends StatelessWidget {
       children: [
         if (title != null)
           DefaultTextStyle(style: context.typography.h3, child: title!),
-        if (title != null)
+        if (subtitle != null)
           DefaultTextStyle(
             style: context.typography.p3.copyWith(
               color: context.colorScheme.textMuted,
@@ -215,41 +246,41 @@ class RadioGroup<T> extends StatelessWidget {
             child: subtitle!,
           ),
         const SizedBox(height: 4),
-        switch (style) {
-          RadioGroupStyle.simpleList => _simpleList(
+        switch (_style) {
+          _RadioGroupStyle.simpleList => _simpleList(
             context,
             trailingRadio: false,
           ),
-          RadioGroupStyle.simpleListInline => _simpleListInline(context),
-          RadioGroupStyle.simpleListWithTrailingRadio => _simpleList(
+          _RadioGroupStyle.simpleListInline => _simpleListInline(context),
+          _RadioGroupStyle.simpleListWithTrailingRadio => _simpleList(
             context,
             trailingRadio: true,
           ),
-          RadioGroupStyle.listWithDescription => _simpleListWithDescription(
+          _RadioGroupStyle.listWithDescription => _simpleListWithDescription(
             context,
             trailingRadio: false,
             inlineDescription: false,
             showDividers: false,
           ),
-          RadioGroupStyle.listWithInlineDescription =>
+          _RadioGroupStyle.listWithInlineDescription =>
             _simpleListWithDescription(
               context,
               trailingRadio: false,
               inlineDescription: true,
               showDividers: false,
             ),
-          RadioGroupStyle.listWithTrailingRadio => _simpleListWithDescription(
+          _RadioGroupStyle.listWithTrailingRadio => _simpleListWithDescription(
             context,
             trailingRadio: true,
             inlineDescription: false,
             showDividers: true,
           ),
-          RadioGroupStyle.table => _table(context),
-          RadioGroupStyle.panel => _panel(context),
-          // TODO: Handle this case.
-          RadioGroupStyle.cards => throw UnimplementedError(),
-          // TODO: Handle this case.
-          RadioGroupStyle.stackedCards => throw UnimplementedError(),
+          _RadioGroupStyle.table => _table(context),
+          _RadioGroupStyle.panel => _panel(context),
+
+          _RadioGroupStyle.cards => _cards(context, false),
+
+          _RadioGroupStyle.stackedCards => _cards(context, true),
         },
       ],
     );
@@ -261,12 +292,12 @@ class RadioGroup<T> extends StatelessWidget {
       mainAxisSize: .min,
       spacing: Spacing.s4,
       children: [
-        for (final option in options.cast<RadioGroupSimpleOption<T>>())
+        for (final option in options!)
           Radio(
             value: option.value == value,
             label: option.label,
-            onSelected: (value) {
-              onOptionSelected?.call(value ? option.value : null);
+            onSelected: (selected) {
+              onOptionSelected?.call(selected ? option.value : null);
             },
             trailingRadio: trailingRadio,
           ),
@@ -279,12 +310,12 @@ class RadioGroup<T> extends StatelessWidget {
       spacing: Spacing.s4,
       runSpacing: Spacing.s4,
       children: [
-        for (final option in options.cast<RadioGroupSimpleOption<T>>())
+        for (final option in options!)
           Radio(
             value: option.value == value,
             label: option.label,
-            onSelected: (value) {
-              onOptionSelected?.call(value ? option.value : null);
+            onSelected: (selected) {
+              onOptionSelected?.call(selected ? option.value : null);
             },
           ),
       ],
@@ -297,13 +328,13 @@ class RadioGroup<T> extends StatelessWidget {
     required bool inlineDescription,
     required bool showDividers,
   }) {
+    final opts = options!;
     return Column(
       crossAxisAlignment: .stretch,
       mainAxisSize: .min,
       spacing: Spacing.s4,
       children: [
-        for (final option
-            in options.cast<RadioGroupSimpleOptionWithDescription<T>>()) ...[
+        for (final option in opts) ...[
           Radio(
             value: option.value == value,
             label: inlineDescription
@@ -311,12 +342,13 @@ class RadioGroup<T> extends StatelessWidget {
                     spacing: Spacing.s2,
                     children: [
                       option.label,
-                      DefaultTextStyle(
-                        style: context.typography.p3.copyWith(
-                          color: context.colorScheme.textMuted,
+                      if (option.description != null)
+                        DefaultTextStyle(
+                          style: context.typography.p3.copyWith(
+                            color: context.colorScheme.textMuted,
+                          ),
+                          child: option.description!,
                         ),
-                        child: option.description,
-                      ),
                     ],
                   )
                 : Column(
@@ -325,26 +357,28 @@ class RadioGroup<T> extends StatelessWidget {
                     spacing: Spacing.s1,
                     children: [
                       option.label,
-                      DefaultTextStyle(
-                        style: context.typography.p3.copyWith(
-                          color: context.colorScheme.textMuted,
+                      if (option.description != null)
+                        DefaultTextStyle(
+                          style: context.typography.p3.copyWith(
+                            color: context.colorScheme.textMuted,
+                          ),
+                          child: option.description!,
                         ),
-                        child: option.description,
-                      ),
                     ],
                   ),
-            onSelected: (value) {
-              onOptionSelected?.call(value ? option.value : null);
+            onSelected: (selected) {
+              onOptionSelected?.call(selected ? option.value : null);
             },
             trailingRadio: trailingRadio,
           ),
-          if (showDividers && option != options.last) const Divider(),
+          if (showDividers && option != opts.last) const Divider(),
         ],
       ],
     );
   }
 
   Widget _table(BuildContext context) {
+    final opts = tableOptions!;
     return Container(
       clipBehavior: .antiAlias,
       decoration: BoxDecoration(
@@ -355,19 +389,19 @@ class RadioGroup<T> extends StatelessWidget {
         crossAxisAlignment: .stretch,
         mainAxisSize: .min,
         children: [
-          for (final option in options.cast<RadioGroupTableRowOption<T>>()) ...[
-            Container(
+          for (final option in opts) ...[
+            MouseRegion(
               key: ValueKey(option),
-              color: option.value == value
-                  ? context.colorScheme.brandSoft
-                  : null,
-              child: MouseRegion(
-                cursor: onOptionSelected != null
-                    ? SystemMouseCursors.click
-                    : .defer,
-                child: GestureDetector(
-                  onTap: onOptionSelected != null
-                      ? () => onOptionSelected!(option.value)
+              cursor: onOptionSelected != null
+                  ? SystemMouseCursors.click
+                  : .defer,
+              child: GestureDetector(
+                onTap: onOptionSelected != null
+                    ? () => onOptionSelected!(option.value)
+                    : null,
+                child: Container(
+                  color: option.value == value
+                      ? context.colorScheme.brandSoft
                       : null,
                   child: Padding(
                     padding: const .all(Spacing.s4),
@@ -388,7 +422,7 @@ class RadioGroup<T> extends StatelessWidget {
                 ),
               ),
             ),
-            if (option != options.last) const Divider(),
+            if (option != opts.last) const Divider(),
           ],
         ],
       ),
@@ -396,6 +430,7 @@ class RadioGroup<T> extends StatelessWidget {
   }
 
   Widget _panel(BuildContext context) {
+    final opts = options!;
     return Container(
       clipBehavior: .antiAlias,
       decoration: BoxDecoration(
@@ -406,20 +441,19 @@ class RadioGroup<T> extends StatelessWidget {
         crossAxisAlignment: .stretch,
         mainAxisSize: .min,
         children: [
-          for (final option
-              in options.cast<RadioGroupSimpleOptionWithDescription<T>>()) ...[
-            Container(
+          for (final option in opts) ...[
+            MouseRegion(
               key: ValueKey(option),
-              color: option.value == value
-                  ? context.colorScheme.brandSoft
-                  : null,
-              child: MouseRegion(
-                cursor: onOptionSelected != null
-                    ? SystemMouseCursors.click
-                    : .defer,
-                child: GestureDetector(
-                  onTap: onOptionSelected != null
-                      ? () => onOptionSelected!(option.value)
+              cursor: onOptionSelected != null
+                  ? SystemMouseCursors.click
+                  : .defer,
+              child: GestureDetector(
+                onTap: onOptionSelected != null
+                    ? () => onOptionSelected!(option.value)
+                    : null,
+                child: Container(
+                  color: option.value == value
+                      ? context.colorScheme.brandSoft
                       : null,
                   child: Padding(
                     padding: const .all(Spacing.s2),
@@ -445,12 +479,13 @@ class RadioGroup<T> extends StatelessWidget {
                               spacing: Spacing.s1,
                               children: [
                                 option.label,
-                                DefaultTextStyle(
-                                  style: context.typography.p3.copyWith(
-                                    color: context.colorScheme.textMuted,
+                                if (option.description != null)
+                                  DefaultTextStyle(
+                                    style: context.typography.p3.copyWith(
+                                      color: context.colorScheme.textMuted,
+                                    ),
+                                    child: option.description!,
                                   ),
-                                  child: option.description,
-                                ),
                               ],
                             ),
                           ),
@@ -461,10 +496,52 @@ class RadioGroup<T> extends StatelessWidget {
                 ),
               ),
             ),
-            if (option != options.last) const Divider(),
+            if (option != opts.last) const Divider(),
           ],
         ],
       ),
+    );
+  }
+
+  Widget _cards(BuildContext context, bool stacked) {
+    final opts = cardOptions!;
+    final widgets = [
+      for (final option in opts)
+        MouseRegion(
+          key: ValueKey(option),
+          cursor: onOptionSelected != null ? SystemMouseCursors.click : .defer,
+          child: GestureDetector(
+            onTap: onOptionSelected != null
+                ? () => onOptionSelected!(option.value)
+                : null,
+            child: Container(
+              constraints: stacked ? const BoxConstraints() : null,
+              decoration: BoxDecoration(
+                color: option.value == value
+                    ? context.colorScheme.brandSoft
+                    : null,
+                border: option.value == value
+                    ? .all(color: context.colorScheme.brand)
+                    : .all(color: context.colorScheme.border),
+                borderRadius: Radii.mdAll,
+              ),
+              padding: const .all(Spacing.s4),
+              child: option.childBuilder(context, option.value == value),
+            ),
+          ),
+        ),
+    ];
+    if (stacked) {
+      return Column(
+        crossAxisAlignment: .stretch,
+        spacing: Spacing.s4,
+        children: widgets,
+      );
+    }
+    return Wrap(
+      spacing: Spacing.s4,
+      runSpacing: Spacing.s4,
+      children: widgets,
     );
   }
 }
