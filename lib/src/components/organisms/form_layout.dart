@@ -64,21 +64,35 @@ class FormLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      spacing: Spacing.s8,
-      children: [
-        for (final group in groups) ...[
-          _group(context, group),
-          const Divider(),
+    return Container(
+      padding: const EdgeInsets.all(Spacing.s8),
+      decoration: BoxDecoration(
+        color:
+            style == FormLayoutStyle.twoColumnWithCards
+                ? context.colorScheme.subtle
+                : context.colorScheme.canvas,
+        borderRadius: Radii.lgAll,
+        border:
+            style == FormLayoutStyle.twoColumnWithCards
+                ? BoxBorder.all(color: context.colorScheme.border)
+                : null,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        spacing: Spacing.s8,
+        children: [
+          for (final group in groups) ...[
+            _group(context, group),
+            const Divider(),
+          ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            spacing: Spacing.s2,
+            children: footerButtons,
+          ),
         ],
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          spacing: Spacing.s2,
-          children: footerButtons,
-        ),
-      ],
+      ),
     );
   }
 
@@ -91,7 +105,7 @@ class FormLayout extends StatelessWidget {
         DefaultTextStyle(style: context.typography.h3, child: group.title),
         if (group.subtitle != null)
           DefaultTextStyle(
-            style: context.typography.p1.copyWith(
+            style: context.typography.p3.copyWith(
               color: context.colorScheme.textMuted,
             ),
             child: group.subtitle!,
@@ -113,14 +127,22 @@ class FormLayout extends StatelessWidget {
         children: [titles, fieldsColumn],
       ),
       FormLayoutStyle.twoColumn => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: Spacing.s4,
         children: [Expanded(child: titles), Expanded(child: fieldsColumn)],
       ),
       FormLayoutStyle.twoColumnWithCards => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: Spacing.s4,
         children: [
           Expanded(child: titles),
-          Expanded(child: Card(child: fieldsColumn)),
+          Expanded(
+            child: Card(
+              padding: const EdgeInsets.all(Spacing.s8),
+              tone: CardTone.surface,
+              child: fieldsColumn,
+            ),
+          ),
         ],
       ),
     };

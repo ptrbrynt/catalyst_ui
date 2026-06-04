@@ -175,7 +175,7 @@ class _DraggableSheetState extends State<_DraggableSheet>
   }
 
   void _onUpdate(DragUpdateDetails d) {
-    if (d.delta.dy > 0) setState(() => _offset += d.delta.dy);
+    setState(() => _offset = (_offset + d.delta.dy).clamp(0, double.infinity));
   }
 
   void _onEnd(DragEndDetails d) {

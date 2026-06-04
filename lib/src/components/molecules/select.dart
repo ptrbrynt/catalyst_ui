@@ -110,17 +110,24 @@ class _SelectState<T> extends State<Select<T>> {
     final typo = context.typography;
     final sh = context.shadows;
 
+    final renderBox = context.findRenderObject()! as RenderBox;
+    final triggerGlobal = renderBox.localToGlobal(Offset.zero);
+    final screenHeight = MediaQuery.of(context).size.height;
+    const dropdownMaxHeight = 240.0;
+    final spaceBelow = screenHeight - triggerGlobal.dy - _triggerHeight - 4;
+    final showAbove = spaceBelow < dropdownMaxHeight;
+
     _overlay = OverlayEntry(
       builder:
           (_) => _SelectDropdown<T>(
             layerLink: _link,
-            triggerWidth: (context.findRenderObject()! as RenderBox).size.width,
-            triggerHeight: _triggerHeight,
+            triggerWidth: renderBox.size.width,
             options: widget.options,
             value: widget.value,
             colorScheme: cs,
             typography: typo,
             shadows: sh,
+            showAbove: showAbove,
             onSelect: (v) {
               widget.onChanged?.call(v);
               _close();
@@ -264,24 +271,27 @@ class _SelectDropdown<T> extends StatelessWidget {
   const _SelectDropdown({
     required this.layerLink,
     required this.triggerWidth,
-    required this.triggerHeight,
     required this.options,
     required this.value,
     required this.colorScheme,
     required this.typography,
     required this.shadows,
+    required this.showAbove,
     required this.onSelect,
     required this.onDismiss,
   });
 
   final LayerLink layerLink;
   final double triggerWidth;
-  final double triggerHeight;
   final List<SelectOption<T>> options;
   final T? value;
   final ColorScheme colorScheme;
   final Typography typography;
   final Shadows shadows;
+
+  /// Whether the dropdown should open above the trigger.
+  final bool showAbove;
+
   final ValueChanged<T> onSelect;
   final VoidCallback onDismiss;
 
@@ -295,12 +305,16 @@ class _SelectDropdown<T> extends StatelessWidget {
             behavior: HitTestBehavior.translucent,
           ),
         ),
-        CompositedTransformFollower(
-          link: layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(0, triggerHeight + 4),
-          child: Align(
-            alignment: Alignment.topLeft,
+        Positioned(
+          left: 0,
+          top: 0,
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            targetAnchor: showAbove ? Alignment.topLeft : Alignment.bottomLeft,
+            followerAnchor:
+                showAbove ? Alignment.bottomLeft : Alignment.topLeft,
+            offset: Offset(0, showAbove ? -4 : 4),
             child: SizedBox(
               width: triggerWidth,
               child: Container(
@@ -374,7 +388,7 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
           color:
               (widget.isSelected || _hovered)
                   ? widget.colorScheme.subtle
-                  : const Color(0x00000000),
+                  : null,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: Row(
             children: [

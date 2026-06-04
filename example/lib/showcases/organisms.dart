@@ -31,14 +31,15 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
               AppBar(
                 automaticallyImplyLeading: false,
                 title: _hasTitle ? const Text('Page Title') : null,
-                trailing: _hasTrailing
-                    ? Button.icon(
-                        icon: const Icon(LucideIcons.bell),
-                        variant: ButtonVariant.ghost,
-                        size: ButtonSize.medium,
-                        onPressed: () {},
-                      )
-                    : null,
+                trailing:
+                    _hasTrailing
+                        ? Button.icon(
+                          icon: const Icon(LucideIcons.bell),
+                          variant: ButtonVariant.ghost,
+                          size: ButtonSize.medium,
+                          onPressed: () {},
+                        )
+                        : null,
               ),
               ColoredBox(
                 color: context.colorScheme.canvas,
@@ -49,8 +50,16 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
         ),
       ),
       controls: [
-        BoolControl(label: 'Has title', value: _hasTitle, onChanged: (v) => setState(() => _hasTitle = v)),
-        BoolControl(label: 'Has trailing action', value: _hasTrailing, onChanged: (v) => setState(() => _hasTrailing = v)),
+        BoolControl(
+          label: 'Has title',
+          value: _hasTitle,
+          onChanged: (v) => setState(() => _hasTitle = v),
+        ),
+        BoolControl(
+          label: 'Has trailing action',
+          value: _hasTrailing,
+          onChanged: (v) => setState(() => _hasTrailing = v),
+        ),
       ],
     );
   }
@@ -77,10 +86,26 @@ class _BottomNavShowcaseState extends State<BottomNavShowcase> {
           selectedItem: _selected,
           onItemSelected: (v) => setState(() => _selected = v),
           destinations: const [
-            BottomNavDestination(value: 'home', label: 'Home', icon: LucideIcons.house),
-            BottomNavDestination(value: 'explore', label: 'Explore', icon: LucideIcons.compass),
-            BottomNavDestination(value: 'inbox', label: 'Inbox', icon: LucideIcons.inbox),
-            BottomNavDestination(value: 'profile', label: 'Profile', icon: LucideIcons.user),
+            BottomNavDestination(
+              value: 'home',
+              label: 'Home',
+              icon: LucideIcons.house,
+            ),
+            BottomNavDestination(
+              value: 'explore',
+              label: 'Explore',
+              icon: LucideIcons.compass,
+            ),
+            BottomNavDestination(
+              value: 'inbox',
+              label: 'Inbox',
+              icon: LucideIcons.inbox,
+            ),
+            BottomNavDestination(
+              value: 'profile',
+              label: 'Profile',
+              icon: LucideIcons.user,
+            ),
           ],
         ),
       ),
@@ -104,6 +129,7 @@ class _BottomSheetShowcaseState extends State<BottomSheetShowcase> {
     showBottomSheet(
       context,
       (_) => BottomSheet(
+        showDragHandle: _draggable,
         title: const Text('Share document'),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -146,7 +172,11 @@ class _BottomSheetShowcaseState extends State<BottomSheetShowcase> {
         onPressed: () => _show(context),
       ),
       controls: [
-        BoolControl(label: 'Draggable', value: _draggable, onChanged: (v) => setState(() => _draggable = v)),
+        BoolControl(
+          label: 'Draggable',
+          value: _draggable,
+          onChanged: (v) => setState(() => _draggable = v),
+        ),
       ],
     );
   }
@@ -225,31 +255,42 @@ class _EmptyStateShowcaseState extends State<EmptyStateShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    final action = _hasAction
-        ? Button(
-            label: const Text('Create project'),
-            onPressed: () {},
-          )
-        : null;
+    final action =
+        _hasAction
+            ? Button(label: const Text('Create project'), onPressed: () {})
+            : null;
 
     return ShowcasePage(
       title: 'EmptyState',
-      preview: _large
-          ? EmptyState.large(
-              icon: LucideIcons.folderOpen,
-              title: const Text('No projects yet'),
-              description: const Text('Create your first project to get started.'),
-              action: action,
-            )
-          : EmptyState(
-              icon: LucideIcons.folderOpen,
-              title: const Text('No projects yet'),
-              description: const Text('Create your first project to get started.'),
-              action: action,
-            ),
+      preview:
+          _large
+              ? EmptyState.large(
+                icon: LucideIcons.folderOpen,
+                title: const Text('No projects yet'),
+                description: const Text(
+                  'Create your first project to get started.',
+                ),
+                action: action,
+              )
+              : EmptyState(
+                icon: LucideIcons.folderOpen,
+                title: const Text('No projects yet'),
+                description: const Text(
+                  'Create your first project to get started.',
+                ),
+                action: action,
+              ),
       controls: [
-        BoolControl(label: 'Large', value: _large, onChanged: (v) => setState(() => _large = v)),
-        BoolControl(label: 'Has action', value: _hasAction, onChanged: (v) => setState(() => _hasAction = v)),
+        BoolControl(
+          label: 'Large',
+          value: _large,
+          onChanged: (v) => setState(() => _large = v),
+        ),
+        BoolControl(
+          label: 'Has action',
+          value: _hasAction,
+          onChanged: (v) => setState(() => _hasAction = v),
+        ),
       ],
     );
   }
@@ -270,29 +311,48 @@ class _ErrorStateShowcaseState extends State<ErrorStateShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    final base = _large
-        ? ErrorState.large(
-            title: const Text('Something went wrong'),
-            description: _hasDescription
-                ? const Text('We could not load your data. Please try again.')
-                : null,
-            onRetry: _hasRetry ? () {} : null,
-          )
-        : ErrorState(
-            title: const Text('Something went wrong'),
-            description: _hasDescription
-                ? const Text('We could not load your data. Please try again.')
-                : null,
-            onRetry: _hasRetry ? () {} : null,
-          );
+    final base =
+        _large
+            ? ErrorState.large(
+              title: const Text('Something went wrong'),
+              description:
+                  _hasDescription
+                      ? const Text(
+                        'We could not load your data. Please try again.',
+                      )
+                      : null,
+              onRetry: _hasRetry ? () {} : null,
+            )
+            : ErrorState(
+              title: const Text('Something went wrong'),
+              description:
+                  _hasDescription
+                      ? const Text(
+                        'We could not load your data. Please try again.',
+                      )
+                      : null,
+              onRetry: _hasRetry ? () {} : null,
+            );
 
     return ShowcasePage(
       title: 'ErrorState',
       preview: base,
       controls: [
-        BoolControl(label: 'Large', value: _large, onChanged: (v) => setState(() => _large = v)),
-        BoolControl(label: 'Has description', value: _hasDescription, onChanged: (v) => setState(() => _hasDescription = v)),
-        BoolControl(label: 'Has retry', value: _hasRetry, onChanged: (v) => setState(() => _hasRetry = v)),
+        BoolControl(
+          label: 'Large',
+          value: _large,
+          onChanged: (v) => setState(() => _large = v),
+        ),
+        BoolControl(
+          label: 'Has description',
+          value: _hasDescription,
+          onChanged: (v) => setState(() => _hasDescription = v),
+        ),
+        BoolControl(
+          label: 'Has retry',
+          value: _hasRetry,
+          onChanged: (v) => setState(() => _hasRetry = v),
+        ),
       ],
     );
   }
@@ -387,20 +447,21 @@ class _ModalShowcaseState extends State<ModalShowcase> {
         body: const Text(
           'Are you sure you want to delete this project? This action cannot be undone and all data will be permanently removed.',
         ),
-        actions: _hasActions
-            ? [
-                Button(
-                  label: const Text('Cancel'),
-                  variant: ButtonVariant.secondary,
-                  onPressed: () => Navigator.pop(context),
-                ),
-                Button(
-                  label: const Text('Delete'),
-                  variant: ButtonVariant.destructive,
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ]
-            : [],
+        actions:
+            _hasActions
+                ? [
+                  Button(
+                    label: const Text('Cancel'),
+                    variant: ButtonVariant.secondary,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  Button(
+                    label: const Text('Delete'),
+                    variant: ButtonVariant.destructive,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ]
+                : [],
       ),
     );
   }
@@ -414,7 +475,11 @@ class _ModalShowcaseState extends State<ModalShowcase> {
         onPressed: () => _show(context),
       ),
       controls: [
-        BoolControl(label: 'Has actions', value: _hasActions, onChanged: (v) => setState(() => _hasActions = v)),
+        BoolControl(
+          label: 'Has actions',
+          value: _hasActions,
+          onChanged: (v) => setState(() => _hasActions = v),
+        ),
       ],
     );
   }
@@ -475,7 +540,11 @@ class _SideNavShowcaseState extends State<SideNavShowcase> {
         ),
       ),
       controls: [
-        BoolControl(label: 'Expanded', value: _isExpanded, onChanged: (v) => setState(() => _isExpanded = v)),
+        BoolControl(
+          label: 'Expanded',
+          value: _isExpanded,
+          onChanged: (v) => setState(() => _isExpanded = v),
+        ),
       ],
     );
   }
@@ -507,35 +576,45 @@ class _TopBarShowcaseState extends State<TopBarShowcase> {
         ],
         selectedItem: _selected,
         onItemSelected: (v) => setState(() => _selected = v),
-        leading: _hasLeading
-            ? const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Acme',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-                ),
-              )
-            : null,
-        actions: _hasActions
-            ? [
-                Button.icon(
-                  icon: const Icon(LucideIcons.bell),
-                  variant: ButtonVariant.ghost,
-                  size: ButtonSize.medium,
-                  onPressed: () {},
-                ),
-                Button.icon(
-                  icon: const Icon(LucideIcons.user),
-                  variant: ButtonVariant.ghost,
-                  size: ButtonSize.medium,
-                  onPressed: () {},
-                ),
-              ]
-            : [],
+        leading:
+            _hasLeading
+                ? const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Acme',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                  ),
+                )
+                : null,
+        actions:
+            _hasActions
+                ? [
+                  Button.icon(
+                    icon: const Icon(LucideIcons.bell),
+                    variant: ButtonVariant.ghost,
+                    size: ButtonSize.medium,
+                    onPressed: () {},
+                  ),
+                  Button.icon(
+                    icon: const Icon(LucideIcons.user),
+                    variant: ButtonVariant.ghost,
+                    size: ButtonSize.medium,
+                    onPressed: () {},
+                  ),
+                ]
+                : [],
       ),
       controls: [
-        BoolControl(label: 'Leading brand', value: _hasLeading, onChanged: (v) => setState(() => _hasLeading = v)),
-        BoolControl(label: 'Action buttons', value: _hasActions, onChanged: (v) => setState(() => _hasActions = v)),
+        BoolControl(
+          label: 'Leading brand',
+          value: _hasLeading,
+          onChanged: (v) => setState(() => _hasLeading = v),
+        ),
+        BoolControl(
+          label: 'Action buttons',
+          value: _hasActions,
+          onChanged: (v) => setState(() => _hasActions = v),
+        ),
       ],
     );
   }

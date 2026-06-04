@@ -14,6 +14,7 @@ class BottomSheet extends StatelessWidget {
     required this.title,
     required this.child,
     required this.footer,
+    required this.showDragHandle,
     super.key,
   });
 
@@ -25,6 +26,9 @@ class BottomSheet extends StatelessWidget {
 
   /// A footer pinned to the bottom (e.g. action buttons).
   final Widget footer;
+
+  /// Whether to show a drag handle at the top of the sheet.
+  final bool showDragHandle;
 
   @override
   Widget build(BuildContext context) {
@@ -55,20 +59,10 @@ class BottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(
-                  top: Spacing.s2,
-                  bottom: Spacing.s3,
-                ),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: cs.border,
-                    borderRadius: Radii.pillAll,
-                  ),
-                  child: const SizedBox(height: 4, width: 40),
-                ),
-              ),
+              if (showDragHandle)
+                const DragHandle()
+              else
+                const SizedBox(height: Spacing.s4),
               DefaultTextStyle(
                 style: TextStyle(
                   fontFamily: typo.fontFamily,
@@ -102,6 +96,67 @@ class BottomSheet extends StatelessWidget {
                 child: footer,
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DragHandle extends StatefulWidget {
+  const DragHandle({
+    super.key,
+  });
+
+  @override
+  State<DragHandle> createState() => _DragHandleState();
+}
+
+class _DragHandleState extends State<DragHandle> {
+  bool _isDragging = false;
+  bool _isHovered = false;
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.colorScheme;
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _isDragging = true;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _isDragging = false;
+        });
+      },
+      child: MouseRegion(
+        cursor:
+            _isDragging && _isHovered
+                ? SystemMouseCursors.grabbing
+                : SystemMouseCursors.grab,
+        onEnter: (_) {
+          setState(() {
+            _isHovered = true;
+          });
+        },
+        onExit: (_) {
+          setState(() {
+            _isHovered = false;
+            _isDragging = false;
+          });
+        },
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(
+            top: Spacing.s2,
+            bottom: Spacing.s3,
+          ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: cs.border,
+              borderRadius: Radii.pillAll,
+            ),
+            child: const SizedBox(height: 4, width: 40),
           ),
         ),
       ),
