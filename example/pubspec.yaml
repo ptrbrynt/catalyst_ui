@@ -1,0 +1,17 @@
+name: catalyst_ui_example
+description: Interactive showcase for the Catalyst UI component library.
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  catalyst_ui:
+    path: ../
+  lucide_icons_flutter: ^3.1.13
+
+flutter:
+  uses-material-design: false

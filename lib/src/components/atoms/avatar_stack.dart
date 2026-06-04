@@ -30,6 +30,7 @@ class AvatarStack extends StatelessWidget {
     final cs = context.colorScheme;
     return SizedBox(
       width: (_size * 0.75) * (maxCount + (_showOverflow ? 2 : 1)),
+      height: _size,
       child: Stack(
         alignment: Alignment.center,
         children: [
