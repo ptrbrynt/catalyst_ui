@@ -67,7 +67,7 @@ class TopBar<T> extends StatelessWidget {
           child: Row(
             spacing: 32,
             children: [
-              if (leading != null) leading!,
+              ?leading,
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: Spacing.s4),

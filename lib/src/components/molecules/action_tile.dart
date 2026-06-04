@@ -131,7 +131,7 @@ class ActionTile extends StatelessWidget {
                 child: title,
               ),
             ),
-            if (badge != null) badge!,
+            ?badge,
           ],
         ),
         if (subtitle != null)

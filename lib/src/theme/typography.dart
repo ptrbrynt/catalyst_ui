@@ -46,19 +46,19 @@ import 'color_scheme.dart';
 class Typography {
   /// Creates a typography scale.
   ///
-  /// [fontFamily] is the typeface for body-level styles ([p1], [p2], [body],
-  /// [p3], [caption], [micro]). Defaults to `null`, which lets Flutter fall
+  /// [fontFamily] is the typeface for body-level styles ([_p1], [_p2], [_body],
+  /// [_p3], [_caption], [_micro]). Defaults to `null`, which lets Flutter fall
   /// through to the platform default.
   ///
-  /// [headerFontFamily] is the typeface for heading-level styles ([display],
-  /// [h1], [h2], [h3]). Defaults to [fontFamily] when `null`, so you only
+  /// [headerFontFamily] is the typeface for heading-level styles ([_display],
+  /// [_h1], [_h2], [_h3]). Defaults to [fontFamily] when `null`, so you only
   /// need to set it when headers should use a different typeface.
   ///
   /// [colorScheme] binds the default text colour for non-overridden styles.
   /// It is set automatically when you attach this typography to a
   /// [ThemeData].
   ///
-  /// Each named style parameter ([display], [h1], …, [micro]) replaces the
+  /// Each named style parameter ([_display], [_h1], …, [_micro]) replaces the
   /// computed default for that slot. Explicit overrides take precedence over
   /// both [fontFamily] and [headerFontFamily]. Pass `null` (the default) to
   /// keep the built-in scale for that style.
@@ -66,26 +66,17 @@ class Typography {
     required this.colorScheme,
     this.fontFamily,
     this.headerFontFamily,
-    TextStyle? display,
-    TextStyle? h1,
-    TextStyle? h2,
-    TextStyle? h3,
-    TextStyle? p1,
-    TextStyle? p2,
-    TextStyle? body,
-    TextStyle? p3,
-    TextStyle? caption,
-    TextStyle? micro,
-  }) : _display = display,
-       _h1 = h1,
-       _h2 = h2,
-       _h3 = h3,
-       _p1 = p1,
-       _p2 = p2,
-       _body = body,
-       _p3 = p3,
-       _caption = caption,
-       _micro = micro;
+    this._display,
+    this._h1,
+    this._h2,
+    this._h3,
+    this._p1,
+    this._p2,
+    this._body,
+    this._p3,
+    this._caption,
+    this._micro,
+  });
 
   /// The font family used for body-level styles.
   ///

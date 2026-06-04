@@ -100,7 +100,7 @@ class SideNav<T> extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (header != null) header!,
+          ?header,
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(
@@ -122,7 +122,7 @@ class SideNav<T> extends StatelessWidget {
               ),
             ),
           ),
-          if (footer != null) footer!,
+          ?footer,
         ],
       ),
     );

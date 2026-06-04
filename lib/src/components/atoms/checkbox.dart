@@ -104,7 +104,7 @@ class Checkbox extends StatelessWidget {
                             ? Icon(LucideIcons.check, size: size.dimension - 6)
                             : null,
                   ),
-                  if (label != null) label!,
+                  ?label,
                 ],
               ),
             ),

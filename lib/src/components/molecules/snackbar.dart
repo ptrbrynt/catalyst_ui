@@ -178,7 +178,7 @@ class Snackbar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             spacing: Spacing.s3,
             children: [
-              if (icon != null) icon!,
+              ?icon,
               Expanded(child: message),
               if (action != null)
                 MouseRegion(

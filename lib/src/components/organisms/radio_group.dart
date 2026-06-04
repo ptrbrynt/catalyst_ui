@@ -210,9 +210,10 @@ class RadioGroup<T> extends StatelessWidget {
   /// Options for list and panel layouts. Null when using table or card layouts.
   final List<RadioGroupOption<T>>? options;
 
-  /// Options for table and card layouts. Null when using other layouts.
+  /// Options for table layouts. Null when using other layouts.
   final List<RadioGroupTableOption<T>>? tableOptions;
 
+  /// Options for card layouts. Null when using other layouts.
   final List<RadioGroupCardOption<T>>? cardOptions;
 
   final _RadioGroupStyle _style;
