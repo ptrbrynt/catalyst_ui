@@ -16,7 +16,7 @@ class Divider extends StatelessWidget {
   const Divider.vertical({
     super.key,
     this.margin = const EdgeInsets.symmetric(
-      horizontal: CatalystSpacing.s1,
+      horizontal: Spacing.s1,
     ),
   }) : _orientation = Axis.vertical,
        label = null;
@@ -66,7 +66,7 @@ class Divider extends StatelessWidget {
               Expanded(child: _line(borderColor)),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: CatalystSpacing.s3,
+                  horizontal: Spacing.s3,
                 ),
                 child: label,
               ),

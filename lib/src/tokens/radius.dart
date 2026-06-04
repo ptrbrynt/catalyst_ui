@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 ///
 /// Each named value is available as both a raw [double] and a pre-built
 /// [BorderRadius] (suffixed `All`).
-abstract final class CatalystRadius {
+abstract final class Radii {
   /// 4 px
   static const double xs = 4;
 

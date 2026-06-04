@@ -449,32 +449,32 @@ context.showSnackbar(
 
 ### Spacing
 
-`CatalystSpacing` provides a 4 px base grid:
+`Spacing` provides a 4 px base grid:
 
 ```dart
-CatalystSpacing.s1   //  4 px
-CatalystSpacing.s2   //  8 px
-CatalystSpacing.s3   // 12 px
-CatalystSpacing.s4   // 16 px
-CatalystSpacing.s5   // 20 px
-CatalystSpacing.s6   // 24 px
+Spacing.s1   //  4 px
+Spacing.s2   //  8 px
+Spacing.s3   // 12 px
+Spacing.s4   // 16 px
+Spacing.s5   // 20 px
+Spacing.s6   // 24 px
 // … up to s16 (64 px)
 ```
 
 ### Border radius
 
 ```dart
-CatalystRadius.xs     //  4 px
-CatalystRadius.sm     //  8 px
-CatalystRadius.md     // 12 px
-CatalystRadius.lg     // 16 px
-CatalystRadius.xl     // 20 px
-CatalystRadius.xxl    // 24 px
-CatalystRadius.pill   // 999 px (full pill)
+Radii.xs     //  4 px
+Radii.sm     //  8 px
+Radii.md     // 12 px
+Radii.lg     // 16 px
+Radii.xl     // 20 px
+Radii.xxl    // 24 px
+Radii.pill   // 999 px (full pill)
 
 // Pre-built BorderRadius helpers
-CatalystCatalystRadius.smAll   // BorderRadius.all(Radius.circular(8))
-CatalystCatalystRadius.mdAll
+Radii.smAll   // BorderRadius.all(Radius.circular(8))
+Radii.mdAll
 // … etc.
 ```
 

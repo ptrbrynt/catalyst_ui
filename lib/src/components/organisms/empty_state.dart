@@ -62,11 +62,11 @@ class EmptyState extends StatelessWidget {
     final typo = context.typography;
 
     return Padding(
-      padding: const EdgeInsets.all(CatalystSpacing.s6),
+      padding: const EdgeInsets.all(Spacing.s6),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        spacing: CatalystSpacing.s3,
+        spacing: Spacing.s3,
         children: [
           Container(
             width: _iconSize,

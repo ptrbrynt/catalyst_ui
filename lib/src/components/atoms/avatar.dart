@@ -99,8 +99,7 @@ class Avatar extends StatelessWidget {
             height: size,
             decoration: BoxDecoration(
               shape: shape,
-              borderRadius:
-                  shape == BoxShape.circle ? null : CatalystRadius.smAll,
+              borderRadius: shape == BoxShape.circle ? null : Radii.smAll,
               color: _effectiveColor,
               image:
                   src != null

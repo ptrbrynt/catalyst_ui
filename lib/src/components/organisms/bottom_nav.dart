@@ -57,7 +57,7 @@ class BottomNav<T> extends StatelessWidget {
         color: cs.surface,
         border: Border(top: BorderSide(color: cs.borderSubtle)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: CatalystSpacing.s2),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.s2),
       child: SafeArea(
         top: false,
         child: Row(
@@ -90,10 +90,10 @@ class BottomNav<T> extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 14,
-              vertical: CatalystSpacing.s2,
+              vertical: Spacing.s2,
             ),
             child: Column(
-              spacing: CatalystSpacing.s1,
+              spacing: Spacing.s1,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(d.icon, size: 22, color: itemColor),

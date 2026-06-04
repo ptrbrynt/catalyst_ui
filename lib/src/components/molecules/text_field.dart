@@ -199,8 +199,8 @@ class _TextFieldState extends State<TextField> {
     final errored = widget.error != null;
 
     final height = switch (widget.size) {
-      TextFieldSize.small => CatalystSpacing.s10,
-      TextFieldSize.medium => CatalystSpacing.s12,
+      TextFieldSize.small => Spacing.s10,
+      TextFieldSize.medium => Spacing.s12,
       TextFieldSize.large => 56.0,
     };
 
@@ -270,7 +270,7 @@ class _TextFieldState extends State<TextField> {
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: widget.enabled ? cs.surface : cs.muted,
-                  borderRadius: CatalystRadius.lgAll,
+                  borderRadius: Radii.lgAll,
                   border: Border.all(color: borderColor),
                   boxShadow: boxShadow,
                 ),

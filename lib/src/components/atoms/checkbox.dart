@@ -93,7 +93,7 @@ class Checkbox extends StatelessWidget {
                     height: size.dimension,
                     decoration: BoxDecoration(
                       color: value ? cs.brand : cs.surface,
-                      borderRadius: CatalystRadius.smAll,
+                      borderRadius: Radii.smAll,
                       border:
                           value
                               ? null

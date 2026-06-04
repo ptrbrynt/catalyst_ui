@@ -104,8 +104,8 @@ class SideNav<T> extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(
-                horizontal: CatalystSpacing.s2,
-                vertical: CatalystSpacing.s3,
+                horizontal: Spacing.s2,
+                vertical: Spacing.s3,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -139,7 +139,7 @@ class SideNav<T> extends StatelessWidget {
           padding:
               show
                   ? const EdgeInsets.only(
-                    top: CatalystSpacing.s3,
+                    top: Spacing.s3,
                     left: 10,
                     right: 10,
                     bottom: 6,
@@ -199,7 +199,7 @@ class SideNav<T> extends StatelessWidget {
                   builder: (_, constraints) {
                     const vertPad = 9.0;
                     const iconSize = 18.0;
-                    final hPad = 10.0 + (CatalystSpacing.s3 - 10.0) * t;
+                    final hPad = 10.0 + (Spacing.s3 - 10.0) * t;
                     final contentWidth = constraints.maxWidth - hPad * 2;
                     // Shrinks to zero as the nav expands, centering
                     // the icon in the collapsed rail.
@@ -214,7 +214,7 @@ class SideNav<T> extends StatelessWidget {
                             isSelected
                                 ? cs.brand.withValues(alpha: 0.10)
                                 : null,
-                        borderRadius: CatalystRadius.mdAll,
+                        borderRadius: Radii.mdAll,
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -230,7 +230,7 @@ class SideNav<T> extends StatelessWidget {
                                 opacity: t,
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                    left: CatalystSpacing.s3 * t,
+                                    left: Spacing.s3 * t,
                                   ),
                                   child: DefaultTextStyle.merge(
                                     maxLines: 1,

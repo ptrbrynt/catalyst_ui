@@ -374,7 +374,7 @@ class _ButtonState extends State<Button> {
       height: widget.size.height,
       width: widget._isSquare ? widget.size.height : null,
       decoration: BoxDecoration(
-        borderRadius: CatalystRadius.lgAll,
+        borderRadius: Radii.lgAll,
         boxShadow: widget.elevated ? (style.shadows ?? []) : null,
         border:
             style.borderColor != null

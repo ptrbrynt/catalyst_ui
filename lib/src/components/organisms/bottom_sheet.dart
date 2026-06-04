@@ -41,13 +41,13 @@ class BottomSheet extends StatelessWidget {
         decoration: BoxDecoration(
           color: cs.surface,
           borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(CatalystRadius.xxl),
+            top: Radius.circular(Radii.xxl),
           ),
           boxShadow: context.shadows.lg,
         ),
         padding: const EdgeInsets.only(
-          top: CatalystSpacing.s2,
-          bottom: CatalystSpacing.s4,
+          top: Spacing.s2,
+          bottom: Spacing.s4,
         ),
         child: SafeArea(
           top: false,
@@ -58,13 +58,13 @@ class BottomSheet extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(
-                  top: CatalystSpacing.s2,
-                  bottom: CatalystSpacing.s3,
+                  top: Spacing.s2,
+                  bottom: Spacing.s3,
                 ),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: cs.border,
-                    borderRadius: CatalystRadius.pillAll,
+                    borderRadius: Radii.pillAll,
                   ),
                   child: const SizedBox(height: 4, width: 40),
                 ),
@@ -79,25 +79,25 @@ class BottomSheet extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    left: CatalystSpacing.s5,
-                    right: CatalystSpacing.s5,
-                    bottom: CatalystSpacing.s4,
+                    left: Spacing.s5,
+                    right: Spacing.s5,
+                    bottom: Spacing.s4,
                   ),
                   child: title,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: CatalystSpacing.s2,
-                  horizontal: CatalystSpacing.s5,
+                  vertical: Spacing.s2,
+                  horizontal: Spacing.s5,
                 ),
                 child: child,
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: CatalystSpacing.s4,
-                  left: CatalystSpacing.s5,
-                  right: CatalystSpacing.s5,
+                  top: Spacing.s4,
+                  left: Spacing.s5,
+                  right: Spacing.s5,
                 ),
                 child: footer,
               ),

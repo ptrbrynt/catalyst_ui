@@ -36,7 +36,7 @@ class ValueRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.all(CatalystSpacing.s3),
+          padding: const EdgeInsets.all(Spacing.s3),
           child: Row(
             spacing: 8,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,7 @@ class ValueRow extends StatelessWidget {
         ),
         if (divider)
           const Divider(
-            margin: EdgeInsets.symmetric(horizontal: CatalystSpacing.s3),
+            margin: EdgeInsets.symmetric(horizontal: Spacing.s3),
           ),
       ],
     );

@@ -41,11 +41,13 @@ lib/
 ## Hard rules
 
 ### No Material or Cupertino imports
+
 Every file must import only from `flutter/widgets.dart`, `flutter/services.dart`, or `flutter/foundation.dart`. Never import `package:flutter/material.dart` or `package:flutter/cupertino.dart`. This is non-negotiable — breaking it would introduce hidden dependencies that affect rendering in apps that use neither Material nor Cupertino.
 
 For platform detection use `defaultTargetPlatform` from `flutter/foundation.dart`, not `dart:io Platform`.
 
 ### `public_member_api_docs: true`
+
 Every public class, constructor, field, method, and enum value must have a doc comment (`///`). The analyser enforces this. Run `dart analyze lib/` to verify — it must report `No issues found!` before any change is merged.
 
 ---
@@ -86,7 +88,7 @@ Both `copyWith` and `withColorScheme` must thread **all** fields — `fontFamily
 
 ### `color_utils.dart`
 
-`catalystTextColorFor(Color bg)` is a free function (not a static method on `ThemeData`) to avoid a circular dependency: `ColorScheme` needs it for its `on*` computed getters, but `ColorScheme` is imported by `ThemeData`. Keeping it in a standalone file breaks the cycle.
+`getTextColorFor(Color bg)` is a free function (not a static method on `ThemeData`) to avoid a circular dependency: `ColorScheme` needs it for its `on*` computed getters, but `ColorScheme` is imported by `ThemeData`. Keeping it in a standalone file breaks the cycle.
 
 ---
 
@@ -95,6 +97,7 @@ Both `copyWith` and `withColorScheme` must thread **all** fields — `fontFamily
 Both the **variant** system (structural styles — `Button`, `Chip`, `Badge`) and the **tone** system (semantic colour intent — `Alert`, `Card`, `Snackbar`, `ProgressBar`, `StatusDot`) use exactly the same pattern: an abstract class with `resolve(ColorScheme)` returning a typed style record.
 
 The only distinction is naming:
+
 - **Variant** (`ButtonVariant`, `ChipVariant`, `BadgeVariant`) — controls structure and emphasis.
 - **Tone** (`AlertTone`, `CardTone`, `SnackbarTone`, `ProgressBarTone`, `StatusTone`) — controls semantic colour intent.
 
@@ -162,6 +165,7 @@ Enums are closed — users cannot add cases. Abstract classes let users subclass
 3. **Organism** — new file in `src/components/organisms/`, export from `organisms.dart`.
 
 Checklist for each new widget:
+
 - [ ] Import only `flutter/widgets.dart` (plus `lucide_icons_flutter` if icons needed).
 - [ ] Use `context.colorScheme`, `context.typography`, `context.motion`, `context.shadows`, `context.breakpoints` — never hardcode colours, fonts, durations, or breakpoint values.
 - [ ] All public symbols have `///` doc comments.
@@ -189,6 +193,7 @@ If a new token belongs on an existing sub-object (`ColorScheme`, `Typography`, `
 3. Update both `.light()` and `.dark()` factories in `ColorScheme`, or the defaults in `Motion` / `Shadows`.
 
 For a new **text style** in `Typography` specifically, the checklist is longer:
+
 - Add a private `TextStyle? _foo` field and a `TextStyle? foo` constructor parameter wired via the initializer list.
 - Add a `foo` getter that returns `_foo ?? _style(_headerBase or _bodyBase, size, weight, height: h)` — use `_headerBase` for heading-level styles, `_bodyBase` for body-level styles.
 - Thread `foo: foo ?? _foo` through both `copyWith` and `withColorScheme`.
@@ -204,6 +209,7 @@ dart analyze lib/
 ```
 
 Must report `No issues found!`. The project uses `very_good_analysis` with two overrides in `analysis_options.yaml`:
+
 - `always_use_package_imports: ignore` — relative imports are fine for internal files.
 - `comment_references: ignore` — doc comment refs to names only visible once the barrel is assembled.
 
@@ -213,12 +219,12 @@ Rules enforced include `public_member_api_docs`, `lines_longer_than_80_chars`, `
 
 ## Dependency notes
 
-| Package | Purpose |
-|---------|---------|
-| `lucide_icons_flutter` | Icon set used throughout components |
-| `intl` | Locale-aware formatting (used in pagination and date display) |
-| `dartx` | Iterable / String extensions |
-| `time` | Duration arithmetic helpers |
-| `very_good_analysis` | Strict lint ruleset (dev only) |
+| Package                | Purpose                                                       |
+| ---------------------- | ------------------------------------------------------------- |
+| `lucide_icons_flutter` | Icon set used throughout components                           |
+| `intl`                 | Locale-aware formatting (used in pagination and date display) |
+| `dartx`                | Iterable / String extensions                                  |
+| `time`                 | Duration arithmetic helpers                                   |
+| `very_good_analysis`   | Strict lint ruleset (dev only)                                |
 
 No Material, no Cupertino, no third-party UI frameworks.

@@ -118,7 +118,7 @@ class SnackbarHandlerState extends State<SnackbarHandler>
                   child: SafeArea(
                     top: false,
                     child: Padding(
-                      padding: const EdgeInsets.all(CatalystSpacing.s4),
+                      padding: const EdgeInsets.all(Spacing.s4),
                       child: snackbar,
                     ),
                   ),

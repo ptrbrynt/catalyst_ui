@@ -83,7 +83,7 @@ class _TabsState<T> extends State<Tabs<T>> {
         ),
       ),
       child: Row(
-        spacing: CatalystSpacing.s6,
+        spacing: Spacing.s6,
         children: [
           for (final opt in widget.options) _buildTab(context, opt),
         ],
@@ -113,7 +113,7 @@ class _TabsState<T> extends State<Tabs<T>> {
             widget.onChanged(option.value);
           },
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: CatalystSpacing.s3),
+            padding: const EdgeInsets.symmetric(vertical: Spacing.s3),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -126,7 +126,7 @@ class _TabsState<T> extends State<Tabs<T>> {
               height: 20,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                spacing: CatalystSpacing.s2,
+                spacing: Spacing.s2,
                 children: [
                   Text(option.label),
                   if (option.badge != null)

@@ -118,11 +118,11 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
     return AnimatedContainer(
       duration: motion.standard.duration,
       curve: motion.standard.curve,
-      padding: const EdgeInsets.all(CatalystSpacing.s1),
+      padding: const EdgeInsets.all(Spacing.s1),
       decoration: BoxDecoration(
         color: cs.subtle,
         border: Border.all(color: cs.border),
-        borderRadius: CatalystRadius.mdAll,
+        borderRadius: Radii.mdAll,
       ),
       child: AnimatedSize(
         duration: motion.standard.duration,
@@ -145,7 +145,7 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
     if (option.icon != null && option.label != null) {
       return Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: CatalystSpacing.s1,
+        spacing: Spacing.s1,
         children: [Icon(option.icon), Text(option.label!)],
       );
     }
@@ -183,10 +183,10 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
             curve: motion.micro.curve,
             height: widget.size - 8,
             padding: const EdgeInsets.symmetric(
-              horizontal: CatalystSpacing.s3,
+              horizontal: Spacing.s3,
             ),
             decoration: BoxDecoration(
-              borderRadius: CatalystRadius.smAll,
+              borderRadius: Radii.smAll,
               color: isSelected ? cs.surface : null,
             ),
             child: Builder(

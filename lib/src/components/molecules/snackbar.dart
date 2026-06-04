@@ -166,17 +166,17 @@ class Snackbar extends StatelessWidget {
           curve: motion.micro.curve,
           decoration: BoxDecoration(
             color: style.backgroundColor,
-            borderRadius: CatalystRadius.xlAll,
+            borderRadius: Radii.xlAll,
             boxShadow: context.shadows.lg,
           ),
           constraints: const BoxConstraints(maxWidth: 420),
           padding: const EdgeInsets.symmetric(
-            horizontal: CatalystSpacing.s3,
-            vertical: CatalystSpacing.s4,
+            horizontal: Spacing.s3,
+            vertical: Spacing.s4,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            spacing: CatalystSpacing.s3,
+            spacing: Spacing.s3,
             children: [
               if (icon != null) icon!,
               Expanded(child: message),
@@ -187,8 +187,8 @@ class Snackbar extends StatelessWidget {
                     onTap: action!.onPressed,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: CatalystSpacing.s1,
-                        vertical: CatalystSpacing.s2,
+                        horizontal: Spacing.s1,
+                        vertical: Spacing.s2,
                       ),
                       child: Opacity(
                         opacity: 0.85,

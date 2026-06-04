@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 /// These are used as defaults throughout the library. Override them by
 /// supplying custom [EdgeInsets]/doubles where components accept them
 /// directly, or by substituting your own spacing constants.
-abstract final class CatalystSpacing {
+abstract final class Spacing {
   /// 4 px
   static const double s1 = 4;
 

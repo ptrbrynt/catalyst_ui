@@ -137,6 +137,5 @@ class ThemeData {
   }
 
   /// Returns the legible text colour (dark or light) for [background].
-  static Color textColorFor(Color background) =>
-      catalystTextColorFor(background);
+  static Color textColorFor(Color background) => getTextColorFor(background);
 }

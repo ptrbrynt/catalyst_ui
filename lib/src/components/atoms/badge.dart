@@ -220,7 +220,7 @@ class Badge extends StatelessWidget {
         height: size.height,
         padding: EdgeInsets.symmetric(horizontal: size.horizontalPadding),
         decoration: BoxDecoration(
-          borderRadius: CatalystRadius.pillAll,
+          borderRadius: Radii.pillAll,
           color: style.backgroundColor,
         ),
         child: Row(

@@ -57,7 +57,7 @@ class TopBar<T> extends StatelessWidget {
         duration: motion.micro.duration,
         curve: motion.micro.curve,
         height: 60 + MediaQuery.paddingOf(context).top,
-        padding: const EdgeInsets.symmetric(horizontal: CatalystSpacing.s6),
+        padding: const EdgeInsets.symmetric(horizontal: Spacing.s6),
         decoration: BoxDecoration(
           color: cs.surface,
           border: Border(bottom: BorderSide(color: cs.border)),
@@ -70,7 +70,7 @@ class TopBar<T> extends StatelessWidget {
               if (leading != null) leading!,
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: CatalystSpacing.s4),
+                  padding: const EdgeInsets.only(left: Spacing.s4),
                   child: Row(
                     spacing: 4,
                     children:
@@ -81,7 +81,7 @@ class TopBar<T> extends StatelessWidget {
                 ),
               ),
               Row(
-                spacing: CatalystSpacing.s3,
+                spacing: Spacing.s3,
                 mainAxisSize: MainAxisSize.min,
                 children: actions,
               ),
@@ -105,11 +105,11 @@ class TopBar<T> extends StatelessWidget {
           duration: motion.micro.duration,
           curve: motion.micro.curve,
           padding: const EdgeInsets.symmetric(
-            vertical: CatalystSpacing.s2,
-            horizontal: CatalystSpacing.s3,
+            vertical: Spacing.s2,
+            horizontal: Spacing.s3,
           ),
           decoration: BoxDecoration(
-            borderRadius: CatalystRadius.smAll,
+            borderRadius: Radii.smAll,
             color: isSelected ? cs.brand.withValues(alpha: 0.10) : null,
           ),
           child: Text(

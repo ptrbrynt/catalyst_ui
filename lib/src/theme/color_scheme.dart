@@ -179,37 +179,37 @@ class ColorScheme {
   // ── Computed on-colours ───────────────────────────────────────────────────
 
   /// Readable text colour for content placed on [canvas].
-  Color get onCanvas => catalystTextColorFor(canvas);
+  Color get onCanvas => getTextColorFor(canvas);
 
   /// Readable text colour for content placed on [surface].
-  Color get onSurface => catalystTextColorFor(surface);
+  Color get onSurface => getTextColorFor(surface);
 
   /// Readable text colour for content placed on [subtle].
-  Color get onSubtle => catalystTextColorFor(subtle);
+  Color get onSubtle => getTextColorFor(subtle);
 
   /// Readable text colour for content placed on [muted].
-  Color get onMuted => catalystTextColorFor(muted);
+  Color get onMuted => getTextColorFor(muted);
 
   /// Readable text colour for content placed on [tint].
-  Color get onTint => catalystTextColorFor(tint);
+  Color get onTint => getTextColorFor(tint);
 
   /// Readable text colour for content placed on [brand].
-  Color get onBrand => catalystTextColorFor(brand);
+  Color get onBrand => getTextColorFor(brand);
 
   /// Readable text colour for content placed on [brandSoft].
-  Color get onBrandSoft => catalystTextColorFor(brandSoft);
+  Color get onBrandSoft => getTextColorFor(brandSoft);
 
   /// Readable text colour for content placed on [inverse].
-  Color get onInverse => catalystTextColorFor(inverse);
+  Color get onInverse => getTextColorFor(inverse);
 
   /// Readable text colour for content placed on [success].
-  Color get onSuccess => catalystTextColorFor(success);
+  Color get onSuccess => getTextColorFor(success);
 
   /// Readable text colour for content placed on [danger].
-  Color get onDanger => catalystTextColorFor(danger);
+  Color get onDanger => getTextColorFor(danger);
 
   /// Readable text colour for content placed on [warning].
-  Color get onWarning => catalystTextColorFor(warning);
+  Color get onWarning => getTextColorFor(warning);
 
   // ── Mutation ──────────────────────────────────────────────────────────────
 

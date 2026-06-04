@@ -201,7 +201,7 @@ class _ChipState extends State<Chip> {
                   height: 32,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    borderRadius: CatalystRadius.pillAll,
+                    borderRadius: Radii.pillAll,
                     border: Border.all(color: style.borderColor),
                     color: style.backgroundColor,
                   ),

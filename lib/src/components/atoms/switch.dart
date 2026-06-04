@@ -113,7 +113,7 @@ class _SwitchState extends State<Switch> {
             width: _dimens.width,
             height: _dimens.height,
             decoration: BoxDecoration(
-              borderRadius: CatalystRadius.pillAll,
+              borderRadius: Radii.pillAll,
               color: widget.value ? cs.brand : cs.textDisabled,
             ),
             alignment:

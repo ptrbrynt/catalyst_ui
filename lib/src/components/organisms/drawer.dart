@@ -44,7 +44,7 @@ class Drawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(CatalystSpacing.s4),
+            padding: const EdgeInsets.all(Spacing.s4),
             child: Row(
               spacing: 8,
               children: [
@@ -71,14 +71,14 @@ class Drawer extends StatelessWidget {
           const Divider(),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(CatalystSpacing.s3),
+              padding: const EdgeInsets.all(Spacing.s3),
               child: body,
             ),
           ),
           if (footer != null) ...[
             const Divider(),
             Padding(
-              padding: const EdgeInsets.all(CatalystSpacing.s3),
+              padding: const EdgeInsets.all(Spacing.s3),
               child: footer,
             ),
           ],

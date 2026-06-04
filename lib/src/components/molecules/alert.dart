@@ -154,13 +154,13 @@ class Alert extends StatelessWidget {
       curve: motion.standard.curve,
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: CatalystRadius.lgAll,
+        borderRadius: Radii.lgAll,
         border: Border.all(color: borderColor),
       ),
-      padding: const EdgeInsets.all(CatalystSpacing.s4),
+      padding: const EdgeInsets.all(Spacing.s4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: CatalystSpacing.s3,
+        spacing: Spacing.s3,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 1),
@@ -200,7 +200,7 @@ class Alert extends StatelessWidget {
                   ),
                 ],
                 if (action != null) ...[
-                  const SizedBox(height: CatalystSpacing.s3),
+                  const SizedBox(height: Spacing.s3),
                   action!,
                 ],
               ],

@@ -10,7 +10,7 @@ class ListItem extends StatelessWidget {
   const ListItem({
     required this.title,
     this.divider = true,
-    this.padding = const EdgeInsets.all(CatalystSpacing.s4),
+    this.padding = const EdgeInsets.all(Spacing.s4),
     this.leading,
     this.subtitle,
     this.trailing,
@@ -49,16 +49,15 @@ class ListItem extends StatelessWidget {
       curve: motion.standard.curve,
       padding: padding,
       decoration: BoxDecoration(
-        border: divider
-            ? Border(bottom: BorderSide(color: cs.borderSubtle))
-            : null,
+        border:
+            divider ? Border(bottom: BorderSide(color: cs.borderSubtle)) : null,
       ),
       child: MouseRegion(
         cursor: onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
         child: GestureDetector(
           onTap: onTap,
           child: Row(
-            spacing: CatalystSpacing.s3,
+            spacing: Spacing.s3,
             children: [
               if (leading != null)
                 IconTheme(

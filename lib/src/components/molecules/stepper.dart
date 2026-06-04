@@ -68,8 +68,8 @@ class _StepperState extends State<Stepper> {
                 child: Container(
                   height: 2,
                   margin: const EdgeInsets.only(
-                    left: CatalystSpacing.s2,
-                    right: CatalystSpacing.s2,
+                    left: Spacing.s2,
+                    right: Spacing.s2,
                     bottom: 18,
                   ),
                   decoration: BoxDecoration(
@@ -77,7 +77,7 @@ class _StepperState extends State<Stepper> {
                         i < _current
                             ? context.colorScheme.brand
                             : context.colorScheme.border,
-                    borderRadius: CatalystRadius.pillAll,
+                    borderRadius: Radii.pillAll,
                   ),
                 ),
               ),

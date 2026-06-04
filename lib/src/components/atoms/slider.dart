@@ -119,7 +119,7 @@ class _SliderState extends State<Slider> {
                       height: _kTrackHeight,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius: CatalystRadius.pillAll,
+                          borderRadius: Radii.pillAll,
                           color: cs.muted,
                         ),
                       ),
@@ -132,7 +132,7 @@ class _SliderState extends State<Slider> {
                       height: _kTrackHeight,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius: CatalystRadius.pillAll,
+                          borderRadius: Radii.pillAll,
                           color: cs.brand,
                         ),
                       ),

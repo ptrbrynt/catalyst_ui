@@ -66,7 +66,7 @@ class Modal extends StatelessWidget {
           curve: motion.micro.curve,
           decoration: BoxDecoration(
             color: cs.surface,
-            borderRadius: CatalystRadius.xlAll,
+            borderRadius: Radii.xlAll,
             border: Border.all(color: cs.border),
             boxShadow: context.shadows.lg,
           ),
@@ -74,11 +74,11 @@ class Modal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: CatalystSpacing.s2),
+              const SizedBox(height: Spacing.s2),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: CatalystSpacing.s4,
-                  vertical: CatalystSpacing.s2,
+                  horizontal: Spacing.s4,
+                  vertical: Spacing.s2,
                 ),
                 child: DefaultTextStyle(
                   style: TextStyle(
@@ -93,18 +93,18 @@ class Modal extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: CatalystSpacing.s4,
-                  vertical: CatalystSpacing.s2,
+                  horizontal: Spacing.s4,
+                  vertical: Spacing.s2,
                 ),
                 child: body,
               ),
-              const SizedBox(height: CatalystSpacing.s2),
+              const SizedBox(height: Spacing.s2),
               if (actions.isNotEmpty) ...[
                 const Divider(),
                 Padding(
-                  padding: const EdgeInsets.all(CatalystSpacing.s3),
+                  padding: const EdgeInsets.all(Spacing.s3),
                   child: Row(
-                    spacing: CatalystSpacing.s2,
+                    spacing: Spacing.s2,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: actions,
                   ),

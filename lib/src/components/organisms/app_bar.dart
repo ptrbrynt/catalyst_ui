@@ -53,7 +53,7 @@ class AppBar extends StatelessWidget {
           duration: motion.standard.duration,
           curve: motion.standard.curve,
           height: 56 + MediaQuery.paddingOf(context).top,
-          padding: const EdgeInsets.symmetric(horizontal: CatalystSpacing.s2),
+          padding: const EdgeInsets.symmetric(horizontal: Spacing.s2),
           decoration: BoxDecoration(
             color: cs.surface,
             border: Border(bottom: BorderSide(color: cs.borderSubtle)),
@@ -65,7 +65,8 @@ class AppBar extends StatelessWidget {
               children: [
                 SizedBox.square(
                   dimension: 44,
-                  child: leading ??
+                  child:
+                      leading ??
                       (automaticallyImplyLeading
                           ? _backButton(context)
                           : const SizedBox.shrink()),

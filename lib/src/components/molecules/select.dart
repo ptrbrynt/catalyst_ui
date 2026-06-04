@@ -100,8 +100,8 @@ class _SelectState<T> extends State<Select<T>> {
   bool get _isOpen => _overlay != null;
 
   double get _triggerHeight => switch (widget.size) {
-    SelectSize.small => CatalystSpacing.s10,
-    SelectSize.medium => CatalystSpacing.s12,
+    SelectSize.small => Spacing.s10,
+    SelectSize.medium => Spacing.s12,
     SelectSize.large => 56.0,
   };
 
@@ -212,7 +212,7 @@ class _SelectState<T> extends State<Select<T>> {
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   decoration: BoxDecoration(
                     color: widget.disabled ? cs.muted : cs.surface,
-                    borderRadius: CatalystRadius.lgAll,
+                    borderRadius: Radii.lgAll,
                     border: Border.all(color: borderColor),
                     boxShadow: boxShadow,
                   ),
@@ -307,12 +307,12 @@ class _SelectDropdown<T> extends StatelessWidget {
                 constraints: const BoxConstraints(maxHeight: 240),
                 decoration: BoxDecoration(
                   color: colorScheme.surface,
-                  borderRadius: CatalystRadius.lgAll,
+                  borderRadius: Radii.lgAll,
                   border: Border.all(color: colorScheme.border),
                   boxShadow: shadows.lg,
                 ),
                 child: ClipRRect(
-                  borderRadius: CatalystRadius.lgAll,
+                  borderRadius: Radii.lgAll,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

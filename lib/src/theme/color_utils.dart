@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 ///
 /// Uses relative luminance with a perceptual threshold so that components can
 /// automatically choose readable text/icon colours without hardcoding them.
-Color catalystTextColorFor(Color background) {
+Color getTextColorFor(Color background) {
   const darkText = Color(0xFF0F172A);
   const lightText = Color(0xFFFFFFFF);
   final luminance = background.computeLuminance();

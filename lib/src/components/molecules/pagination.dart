@@ -81,7 +81,7 @@ class _PaginationState extends State<Pagination> {
       curve: motion.micro.curve,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: CatalystSpacing.s1,
+        spacing: Spacing.s1,
         children: [
           Button.icon(
             icon: const Icon(LucideIcons.chevronLeft, size: 16),
@@ -95,7 +95,7 @@ class _PaginationState extends State<Pagination> {
           for (final page in _pages)
             page == '...'
                 ? SizedBox(
-                  width: CatalystSpacing.s8,
+                  width: Spacing.s8,
                   child: Center(
                     child: Text(
                       '…',
@@ -145,11 +145,11 @@ class _PaginationState extends State<Pagination> {
           child: AnimatedContainer(
             duration: motion.micro.duration,
             curve: motion.micro.curve,
-            width: CatalystSpacing.s8,
-            height: CatalystSpacing.s8,
+            width: Spacing.s8,
+            height: Spacing.s8,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: CatalystRadius.smAll,
+              borderRadius: Radii.smAll,
               color: isCurrent ? cs.brand : null,
             ),
             child: Text('${p + 1}'),

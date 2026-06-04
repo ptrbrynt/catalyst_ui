@@ -90,13 +90,13 @@ class _DangerProgressBarTone extends ProgressBarTone {
 /// Controls the height of a [ProgressBar].
 enum ProgressBarSize {
   /// 4 px tall.
-  small(CatalystSpacing.s1),
+  small(Spacing.s1),
 
   /// 8 px tall (default).
-  medium(CatalystSpacing.s2),
+  medium(Spacing.s2),
 
   /// 12 px tall.
-  large(CatalystSpacing.s3);
+  large(Spacing.s3);
 
   const ProgressBarSize(this.height);
 
@@ -220,7 +220,7 @@ class _ProgressBarState extends State<ProgressBar>
         Container(
           height: widget.size.height,
           decoration: BoxDecoration(
-            borderRadius: CatalystRadius.pillAll,
+            borderRadius: Radii.pillAll,
             color: context.colorScheme.muted,
           ),
           child: LayoutBuilder(
@@ -234,7 +234,7 @@ class _ProgressBarState extends State<ProgressBar>
                           height: widget.size.height,
                           width: constraints.maxWidth * _controller.value,
                           decoration: BoxDecoration(
-                            borderRadius: CatalystRadius.pillAll,
+                            borderRadius: Radii.pillAll,
                             color: fillColor,
                           ),
                         ),

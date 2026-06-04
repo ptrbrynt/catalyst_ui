@@ -81,19 +81,16 @@ class StatCard extends StatelessWidget {
     final cs = context.colorScheme;
     final typo = context.typography;
 
-    final iconColor = primary
-        ? cs.onBrand
-        : cs.brand;
-    final titleColor = primary
-        ? cs.onBrand.withValues(alpha: 0.85)
-        : cs.textMuted;
+    final iconColor = primary ? cs.onBrand : cs.brand;
+    final titleColor =
+        primary ? cs.onBrand.withValues(alpha: 0.85) : cs.textMuted;
     final valueColor = primary ? cs.onBrand : cs.text;
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 220),
       child: Card(
         tone: primary ? CardTone.brand : CardTone.subtle,
-        padding: const EdgeInsets.all(CatalystSpacing.s4),
+        padding: const EdgeInsets.all(Spacing.s4),
         child: IconTheme(
           data: IconThemeData(color: iconColor, size: 18),
           child: Column(

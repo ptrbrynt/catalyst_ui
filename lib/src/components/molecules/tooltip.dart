@@ -123,7 +123,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
                         ),
                         decoration: BoxDecoration(
                           color: cs.inverse,
-                          borderRadius: CatalystRadius.smAll,
+                          borderRadius: Radii.smAll,
                           boxShadow: shadows.md,
                         ),
                         child: Text(

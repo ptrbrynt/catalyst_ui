@@ -66,18 +66,18 @@ class ActionTile extends StatelessWidget {
     return AnimatedContainer(
       duration: motion.standard.duration,
       curve: motion.standard.curve,
-      padding: const EdgeInsets.all(CatalystSpacing.s4),
+      padding: const EdgeInsets.all(Spacing.s4),
       decoration: BoxDecoration(
         color: cs.subtle,
         border: Border.all(color: cs.border),
-        borderRadius: CatalystRadius.xlAll,
+        borderRadius: Radii.xlAll,
       ),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: onTap,
           child: Row(
-            spacing: CatalystSpacing.s4,
+            spacing: Spacing.s4,
             children: [
               _buildIcon(context),
               Expanded(child: _buildContent(context)),

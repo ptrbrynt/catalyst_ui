@@ -111,7 +111,7 @@ class Card extends StatelessWidget {
   const Card({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(CatalystSpacing.s3),
+    this.padding = const EdgeInsets.all(Spacing.s3),
     this.tone = CardTone.subtle,
     this.interactive = false,
     this.onTap,
@@ -146,7 +146,7 @@ class Card extends StatelessWidget {
         decoration: BoxDecoration(
           color: style.backgroundColor,
           border: Border.all(color: style.borderColor),
-          borderRadius: CatalystRadius.xlAll,
+          borderRadius: Radii.xlAll,
         ),
         padding: padding,
         child: AnimatedDefaultTextStyle(

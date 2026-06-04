@@ -36,17 +36,18 @@ Future<T?> showModal<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => Theme(
-      data: themeData,
-      child: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(CatalystSpacing.s4),
-            child: builder(context),
+    pageBuilder:
+        (context, _, _) => Theme(
+          data: themeData,
+          child: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(Spacing.s4),
+                child: builder(context),
+              ),
+            ),
           ),
         ),
-      ),
-    ),
   );
 }
 
@@ -86,15 +87,17 @@ Future<T?> showBottomSheet<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => Theme(
-      data: themeData,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: draggable
-            ? _DraggableSheet(child: builder(context))
-            : builder(context),
-      ),
-    ),
+    pageBuilder:
+        (context, _, _) => Theme(
+          data: themeData,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child:
+                draggable
+                    ? _DraggableSheet(child: builder(context))
+                    : builder(context),
+          ),
+        ),
   );
 }
 
@@ -132,13 +135,14 @@ Future<T?> showDrawer<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => Theme(
-      data: themeData,
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: builder(context),
-      ),
-    ),
+    pageBuilder:
+        (context, _, _) => Theme(
+          data: themeData,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: builder(context),
+          ),
+        ),
   );
 }
 
@@ -180,13 +184,13 @@ class _DraggableSheetState extends State<_DraggableSheet>
       return;
     }
     final start = _offset;
-    final anim =
-        Tween<double>(begin: start, end: 0).animate(
-          CurvedAnimation(parent: _snapBack, curve: Curves.easeOut),
-        );
+    final anim = Tween<double>(begin: start, end: 0).animate(
+      CurvedAnimation(parent: _snapBack, curve: Curves.easeOut),
+    );
     void listener() {
       if (mounted) setState(() => _offset = anim.value);
     }
+
     anim.addListener(listener);
     unawaited(
       _snapBack.forward(from: 0).then((_) {
