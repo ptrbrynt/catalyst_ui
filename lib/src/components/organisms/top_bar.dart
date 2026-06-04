@@ -73,9 +73,10 @@ class TopBar<T> extends StatelessWidget {
                   padding: const EdgeInsets.only(left: CatalystSpacing.s4),
                   child: Row(
                     spacing: 4,
-                    children: destinations
-                        .map((d) => _buildDest(context, d))
-                        .toList(),
+                    children:
+                        destinations
+                            .map((d) => _buildDest(context, d))
+                            .toList(),
                   ),
                 ),
               ),
@@ -109,9 +110,7 @@ class TopBar<T> extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: CatalystRadius.smAll,
-            color: isSelected
-                ? cs.brand.withValues(alpha: 0.10)
-                : null,
+            color: isSelected ? cs.brand.withValues(alpha: 0.10) : null,
           ),
           child: Text(
             d.label,

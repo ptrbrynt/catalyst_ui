@@ -104,7 +104,7 @@ class ActionTile extends StatelessWidget {
       alignment: Alignment.center,
       child: IconTheme(
         data: IconThemeData(
-          color: CatalystThemeData.textColorFor(iconBackgroundColor),
+          color: ThemeData.textColorFor(iconBackgroundColor),
         ),
         child: icon,
       ),

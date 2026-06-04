@@ -91,7 +91,7 @@ class StatCard extends StatelessWidget {
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 220),
-      child: CatalystCard(
+      child: Card(
         tone: primary ? CardTone.brand : CardTone.subtle,
         padding: const EdgeInsets.all(CatalystSpacing.s4),
         child: IconTheme(

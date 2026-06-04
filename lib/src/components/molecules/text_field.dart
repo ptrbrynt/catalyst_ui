@@ -5,7 +5,7 @@ import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
 import '../../tokens/spacing.dart';
 
-/// Controls the height of a [CatalystTextField].
+/// Controls the height of a [TextField].
 enum TextFieldSize {
   /// 40 px tall input.
   small,
@@ -22,9 +22,9 @@ enum TextFieldSize {
 /// Supports labels, placeholder text, helper/error messages, and leading and
 /// trailing widgets. Either [controller] or [initialValue] may be provided,
 /// not both.
-class CatalystTextField extends StatefulWidget {
+class TextField extends StatefulWidget {
   /// Creates a text field.
-  const CatalystTextField({
+  const TextField({
     super.key,
     this.label,
     this.controller,
@@ -145,10 +145,10 @@ class CatalystTextField extends StatefulWidget {
   final Iterable<String>? autofillHints;
 
   @override
-  State<CatalystTextField> createState() => _CatalystTextFieldState();
+  State<TextField> createState() => _TextFieldState();
 }
 
-class _CatalystTextFieldState extends State<CatalystTextField> {
+class _TextFieldState extends State<TextField> {
   TextEditingController? _internalController;
   FocusNode? _internalFocusNode;
   bool _isFocused = false;
@@ -169,7 +169,7 @@ class _CatalystTextFieldState extends State<CatalystTextField> {
   }
 
   @override
-  void didUpdateWidget(CatalystTextField oldWidget) {
+  void didUpdateWidget(TextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       (oldWidget.focusNode ?? _internalFocusNode)?.removeListener(

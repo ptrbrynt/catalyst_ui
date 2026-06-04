@@ -4,58 +4,58 @@
 /// work intuitively:
 ///
 /// ```dart
-/// if (breakpoint >= CatalystBreakpoint.md) {
+/// if (breakpoint >= Breakpoint.md) {
 ///   // tablet portrait or wider
 /// }
 /// ```
-enum CatalystBreakpoint {
-  /// Below [CatalystBreakpoints.sm] — phone portrait.
+enum Breakpoint {
+  /// Below [Breakpoints.sm] — phone portrait.
   xs,
 
-  /// At or above [CatalystBreakpoints.sm] — phone landscape / large phone.
+  /// At or above [Breakpoints.sm] — phone landscape / large phone.
   sm,
 
-  /// At or above [CatalystBreakpoints.md] — tablet portrait.
+  /// At or above [Breakpoints.md] — tablet portrait.
   md,
 
-  /// At or above [CatalystBreakpoints.lg] — tablet landscape / small desktop.
+  /// At or above [Breakpoints.lg] — tablet landscape / small desktop.
   lg,
 
-  /// At or above [CatalystBreakpoints.xl] — standard desktop.
+  /// At or above [Breakpoints.xl] — standard desktop.
   xl,
 
-  /// At or above [CatalystBreakpoints.xxl] — large desktop.
+  /// At or above [Breakpoints.xxl] — large desktop.
   xxl;
 
   /// True when this breakpoint is at least as wide as [other].
-  bool operator >=(CatalystBreakpoint other) => index >= other.index;
+  bool operator >=(Breakpoint other) => index >= other.index;
 
   /// True when this breakpoint is wider than [other].
-  bool operator >(CatalystBreakpoint other) => index > other.index;
+  bool operator >(Breakpoint other) => index > other.index;
 
   /// True when this breakpoint is at most as wide as [other].
-  bool operator <=(CatalystBreakpoint other) => index <= other.index;
+  bool operator <=(Breakpoint other) => index <= other.index;
 
   /// True when this breakpoint is narrower than [other].
-  bool operator <(CatalystBreakpoint other) => index < other.index;
+  bool operator <(Breakpoint other) => index < other.index;
 }
 
 /// The minimum widths (in logical pixels) at which each named breakpoint
 /// becomes active.
 ///
 /// Defaults follow common web conventions. Override any threshold via
-/// [copyWith] or by supplying a custom instance to [CatalystThemeData]:
+/// [copyWith] or by supplying a custom instance to [ThemeData]:
 ///
 /// ```dart
-/// CatalystThemeData.light().copyWith(
-///   breakpoints: const CatalystBreakpoints(md: 900, lg: 1200),
+/// ThemeData.light().copyWith(
+///   breakpoints: const Breakpoints(md: 900, lg: 1200),
 /// )
 /// ```
-class CatalystBreakpoints {
+class Breakpoints {
   /// Creates a breakpoints configuration.
   ///
   /// All parameters default to common web-standard values.
-  const CatalystBreakpoints({
+  const Breakpoints({
     this.sm = 640,
     this.md = 768,
     this.lg = 1024,
@@ -63,40 +63,40 @@ class CatalystBreakpoints {
     this.xxl = 1536,
   });
 
-  /// Minimum width for [CatalystBreakpoint.sm] (default 640 px).
+  /// Minimum width for [Breakpoint.sm] (default 640 px).
   final double sm;
 
-  /// Minimum width for [CatalystBreakpoint.md] (default 768 px).
+  /// Minimum width for [Breakpoint.md] (default 768 px).
   final double md;
 
-  /// Minimum width for [CatalystBreakpoint.lg] (default 1024 px).
+  /// Minimum width for [Breakpoint.lg] (default 1024 px).
   final double lg;
 
-  /// Minimum width for [CatalystBreakpoint.xl] (default 1280 px).
+  /// Minimum width for [Breakpoint.xl] (default 1280 px).
   final double xl;
 
-  /// Minimum width for [CatalystBreakpoint.xxl] (default 1536 px).
+  /// Minimum width for [Breakpoint.xxl] (default 1536 px).
   final double xxl;
 
-  /// Returns the active [CatalystBreakpoint] for the given [width].
-  CatalystBreakpoint resolve(double width) {
-    if (width >= xxl) return CatalystBreakpoint.xxl;
-    if (width >= xl) return CatalystBreakpoint.xl;
-    if (width >= lg) return CatalystBreakpoint.lg;
-    if (width >= md) return CatalystBreakpoint.md;
-    if (width >= sm) return CatalystBreakpoint.sm;
-    return CatalystBreakpoint.xs;
+  /// Returns the active [Breakpoint] for the given [width].
+  Breakpoint resolve(double width) {
+    if (width >= xxl) return Breakpoint.xxl;
+    if (width >= xl) return Breakpoint.xl;
+    if (width >= lg) return Breakpoint.lg;
+    if (width >= md) return Breakpoint.md;
+    if (width >= sm) return Breakpoint.sm;
+    return Breakpoint.xs;
   }
 
   /// Returns a copy with the given thresholds replaced.
-  CatalystBreakpoints copyWith({
+  Breakpoints copyWith({
     double? sm,
     double? md,
     double? lg,
     double? xl,
     double? xxl,
   }) {
-    return CatalystBreakpoints(
+    return Breakpoints(
       sm: sm ?? this.sm,
       md: md ?? this.md,
       lg: lg ?? this.lg,

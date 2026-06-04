@@ -35,7 +35,7 @@ class BadgeVariantStyle {
 ///   const PremiumBadgeVariant();
 ///
 ///   @override
-///   BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+///   BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
 ///     backgroundColor: const Color(0xFFFFF7E6),
 ///     foregroundColor: const Color(0xFFB45309),
 ///     dotColor: const Color(0xFFD97706),
@@ -70,14 +70,14 @@ abstract class BadgeVariant {
   static const BadgeVariant brand = _BrandBadgeVariant();
 
   /// Resolves the visual style for this variant against [colorScheme].
-  BadgeVariantStyle resolve(CatalystColorScheme colorScheme);
+  BadgeVariantStyle resolve(ColorScheme colorScheme);
 }
 
 class _NeutralBadgeVariant extends BadgeVariant {
   const _NeutralBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.subtle,
     foregroundColor: cs.textMuted,
     dotColor: cs.textSubtle,
@@ -88,7 +88,7 @@ class _InfoBadgeVariant extends BadgeVariant {
   const _InfoBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.infoSoft,
     foregroundColor: cs.info,
     dotColor: cs.info,
@@ -99,7 +99,7 @@ class _SuccessBadgeVariant extends BadgeVariant {
   const _SuccessBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.successSoft,
     foregroundColor: cs.success,
     dotColor: cs.success,
@@ -110,7 +110,7 @@ class _WarningBadgeVariant extends BadgeVariant {
   const _WarningBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.warningSoft,
     foregroundColor: cs.warning,
     dotColor: cs.warning,
@@ -121,7 +121,7 @@ class _DangerBadgeVariant extends BadgeVariant {
   const _DangerBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.dangerSoft,
     foregroundColor: cs.danger,
     dotColor: cs.danger,
@@ -132,7 +132,7 @@ class _BrandBadgeVariant extends BadgeVariant {
   const _BrandBadgeVariant();
 
   @override
-  BadgeVariantStyle resolve(CatalystColorScheme cs) => BadgeVariantStyle(
+  BadgeVariantStyle resolve(ColorScheme cs) => BadgeVariantStyle(
     backgroundColor: cs.brand,
     foregroundColor: cs.onBrand,
     dotColor: cs.onBrand,

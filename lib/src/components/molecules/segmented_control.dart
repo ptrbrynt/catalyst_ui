@@ -17,9 +17,9 @@ class SegmentedControlOption<T> {
     this.label,
     this.icon,
   }) : assert(
-          label != null || icon != null,
-          'Either label or icon must be provided.',
-        );
+         label != null || icon != null,
+         'Either label or icon must be provided.',
+       );
 
   /// The value associated with this option.
   final T value;
@@ -190,15 +190,15 @@ class _SegmentedControlState<T> extends State<SegmentedControl<T>> {
               color: isSelected ? cs.surface : null,
             ),
             child: Builder(
-            builder: (context) {
-              final color = DefaultTextStyle.of(context).style.color;
-              final iconSize = widget.size < 40 ? 14.0 : 16.0;
-              return IconTheme(
-                data: IconThemeData(color: color, size: iconSize),
-                child: _buildContent(option),
-              );
-            },
-          ),
+              builder: (context) {
+                final color = DefaultTextStyle.of(context).style.color;
+                final iconSize = widget.size < 40 ? 14.0 : 16.0;
+                return IconTheme(
+                  data: IconThemeData(color: color, size: iconSize),
+                  child: _buildContent(option),
+                );
+              },
+            ),
           ),
         ),
       ),

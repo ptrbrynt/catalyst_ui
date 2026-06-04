@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../theme/extensions.dart';
 
-/// Controls the size of a [CatalystRadio].
+/// Controls the size of a [Radio].
 enum RadioSize {
   /// 16 × 16 px.
   small(16),
@@ -24,15 +24,15 @@ enum RadioSize {
 /// Pass `null` for [onSelected] to render the button as disabled.
 ///
 /// ```dart
-/// CatalystRadio(
+/// Radio(
 ///   value: selectedOption == 'a',
 ///   label: const Text('Option A'),
 ///   onSelected: (_) => setState(() => selectedOption = 'a'),
 /// )
 /// ```
-class CatalystRadio extends StatelessWidget {
+class Radio extends StatelessWidget {
   /// Creates a radio button.
-  const CatalystRadio({
+  const Radio({
     required this.value,
     this.label,
     this.size = RadioSize.medium,

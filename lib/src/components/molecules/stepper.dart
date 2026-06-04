@@ -11,14 +11,14 @@ import '../../tokens/spacing.dart';
 /// in an outlined circle; future steps are greyed out.
 ///
 /// ```dart
-/// CatalystStepper(
+/// Stepper(
 ///   current: 1,
 ///   steps: const ['Account', 'Details', 'Review'],
 /// )
 /// ```
-class CatalystStepper extends StatefulWidget {
+class Stepper extends StatefulWidget {
   /// Creates a stepper.
-  const CatalystStepper({
+  const Stepper({
     required this.current,
     required this.steps,
     super.key,
@@ -31,10 +31,10 @@ class CatalystStepper extends StatefulWidget {
   final List<String> steps;
 
   @override
-  State<CatalystStepper> createState() => _CatalystStepperState();
+  State<Stepper> createState() => _StepperState();
 }
 
-class _CatalystStepperState extends State<CatalystStepper> {
+class _StepperState extends State<Stepper> {
   late int _current;
 
   @override
@@ -44,7 +44,7 @@ class _CatalystStepperState extends State<CatalystStepper> {
   }
 
   @override
-  void didUpdateWidget(CatalystStepper oldWidget) {
+  void didUpdateWidget(Stepper oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.current != widget.current) {
       setState(() => _current = widget.current);
@@ -73,9 +73,10 @@ class _CatalystStepperState extends State<CatalystStepper> {
                     bottom: 18,
                   ),
                   decoration: BoxDecoration(
-                    color: i < _current
-                        ? context.colorScheme.brand
-                        : context.colorScheme.border,
+                    color:
+                        i < _current
+                            ? context.colorScheme.brand
+                            : context.colorScheme.border,
                     borderRadius: CatalystRadius.pillAll,
                   ),
                 ),
@@ -94,11 +95,12 @@ class _CatalystStepperState extends State<CatalystStepper> {
     final isDone = i < _current;
     final isActive = i == _current;
 
-    final indicatorFg = isDone
-        ? cs.onBrand
-        : isActive
-        ? cs.brand
-        : cs.textMuted;
+    final indicatorFg =
+        isDone
+            ? cs.onBrand
+            : isActive
+            ? cs.brand
+            : cs.textMuted;
 
     return Column(
       spacing: 6,
@@ -123,22 +125,23 @@ class _CatalystStepperState extends State<CatalystStepper> {
               shape: BoxShape.circle,
               border: Border.all(
                 width: 1.5,
-                color:
-                    (isDone || isActive) ? cs.brand : cs.border,
+                color: (isDone || isActive) ? cs.brand : cs.border,
               ),
-              color: isDone
-                  ? cs.brand
-                  : isActive
-                  ? cs.surface
-                  : cs.subtle,
+              color:
+                  isDone
+                      ? cs.brand
+                      : isActive
+                      ? cs.surface
+                      : cs.subtle,
             ),
             child: AnimatedSwitcher(
               duration: motion.micro.duration,
               switchInCurve: motion.micro.curve,
               switchOutCurve: motion.micro.curve,
-              child: isDone
-                  ? Icon(LucideIcons.check, size: 14, color: indicatorFg)
-                  : Text('${i + 1}'),
+              child:
+                  isDone
+                      ? Icon(LucideIcons.check, size: 14, color: indicatorFg)
+                      : Text('${i + 1}'),
             ),
           ),
         ),

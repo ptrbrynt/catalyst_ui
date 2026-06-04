@@ -5,16 +5,16 @@ import 'color_utils.dart';
 /// The full set of semantic colours consumed by all Catalyst components.
 ///
 /// Retrieve via `context.colorScheme`. Two factory constructors are provided
-/// for convenience — [CatalystColorScheme.light] and
-/// [CatalystColorScheme.dark] — but every field may also be overridden
+/// for convenience — [ColorScheme.light] and
+/// [ColorScheme.dark] — but every field may also be overridden
 /// individually using the default (required) constructor or [copyWith].
-class CatalystColorScheme {
+class ColorScheme {
   /// Creates a fully custom colour scheme.
   ///
   /// Every field is required so that no colour is silently defaulted.
-  /// Use [CatalystColorScheme.light] or [CatalystColorScheme.dark] and
+  /// Use [ColorScheme.light] or [ColorScheme.dark] and
   /// call [copyWith] to start from a sensible base.
-  const CatalystColorScheme({
+  const ColorScheme({
     required this.canvas,
     required this.surface,
     required this.subtle,
@@ -43,8 +43,8 @@ class CatalystColorScheme {
   /// A sensible light-mode colour scheme.
   ///
   /// Brand defaults to a clean blue (`#0066FF`). Override by calling
-  /// `CatalystColorScheme.light().copyWith(brand: yourColor, ...)`.
-  const CatalystColorScheme.light()
+  /// `ColorScheme.light().copyWith(brand: yourColor, ...)`.
+  const ColorScheme.light()
     : canvas = const Color(0xFFFFFFFF),
       surface = const Color(0xFFFFFFFF),
       subtle = const Color(0xFFF8F9FA),
@@ -70,7 +70,7 @@ class CatalystColorScheme {
       infoSoft = const Color(0xFFEFF6FF);
 
   /// A sensible dark-mode colour scheme.
-  const CatalystColorScheme.dark()
+  const ColorScheme.dark()
     : canvas = const Color(0xFF0B0F19),
       surface = const Color(0xFF141924),
       subtle = const Color(0xFF1A2030),
@@ -214,7 +214,7 @@ class CatalystColorScheme {
   // ── Mutation ──────────────────────────────────────────────────────────────
 
   /// Returns a copy of this scheme with the given fields replaced.
-  CatalystColorScheme copyWith({
+  ColorScheme copyWith({
     Color? canvas,
     Color? surface,
     Color? subtle,
@@ -239,7 +239,7 @@ class CatalystColorScheme {
     Color? dangerSoft,
     Color? infoSoft,
   }) {
-    return CatalystColorScheme(
+    return ColorScheme(
       canvas: canvas ?? this.canvas,
       surface: surface ?? this.surface,
       subtle: subtle ?? this.subtle,

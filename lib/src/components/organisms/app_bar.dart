@@ -11,9 +11,9 @@ import '../atoms/button.dart';
 /// When [automaticallyImplyLeading] is `true` and the current route can be
 /// popped, a back button is shown automatically. On iOS the back button uses
 /// a chevron; on other platforms it uses an arrow.
-class CatalystAppBar extends StatelessWidget {
+class AppBar extends StatelessWidget {
   /// Creates an app bar.
-  const CatalystAppBar({
+  const AppBar({
     super.key,
     this.title,
     this.automaticallyImplyLeading = true,

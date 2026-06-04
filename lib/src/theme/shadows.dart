@@ -2,18 +2,18 @@ import 'package:flutter/widgets.dart';
 
 /// Shadow presets for elevating surfaces.
 ///
-/// Pass a custom [CatalystShadows] to [CatalystThemeData] to change shadow
+/// Pass a custom [Shadows] to [ThemeData] to change shadow
 /// values globally. The [brand] shadow is tinted with your brand colour and
 /// is typically computed from your colour scheme rather than hardcoded.
 ///
 /// ```dart
-/// CatalystShadows(
+/// Shadows(
 ///   brand: [BoxShadow(color: Color.fromRGBO(0, 102, 255, 0.20), ...)],
 /// )
 /// ```
-class CatalystShadows {
+class Shadows {
   /// Creates a shadow preset bundle.
-  const CatalystShadows({
+  const Shadows({
     this.none = const [],
     this.sm = const [
       BoxShadow(

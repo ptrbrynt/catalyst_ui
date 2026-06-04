@@ -37,7 +37,7 @@ class AlertToneStyle {
 ///   const MaintenanceTone();
 ///
 ///   @override
-///   AlertToneStyle resolve(CatalystColorScheme cs) => AlertToneStyle(
+///   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
 ///     backgroundColor: cs.warningSoft,
 ///     accentColor: cs.warning,
 ///     icon: LucideIcons.wrench,
@@ -62,14 +62,14 @@ abstract class AlertTone {
   static const AlertTone danger = _DangerAlertTone();
 
   /// Resolves the visual style for this tone against [cs].
-  AlertToneStyle resolve(CatalystColorScheme cs);
+  AlertToneStyle resolve(ColorScheme cs);
 }
 
 class _InfoAlertTone extends AlertTone {
   const _InfoAlertTone();
 
   @override
-  AlertToneStyle resolve(CatalystColorScheme cs) => AlertToneStyle(
+  AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.infoSoft,
     accentColor: cs.info,
     icon: LucideIcons.info,
@@ -80,7 +80,7 @@ class _SuccessAlertTone extends AlertTone {
   const _SuccessAlertTone();
 
   @override
-  AlertToneStyle resolve(CatalystColorScheme cs) => AlertToneStyle(
+  AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.successSoft,
     accentColor: cs.success,
     icon: LucideIcons.circleCheckBig,
@@ -91,7 +91,7 @@ class _WarningAlertTone extends AlertTone {
   const _WarningAlertTone();
 
   @override
-  AlertToneStyle resolve(CatalystColorScheme cs) => AlertToneStyle(
+  AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.warningSoft,
     accentColor: cs.warning,
     icon: LucideIcons.triangleAlert,
@@ -102,7 +102,7 @@ class _DangerAlertTone extends AlertTone {
   const _DangerAlertTone();
 
   @override
-  AlertToneStyle resolve(CatalystColorScheme cs) => AlertToneStyle(
+  AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.dangerSoft,
     accentColor: cs.danger,
     icon: LucideIcons.circleX,

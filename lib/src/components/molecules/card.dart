@@ -24,7 +24,7 @@ class CardToneStyle {
   final Color borderColor;
 }
 
-/// Defines the background and border of a [CatalystCard].
+/// Defines the background and border of a [Card].
 ///
 /// Extend this class to create your own tones:
 ///
@@ -33,7 +33,7 @@ class CardToneStyle {
 ///   const HighlightCardTone();
 ///
 ///   @override
-///   CardToneStyle resolve(CatalystColorScheme cs) => CardToneStyle(
+///   CardToneStyle resolve(ColorScheme cs) => CardToneStyle(
 ///     backgroundColor: cs.warningSoft,
 ///     borderColor: cs.warning.withValues(alpha: 0.30),
 ///   );
@@ -57,14 +57,14 @@ abstract class CardTone {
   static const CardTone tint = _TintCardTone();
 
   /// Resolves the visual style for this tone against [cs].
-  CardToneStyle resolve(CatalystColorScheme cs);
+  CardToneStyle resolve(ColorScheme cs);
 }
 
 class _SubtleCardTone extends CardTone {
   const _SubtleCardTone();
 
   @override
-  CardToneStyle resolve(CatalystColorScheme cs) =>
+  CardToneStyle resolve(ColorScheme cs) =>
       CardToneStyle(backgroundColor: cs.subtle, borderColor: cs.border);
 }
 
@@ -72,7 +72,7 @@ class _SurfaceCardTone extends CardTone {
   const _SurfaceCardTone();
 
   @override
-  CardToneStyle resolve(CatalystColorScheme cs) =>
+  CardToneStyle resolve(ColorScheme cs) =>
       CardToneStyle(backgroundColor: cs.surface, borderColor: cs.border);
 }
 
@@ -80,7 +80,7 @@ class _BrandCardTone extends CardTone {
   const _BrandCardTone();
 
   @override
-  CardToneStyle resolve(CatalystColorScheme cs) => CardToneStyle(
+  CardToneStyle resolve(ColorScheme cs) => CardToneStyle(
     backgroundColor: cs.brand,
     borderColor: const Color(0x00000000),
   );
@@ -90,7 +90,7 @@ class _TintCardTone extends CardTone {
   const _TintCardTone();
 
   @override
-  CardToneStyle resolve(CatalystColorScheme cs) => CardToneStyle(
+  CardToneStyle resolve(ColorScheme cs) => CardToneStyle(
     backgroundColor: cs.tint,
     borderColor: cs.brand.withValues(alpha: 0.20),
   );
@@ -101,14 +101,14 @@ class _TintCardTone extends CardTone {
 /// A rounded container that groups related content.
 ///
 /// ```dart
-/// CatalystCard(
+/// Card(
 ///   tone: CardTone.surface,
 ///   child: const Text('Hello'),
 /// )
 /// ```
-class CatalystCard extends StatelessWidget {
+class Card extends StatelessWidget {
   /// Creates a card.
-  const CatalystCard({
+  const Card({
     required this.child,
     super.key,
     this.padding = const EdgeInsets.all(CatalystSpacing.s3),
@@ -136,7 +136,7 @@ class CatalystCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final motion = context.motion;
     final style = tone.resolve(context.colorScheme);
-    final fg = CatalystThemeData.textColorFor(style.backgroundColor);
+    final fg = ThemeData.textColorFor(style.backgroundColor);
 
     return GestureDetector(
       onTap: onTap,
@@ -156,9 +156,10 @@ class CatalystCard extends StatelessWidget {
           child: IconTheme(
             data: IconThemeData(color: fg),
             child: MouseRegion(
-              cursor: (interactive || onTap != null)
-                  ? SystemMouseCursors.click
-                  : MouseCursor.defer,
+              cursor:
+                  (interactive || onTap != null)
+                      ? SystemMouseCursors.click
+                      : MouseCursor.defer,
               child: child,
             ),
           ),

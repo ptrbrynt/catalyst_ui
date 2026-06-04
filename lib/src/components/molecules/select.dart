@@ -111,22 +111,22 @@ class _SelectState<T> extends State<Select<T>> {
     final sh = context.shadows;
 
     _overlay = OverlayEntry(
-      builder: (_) => _SelectDropdown<T>(
-        layerLink: _link,
-        triggerWidth:
-            (context.findRenderObject()! as RenderBox).size.width,
-        triggerHeight: _triggerHeight,
-        options: widget.options,
-        value: widget.value,
-        colorScheme: cs,
-        typography: typo,
-        shadows: sh,
-        onSelect: (v) {
-          widget.onChanged?.call(v);
-          _close();
-        },
-        onDismiss: _close,
-      ),
+      builder:
+          (_) => _SelectDropdown<T>(
+            layerLink: _link,
+            triggerWidth: (context.findRenderObject()! as RenderBox).size.width,
+            triggerHeight: _triggerHeight,
+            options: widget.options,
+            value: widget.value,
+            colorScheme: cs,
+            typography: typo,
+            shadows: sh,
+            onSelect: (v) {
+              widget.onChanged?.call(v);
+              _close();
+            },
+            onDismiss: _close,
+          ),
     );
     Overlay.of(context).insert(_overlay!);
     setState(() {});
@@ -157,9 +157,8 @@ class _SelectState<T> extends State<Select<T>> {
     final motion = context.motion;
     final hasError = widget.error != null;
 
-    final selected = widget.options
-        .where((o) => o.value == widget.value)
-        .firstOrNull;
+    final selected =
+        widget.options.where((o) => o.value == widget.value).firstOrNull;
 
     final Color borderColor;
     final List<BoxShadow> boxShadow;
@@ -198,9 +197,10 @@ class _SelectState<T> extends State<Select<T>> {
           child: GestureDetector(
             onTap: _toggle,
             child: MouseRegion(
-              cursor: widget.disabled
-                  ? SystemMouseCursors.forbidden
-                  : SystemMouseCursors.click,
+              cursor:
+                  widget.disabled
+                      ? SystemMouseCursors.forbidden
+                      : SystemMouseCursors.click,
               child: AnimatedOpacity(
                 duration: motion.standard.duration,
                 curve: motion.standard.curve,
@@ -279,9 +279,9 @@ class _SelectDropdown<T> extends StatelessWidget {
   final double triggerHeight;
   final List<SelectOption<T>> options;
   final T? value;
-  final CatalystColorScheme colorScheme;
-  final CatalystTypography typography;
-  final CatalystShadows shadows;
+  final ColorScheme colorScheme;
+  final Typography typography;
+  final Shadows shadows;
   final ValueChanged<T> onSelect;
   final VoidCallback onDismiss;
 
@@ -350,8 +350,8 @@ class _SelectOptionRow<T> extends StatefulWidget {
   final SelectOption<T> option;
   final bool isSelected;
   final VoidCallback onTap;
-  final CatalystColorScheme colorScheme;
-  final CatalystTypography typography;
+  final ColorScheme colorScheme;
+  final Typography typography;
 
   @override
   State<_SelectOptionRow<T>> createState() => _SelectOptionRowState<T>();
@@ -371,9 +371,10 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 120),
           curve: Curves.easeOut,
-          color: (widget.isSelected || _hovered)
-              ? widget.colorScheme.subtle
-              : const Color(0x00000000),
+          color:
+              (widget.isSelected || _hovered)
+                  ? widget.colorScheme.subtle
+                  : const Color(0x00000000),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: Row(
             children: [

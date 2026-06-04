@@ -18,8 +18,8 @@ lib/
     │   ├── extensions.dart   # BuildContext extensions
     │   ├── motion.dart
     │   ├── shadows.dart
-    │   ├── theme.dart        # CatalystTheme (InheritedWidget)
-    │   ├── theme_data.dart   # CatalystThemeData (aggregator)
+    │   ├── theme.dart        # Theme (InheritedWidget)
+    │   ├── theme_data.dart   # ThemeData (aggregator)
     │   └── typography.dart
     ├── tokens/               # Static spacing + radius constants
     │   ├── radius.dart
@@ -30,8 +30,8 @@ lib/
     │   ├── molecules/        # Composed widgets (2–3 atoms combined)
     │   └── organisms/        # Full-screen sections and complex layouts
     └── utils/
-        ├── provider.dart     # CatalystProvider (theme + overlays)
-        ├── show_modal.dart   # showCatalystModal/BottomSheet/Drawer
+        ├── provider.dart     # Provider (theme + overlays)
+        ├── show_modal.dart   # showModal/BottomSheet/Drawer
         ├── snackbar_handler.dart
         └── utils.dart        # Barrel
 ```
@@ -55,26 +55,26 @@ Every public class, constructor, field, method, and enum value must have a doc c
 ### How the theme flows
 
 ```
-CatalystProvider
-  └── CatalystTheme (InheritedWidget)     ← propagates CatalystThemeData
+Provider
+  └── Theme (InheritedWidget)     ← propagates ThemeData
         └── DefaultTextStyle              ← set to typography.defaultStyle
-              └── CatalystSnackbarHandler ← overlay for snackbar
+              └── SnackbarHandler ← overlay for snackbar
                     └── child
 ```
 
-`CatalystThemeData` aggregates five sub-objects: `colorScheme`, `typography`, `motion`, `shadows`, `breakpoints`. Components read them via `BuildContext` extensions defined in `extensions.dart`:
+`ThemeData` aggregates five sub-objects: `colorScheme`, `typography`, `motion`, `shadows`, `breakpoints`. Components read them via `BuildContext` extensions defined in `extensions.dart`:
 
 ```dart
-context.colorScheme   // CatalystColorScheme
-context.typography    // CatalystTypography
-context.motion        // CatalystMotion
-context.shadows       // CatalystShadows
-context.breakpoints   // CatalystBreakpoints
+context.colorScheme   // ColorScheme
+context.typography    // Typography
+context.motion        // Motion
+context.shadows       // Shadows
+context.breakpoints   // Breakpoints
 ```
 
-### `CatalystTypography`
+### `Typography`
 
-`CatalystTypography` supports three levels of customisation, in ascending specificity:
+`Typography` supports three levels of customisation, in ascending specificity:
 
 1. **`fontFamily`** — applies to all non-overridden body styles (`p1`, `p2`, `body`, `p3`, `caption`, `micro`).
 2. **`headerFontFamily`** — applies to heading styles (`display`, `h1`, `h2`, `h3`); falls back to `fontFamily` when `null`.
@@ -86,13 +86,13 @@ Both `copyWith` and `withColorScheme` must thread **all** fields — `fontFamily
 
 ### `color_utils.dart`
 
-`catalystTextColorFor(Color bg)` is a free function (not a static method on `CatalystThemeData`) to avoid a circular dependency: `CatalystColorScheme` needs it for its `on*` computed getters, but `CatalystColorScheme` is imported by `CatalystThemeData`. Keeping it in a standalone file breaks the cycle.
+`catalystTextColorFor(Color bg)` is a free function (not a static method on `ThemeData`) to avoid a circular dependency: `ColorScheme` needs it for its `on*` computed getters, but `ColorScheme` is imported by `ThemeData`. Keeping it in a standalone file breaks the cycle.
 
 ---
 
 ## Variant and tone system
 
-Both the **variant** system (structural styles — `Button`, `Chip`, `Badge`) and the **tone** system (semantic colour intent — `Alert`, `Card`, `Snackbar`, `ProgressBar`, `StatusDot`) use exactly the same pattern: an abstract class with `resolve(CatalystColorScheme)` returning a typed style record.
+Both the **variant** system (structural styles — `Button`, `Chip`, `Badge`) and the **tone** system (semantic colour intent — `Alert`, `Card`, `Snackbar`, `ProgressBar`, `StatusDot`) use exactly the same pattern: an abstract class with `resolve(ColorScheme)` returning a typed style record.
 
 The only distinction is naming:
 - **Variant** (`ButtonVariant`, `ChipVariant`, `BadgeVariant`) — controls structure and emphasis.
@@ -107,7 +107,7 @@ abstract class FooVariant {   // or FooTone
 
   static const FooVariant primary = _PrimaryFooVariant();
 
-  FooVariantStyle resolve(CatalystColorScheme colorScheme);
+  FooVariantStyle resolve(ColorScheme colorScheme);
 }
 
 @immutable
@@ -131,7 +131,7 @@ class _PrimaryFooVariant extends FooVariant {
   const _PrimaryFooVariant();
 
   @override
-  FooVariantStyle resolve(CatalystColorScheme cs) => FooVariantStyle(
+  FooVariantStyle resolve(ColorScheme cs) => FooVariantStyle(
     foregroundColor: cs.onBrand,
     backgroundColor: cs.brand,
   );
@@ -172,28 +172,28 @@ Checklist for each new widget:
 
 ## Responsive breakpoints
 
-`CatalystBreakpoints` lives in `src/tokens/breakpoints.dart` and is threaded through `CatalystThemeData` like every other token — accessed via `context.breakpoints` and overridable via `CatalystThemeData.copyWith(breakpoints: ...)`.
+`Breakpoints` lives in `src/tokens/breakpoints.dart` and is threaded through `ThemeData` like every other token — accessed via `context.breakpoints` and overridable via `ThemeData.copyWith(breakpoints: ...)`.
 
-`CatalystResponsiveBuilder` in `src/utils/responsive_builder.dart` wraps `LayoutBuilder` and resolves the current `CatalystBreakpoint` from the available width. It does **not** use `MediaQuery.sizeOf` — it reads the parent constraints, so it works for embedded components as well as full-screen layouts.
+`ResponsiveBuilder` in `src/utils/responsive_builder.dart` wraps `LayoutBuilder` and resolves the current `Breakpoint` from the available width. It does **not** use `MediaQuery.sizeOf` — it reads the parent constraints, so it works for embedded components as well as full-screen layouts.
 
-`CatalystBreakpoint` is an enhanced enum with comparison operators (`>=`, `>`, `<=`, `<`) so callers can write `breakpoint >= CatalystBreakpoint.md` rather than comparing raw integers.
+`Breakpoint` is an enhanced enum with comparison operators (`>=`, `>`, `<=`, `<`) so callers can write `breakpoint >= Breakpoint.md` rather than comparing raw integers.
 
 ---
 
 ## Adding a new design token
 
-If a new token belongs on an existing sub-object (`CatalystColorScheme`, `CatalystTypography`, `CatalystMotion`, `CatalystShadows`):
+If a new token belongs on an existing sub-object (`ColorScheme`, `Typography`, `Motion`, `Shadows`):
 
 1. Add the field (required or with a default).
 2. Add it to the corresponding `copyWith` and factory constructors.
-3. Update both `.light()` and `.dark()` factories in `CatalystColorScheme`, or the defaults in `CatalystMotion` / `CatalystShadows`.
+3. Update both `.light()` and `.dark()` factories in `ColorScheme`, or the defaults in `Motion` / `Shadows`.
 
-For a new **text style** in `CatalystTypography` specifically, the checklist is longer:
+For a new **text style** in `Typography` specifically, the checklist is longer:
 - Add a private `TextStyle? _foo` field and a `TextStyle? foo` constructor parameter wired via the initializer list.
 - Add a `foo` getter that returns `_foo ?? _style(_headerBase or _bodyBase, size, weight, height: h)` — use `_headerBase` for heading-level styles, `_bodyBase` for body-level styles.
 - Thread `foo: foo ?? _foo` through both `copyWith` and `withColorScheme`.
 
-If it's a new category of token, add a new class and wire it into `CatalystThemeData` (field + `copyWith` + factory constructors) and `extensions.dart` (`context.newThing` getter).
+If it's a new category of token, add a new class and wire it into `ThemeData` (field + `copyWith` + factory constructors) and `extensions.dart` (`context.newThing` getter).
 
 ---
 

@@ -3,35 +3,35 @@ import 'package:flutter/widgets.dart';
 import '../theme/extensions.dart';
 import '../tokens/breakpoints.dart';
 
-/// A layout builder that resolves the current [CatalystBreakpoint] from
+/// A layout builder that resolves the current [Breakpoint] from
 /// the available width and passes it to [builder].
 ///
 /// Uses [LayoutBuilder] internally, so the breakpoint reflects the
 /// parent's constraints rather than the full screen size — making it
 /// suitable for both full-screen layouts and embedded components.
 ///
-/// Breakpoint thresholds are read from the nearest [CatalystTheme] and
-/// can be customised globally via [CatalystThemeData.breakpoints].
+/// Breakpoint thresholds are read from the nearest [Theme] and
+/// can be customised globally via [ThemeData.breakpoints].
 ///
 /// ```dart
-/// CatalystResponsiveBuilder(
+/// ResponsiveBuilder(
 ///   builder: (context, breakpoint) {
-///     if (breakpoint >= CatalystBreakpoint.md) {
+///     if (breakpoint >= Breakpoint.md) {
 ///       return const TwoColumnLayout();
 ///     }
 ///     return const SingleColumnLayout();
 ///   },
 /// )
 /// ```
-class CatalystResponsiveBuilder extends StatelessWidget {
+class ResponsiveBuilder extends StatelessWidget {
   /// Creates a responsive builder.
-  const CatalystResponsiveBuilder({required this.builder, super.key});
+  const ResponsiveBuilder({required this.builder, super.key});
 
-  /// Called with the resolved [CatalystBreakpoint] whenever the available
+  /// Called with the resolved [Breakpoint] whenever the available
   /// width changes.
   final Widget Function(
     BuildContext context,
-    CatalystBreakpoint breakpoint,
+    Breakpoint breakpoint,
   ) builder;
 
   @override

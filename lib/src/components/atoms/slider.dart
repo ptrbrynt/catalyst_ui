@@ -11,14 +11,14 @@ const double _kThumbSize = 20;
 /// Pass `null` for [onChanged] to render the slider as disabled.
 ///
 /// ```dart
-/// CatalystSlider(
+/// Slider(
 ///   value: _volume,
 ///   onChanged: (v) => setState(() => _volume = v),
 /// )
 /// ```
-class CatalystSlider extends StatefulWidget {
+class Slider extends StatefulWidget {
   /// Creates a slider.
-  const CatalystSlider({
+  const Slider({
     required this.value,
     required this.onChanged,
     this.min = 0,
@@ -39,10 +39,10 @@ class CatalystSlider extends StatefulWidget {
   final double max;
 
   @override
-  State<CatalystSlider> createState() => _CatalystSliderState();
+  State<Slider> createState() => _SliderState();
 }
 
-class _CatalystSliderState extends State<CatalystSlider> {
+class _SliderState extends State<Slider> {
   late double _value;
 
   bool get _disabled => widget.onChanged == null;
@@ -54,7 +54,7 @@ class _CatalystSliderState extends State<CatalystSlider> {
   }
 
   @override
-  void didUpdateWidget(CatalystSlider oldWidget) {
+  void didUpdateWidget(Slider oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       setState(() {
@@ -66,8 +66,7 @@ class _CatalystSliderState extends State<CatalystSlider> {
   void _updateFromDx(double dx, double trackWidth) {
     final usableWidth = trackWidth - _kThumbSize;
     if (usableWidth <= 0) return;
-    final fraction =
-        ((dx - _kThumbSize / 2) / usableWidth).clamp(0.0, 1.0);
+    final fraction = ((dx - _kThumbSize / 2) / usableWidth).clamp(0.0, 1.0);
     final newValue = widget.min + fraction * (widget.max - widget.min);
     setState(() => _value = newValue);
     widget.onChanged?.call(newValue);
@@ -77,13 +76,13 @@ class _CatalystSliderState extends State<CatalystSlider> {
   Widget build(BuildContext context) {
     final cs = context.colorScheme;
     final motion = context.motion;
-    final fraction =
-        (_value - widget.min) / (widget.max - widget.min);
+    final fraction = (_value - widget.min) / (widget.max - widget.min);
 
     return MouseRegion(
-      cursor: _disabled
-          ? SystemMouseCursors.forbidden
-          : SystemMouseCursors.resizeLeftRight,
+      cursor:
+          _disabled
+              ? SystemMouseCursors.forbidden
+              : SystemMouseCursors.resizeLeftRight,
       child: AnimatedOpacity(
         duration: motion.micro.duration,
         curve: motion.micro.curve,
@@ -95,15 +94,18 @@ class _CatalystSliderState extends State<CatalystSlider> {
             final fillWidth = thumbLeft + _kThumbSize / 2;
 
             return GestureDetector(
-              onHorizontalDragStart: _disabled
-                  ? null
-                  : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
-              onHorizontalDragUpdate: _disabled
-                  ? null
-                  : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
-              onTapDown: _disabled
-                  ? null
-                  : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
+              onHorizontalDragStart:
+                  _disabled
+                      ? null
+                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
+              onHorizontalDragUpdate:
+                  _disabled
+                      ? null
+                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
+              onTapDown:
+                  _disabled
+                      ? null
+                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
               child: SizedBox(
                 height: _kThumbSize,
                 child: Stack(

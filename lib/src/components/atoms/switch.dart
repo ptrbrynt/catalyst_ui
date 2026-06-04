@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
 
-/// The physical dimensions of a [CatalystSwitch] knob and track.
+/// The physical dimensions of a [Switch] knob and track.
 typedef SwitchDimens = ({double width, double height, double knob});
 
-/// Controls the size of a [CatalystSwitch].
+/// Controls the size of a [Switch].
 enum SwitchSize {
   /// 32 × 18 px track, 14 px knob.
   small((width: 32, height: 18, knob: 14)),
@@ -28,14 +28,14 @@ enum SwitchSize {
 /// Pass `null` for [onChanged] to render the switch as disabled.
 ///
 /// ```dart
-/// CatalystSwitch(
+/// Switch(
 ///   value: _isOn,
 ///   onChanged: (v) => setState(() => _isOn = v),
 /// )
 /// ```
-class CatalystSwitch extends StatefulWidget {
+class Switch extends StatefulWidget {
   /// Creates a switch.
-  const CatalystSwitch({
+  const Switch({
     required this.value,
     required this.onChanged,
     this.size = SwitchSize.medium,
@@ -52,10 +52,10 @@ class CatalystSwitch extends StatefulWidget {
   final SwitchSize size;
 
   @override
-  State<CatalystSwitch> createState() => _CatalystSwitchState();
+  State<Switch> createState() => _SwitchState();
 }
 
-class _CatalystSwitchState extends State<CatalystSwitch> {
+class _SwitchState extends State<Switch> {
   late final WidgetStatesController _controller;
 
   bool get _disabled => widget.onChanged == null;
@@ -71,7 +71,7 @@ class _CatalystSwitchState extends State<CatalystSwitch> {
   }
 
   @override
-  void didUpdateWidget(CatalystSwitch oldWidget) {
+  void didUpdateWidget(Switch oldWidget) {
     super.didUpdateWidget(oldWidget);
     _controller.update(WidgetState.disabled, _disabled);
   }
@@ -96,9 +96,8 @@ class _CatalystSwitchState extends State<CatalystSwitch> {
           ..update(WidgetState.hovered, false)
           ..update(WidgetState.pressed, false);
       },
-      cursor: _disabled
-          ? SystemMouseCursors.forbidden
-          : SystemMouseCursors.click,
+      cursor:
+          _disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => widget.onChanged?.call(!widget.value),
         onTapDown: (_) => _controller.update(WidgetState.pressed, true),

@@ -8,29 +8,29 @@ import 'theme.dart';
 import 'theme_data.dart';
 import 'typography.dart';
 
-/// Convenience accessors for [CatalystThemeData] on [BuildContext].
-extension CatalystThemeContext on BuildContext {
-  /// The full [CatalystThemeData] from the nearest [CatalystTheme] ancestor.
-  CatalystThemeData get theme => CatalystTheme.of(this);
+/// Convenience accessors for [ThemeData] on [BuildContext].
+extension ThemeContext on BuildContext {
+  /// The full [ThemeData] from the nearest [Theme] ancestor.
+  ThemeData get theme => Theme.of(this);
 
   /// Shorthand for `context.theme.colorScheme`.
-  CatalystColorScheme get colorScheme => theme.colorScheme;
+  ColorScheme get colorScheme => theme.colorScheme;
 
   /// Shorthand for `context.theme.typography`.
-  CatalystTypography get typography => theme.typography;
+  Typography get typography => theme.typography;
 
   /// Shorthand for `context.theme.motion`.
-  CatalystMotion get motion => theme.motion;
+  Motion get motion => theme.motion;
 
   /// Shorthand for `context.theme.shadows`.
-  CatalystShadows get shadows => theme.shadows;
+  Shadows get shadows => theme.shadows;
 
   /// Shorthand for `context.theme.breakpoints`.
-  CatalystBreakpoints get breakpoints => theme.breakpoints;
+  Breakpoints get breakpoints => theme.breakpoints;
 }
 
 /// Brightness manipulation for widgets via a colour-matrix filter.
-extension CatalystBrightnessFilter on Widget {
+extension BrightnessFilter on Widget {
   /// Applies a multiplicative brightness factor to this widget.
   ///
   /// [amount] of `1.0` leaves the widget unchanged. Values below `1.0`

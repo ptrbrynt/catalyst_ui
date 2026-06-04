@@ -68,7 +68,7 @@ class ValueRow extends StatelessWidget {
           ),
         ),
         if (divider)
-          const CatalystDivider(
+          const Divider(
             margin: EdgeInsets.symmetric(horizontal: CatalystSpacing.s3),
           ),
       ],

@@ -8,9 +8,9 @@ import '../../tokens/spacing.dart';
 ///
 /// Present via [showModalBottomSheet] rather than placing directly in the
 /// widget tree. The sheet constrains its height to 80 % of the screen.
-class CatalystBottomSheet extends StatelessWidget {
+class BottomSheet extends StatelessWidget {
   /// Creates a bottom sheet.
-  const CatalystBottomSheet({
+  const BottomSheet({
     required this.title,
     required this.child,
     required this.footer,

@@ -40,7 +40,7 @@ class ButtonVariantStyle {
 ///   const MyBrandVariant();
 ///
 ///   @override
-///   ButtonVariantStyle resolve(CatalystColorScheme cs) {
+///   ButtonVariantStyle resolve(ColorScheme cs) {
 ///     return ButtonVariantStyle(
 ///       backgroundColor: cs.brand,
 ///       foregroundColor: cs.onBrand,
@@ -81,14 +81,14 @@ abstract class ButtonVariant {
   static const ButtonVariant success = _SuccessButtonVariant();
 
   /// Resolves the visual style for this variant against [colorScheme].
-  ButtonVariantStyle resolve(CatalystColorScheme colorScheme);
+  ButtonVariantStyle resolve(ColorScheme colorScheme);
 }
 
 class _PrimaryButtonVariant extends ButtonVariant {
   const _PrimaryButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(
       backgroundColor: cs.brand,
       foregroundColor: cs.onBrand,
@@ -107,7 +107,7 @@ class _SecondaryButtonVariant extends ButtonVariant {
   const _SecondaryButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(
       backgroundColor: cs.surface,
       foregroundColor: cs.text,
@@ -127,7 +127,7 @@ class _TertiaryButtonVariant extends ButtonVariant {
   const _TertiaryButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(
       backgroundColor: cs.subtle,
       foregroundColor: cs.text,
@@ -140,7 +140,7 @@ class _GhostButtonVariant extends ButtonVariant {
   const _GhostButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(foregroundColor: cs.text);
   }
 }
@@ -149,7 +149,7 @@ class _DestructiveButtonVariant extends ButtonVariant {
   const _DestructiveButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(
       backgroundColor: cs.danger,
       foregroundColor: cs.onDanger,
@@ -161,7 +161,7 @@ class _SuccessButtonVariant extends ButtonVariant {
   const _SuccessButtonVariant();
 
   @override
-  ButtonVariantStyle resolve(CatalystColorScheme cs) {
+  ButtonVariantStyle resolve(ColorScheme cs) {
     return ButtonVariantStyle(
       backgroundColor: cs.success,
       foregroundColor: cs.onSuccess,

@@ -6,14 +6,14 @@ import '../../tokens/spacing.dart';
 /// A thin horizontal or vertical rule used to separate content.
 ///
 /// The horizontal variant optionally accepts a [label] centred within the
-/// rule. Use [CatalystDivider.vertical] for an inline vertical divider.
-class CatalystDivider extends StatelessWidget {
+/// rule. Use [Divider.vertical] for an inline vertical divider.
+class Divider extends StatelessWidget {
   /// Creates a horizontal divider.
-  const CatalystDivider({super.key, this.label, this.margin = EdgeInsets.zero})
+  const Divider({super.key, this.label, this.margin = EdgeInsets.zero})
     : _orientation = Axis.horizontal;
 
   /// Creates a vertical divider for use inside a [Row].
-  const CatalystDivider.vertical({
+  const Divider.vertical({
     super.key,
     this.margin = const EdgeInsets.symmetric(
       horizontal: CatalystSpacing.s1,

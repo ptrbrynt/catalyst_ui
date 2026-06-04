@@ -26,7 +26,7 @@ class StatusToneStyle {
 ///   const LiveTone();
 ///
 ///   @override
-///   StatusToneStyle resolve(CatalystColorScheme cs) =>
+///   StatusToneStyle resolve(ColorScheme cs) =>
 ///       StatusToneStyle(color: const Color(0xFFFF0000));
 /// }
 /// ```
@@ -60,14 +60,14 @@ abstract class StatusTone {
   static StatusTone custom(Color color) => _CustomStatusTone(color);
 
   /// Resolves the visual style for this tone against [cs].
-  StatusToneStyle resolve(CatalystColorScheme cs);
+  StatusToneStyle resolve(ColorScheme cs);
 }
 
 class _SuccessStatusTone extends StatusTone {
   const _SuccessStatusTone();
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: cs.success);
 }
 
@@ -75,7 +75,7 @@ class _WarningStatusTone extends StatusTone {
   const _WarningStatusTone();
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: cs.warning);
 }
 
@@ -83,7 +83,7 @@ class _DangerStatusTone extends StatusTone {
   const _DangerStatusTone();
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: cs.danger);
 }
 
@@ -91,7 +91,7 @@ class _InfoStatusTone extends StatusTone {
   const _InfoStatusTone();
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: cs.info);
 }
 
@@ -99,7 +99,7 @@ class _NeutralStatusTone extends StatusTone {
   const _NeutralStatusTone();
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: cs.textSubtle);
 }
 
@@ -108,7 +108,7 @@ class _CustomStatusTone extends StatusTone {
   final Color _color;
 
   @override
-  StatusToneStyle resolve(CatalystColorScheme cs) =>
+  StatusToneStyle resolve(ColorScheme cs) =>
       StatusToneStyle(color: _color);
 }
 

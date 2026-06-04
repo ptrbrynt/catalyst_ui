@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 /// Controls which theme [CatalystProvider] applies when both [theme] and
 /// [darkTheme] are supplied.
-enum CatalystThemeMode {
+enum ThemeMode {
   /// Follows the host platform's brightness setting (default).
   system,
 
@@ -23,7 +23,7 @@ enum CatalystThemeMode {
 /// **Light theme only:**
 /// ```dart
 /// CatalystProvider(
-///   theme: CatalystThemeData.light(fontFamily: 'Inter'),
+///   theme: ThemeData.light(fontFamily: 'Inter'),
 ///   child: MyHomePage(),
 /// )
 /// ```
@@ -31,8 +31,8 @@ enum CatalystThemeMode {
 /// **Automatic dark / light switching:**
 /// ```dart
 /// CatalystProvider(
-///   theme: CatalystThemeData.light(fontFamily: 'Inter'),
-///   darkTheme: CatalystThemeData.dark(fontFamily: 'Inter'),
+///   theme: ThemeData.light(fontFamily: 'Inter'),
+///   darkTheme: ThemeData.dark(fontFamily: 'Inter'),
 ///   child: MyHomePage(),
 /// )
 /// ```
@@ -40,9 +40,9 @@ enum CatalystThemeMode {
 /// **Force a specific mode:**
 /// ```dart
 /// CatalystProvider(
-///   theme: CatalystThemeData.light(fontFamily: 'Inter'),
-///   darkTheme: CatalystThemeData.dark(fontFamily: 'Inter'),
-///   themeMode: CatalystThemeMode.dark,
+///   theme: ThemeData.light(fontFamily: 'Inter'),
+///   darkTheme: ThemeData.dark(fontFamily: 'Inter'),
+///   themeMode: ThemeMode.dark,
 ///   child: MyHomePage(),
 /// )
 /// ```
@@ -52,30 +52,30 @@ class CatalystProvider extends StatelessWidget {
     required this.theme,
     required this.child,
     this.darkTheme,
-    this.themeMode = CatalystThemeMode.system,
+    this.themeMode = ThemeMode.system,
     super.key,
   });
 
   /// The light theme, and the fallback when [darkTheme] is not supplied.
-  final CatalystThemeData theme;
+  final ThemeData theme;
 
   /// The dark theme. When provided alongside [themeMode] set to
-  /// [CatalystThemeMode.system], the active theme switches automatically with
+  /// [ThemeMode.system], the active theme switches automatically with
   /// the platform brightness.
-  final CatalystThemeData? darkTheme;
+  final ThemeData? darkTheme;
 
-  /// Controls which theme is applied. Defaults to [CatalystThemeMode.system].
+  /// Controls which theme is applied. Defaults to [ThemeMode.system].
   ///
   /// Ignored when [darkTheme] is `null`.
-  final CatalystThemeMode themeMode;
+  final ThemeMode themeMode;
 
   /// The widget subtree receiving the Catalyst scope.
   final Widget child;
 
-  CatalystThemeData _effectiveTheme(BuildContext context) {
+  ThemeData _effectiveTheme(BuildContext context) {
     final dark = darkTheme;
-    if (dark == null || themeMode == CatalystThemeMode.light) return theme;
-    if (themeMode == CatalystThemeMode.dark) return dark;
+    if (dark == null || themeMode == ThemeMode.light) return theme;
+    if (themeMode == ThemeMode.dark) return dark;
     return MediaQuery.platformBrightnessOf(context) == Brightness.dark
         ? dark
         : theme;
@@ -83,13 +83,13 @@ class CatalystProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CatalystTheme(
+    return Theme(
       data: _effectiveTheme(context),
       child: Overlay(
         initialEntries: [
           OverlayEntry(
             builder: (_) {
-              return CatalystSnackbarHandler(
+              return SnackbarHandler(
                 child: Builder(
                   builder: (context) {
                     return DefaultTextStyle(

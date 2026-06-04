@@ -4,7 +4,7 @@ import '../../theme/extensions.dart';
 import '../../tokens/spacing.dart';
 import '../atoms/badge.dart';
 
-/// A single option in a [CatalystTabs] bar.
+/// A single option in a [Tabs] bar.
 @immutable
 class TabOption<T> {
   /// Creates a tab option.
@@ -26,7 +26,7 @@ class TabOption<T> {
 /// area below to show the corresponding view.
 ///
 /// ```dart
-/// CatalystTabs<String>(
+/// Tabs<String>(
 ///   value: _selected,
 ///   options: const [
 ///     TabOption(value: 'all', label: 'All'),
@@ -35,9 +35,9 @@ class TabOption<T> {
 ///   onChanged: (v) => setState(() => _selected = v),
 /// )
 /// ```
-class CatalystTabs<T> extends StatefulWidget {
+class Tabs<T> extends StatefulWidget {
   /// Creates a tab bar.
-  const CatalystTabs({
+  const Tabs({
     required this.options,
     required this.onChanged,
     this.value,
@@ -54,10 +54,10 @@ class CatalystTabs<T> extends StatefulWidget {
   final ValueChanged<T> onChanged;
 
   @override
-  State<CatalystTabs<T>> createState() => _CatalystTabsState<T>();
+  State<Tabs<T>> createState() => _TabsState<T>();
 }
 
-class _CatalystTabsState<T> extends State<CatalystTabs<T>> {
+class _TabsState<T> extends State<Tabs<T>> {
   T? _selected;
 
   @override
@@ -67,7 +67,7 @@ class _CatalystTabsState<T> extends State<CatalystTabs<T>> {
   }
 
   @override
-  void didUpdateWidget(CatalystTabs<T> oldWidget) {
+  void didUpdateWidget(Tabs<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       setState(() => _selected = widget.value);

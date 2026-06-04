@@ -9,12 +9,12 @@ import 'typography.dart';
 
 /// Aggregates all design tokens and theme sub-objects for Catalyst.
 ///
-/// Obtain via `CatalystTheme.of(context)` or the `context.theme` extension.
+/// Obtain via `Theme.of(context)` or the `context.theme` extension.
 ///
 /// **Quick start — light theme with custom brand colour:**
 /// ```dart
-/// CatalystThemeData.light().copyWith(
-///   colorScheme: const CatalystColorScheme.light().copyWith(
+/// ThemeData.light().copyWith(
+///   colorScheme: const ColorScheme.light().copyWith(
 ///     brand: Color(0xFF7C3AED),
 ///     brandSoft: Color(0xFFEDE9FE),
 ///   ),
@@ -23,19 +23,19 @@ import 'typography.dart';
 ///
 /// **Custom font:**
 /// ```dart
-/// CatalystThemeData.light(fontFamily: 'Poppins')
+/// ThemeData.light(fontFamily: 'Poppins')
 /// ```
 ///
 /// **Override individual text styles:**
 /// ```dart
-/// final base = CatalystThemeData.light();
+/// final base = ThemeData.light();
 /// base.copyWith(
 ///   typography: base.typography.copyWith(
 ///     display: TextStyle(fontSize: 48, fontWeight: FontWeight.w800),
 ///   ),
 /// )
 /// ```
-class CatalystThemeData {
+class ThemeData {
   /// Creates a light-mode theme.
   ///
   /// Supply [colorScheme] to override colours, [fontFamily] to change the
@@ -43,25 +43,25 @@ class CatalystThemeData {
   /// [motion] / [shadows] / [breakpoints] for further control.
   ///
   /// When [typography] is provided, [fontFamily] is ignored — pass
-  /// [fontFamily] directly to the [CatalystTypography] constructor instead.
-  factory CatalystThemeData.light({
-    CatalystColorScheme? colorScheme,
+  /// [fontFamily] directly to the [Typography] constructor instead.
+  factory ThemeData.light({
+    ColorScheme? colorScheme,
     String? fontFamily,
-    CatalystTypography? typography,
-    CatalystMotion? motion,
-    CatalystShadows? shadows,
-    CatalystBreakpoints? breakpoints,
+    Typography? typography,
+    Motion? motion,
+    Shadows? shadows,
+    Breakpoints? breakpoints,
   }) {
-    final cs = colorScheme ?? const CatalystColorScheme.light();
+    final cs = colorScheme ?? const ColorScheme.light();
     final typo = (typography ??
-            CatalystTypography(colorScheme: cs, fontFamily: fontFamily))
+            Typography(colorScheme: cs, fontFamily: fontFamily))
         .withColorScheme(cs);
-    return CatalystThemeData.raw(
+    return ThemeData.raw(
       colorScheme: cs,
       typography: typo,
-      motion: motion ?? const CatalystMotion(),
-      shadows: shadows ?? const CatalystShadows(),
-      breakpoints: breakpoints ?? const CatalystBreakpoints(),
+      motion: motion ?? const Motion(),
+      shadows: shadows ?? const Shadows(),
+      breakpoints: breakpoints ?? const Breakpoints(),
     );
   }
 
@@ -72,30 +72,30 @@ class CatalystThemeData {
   /// [motion] / [shadows] / [breakpoints] for further control.
   ///
   /// When [typography] is provided, [fontFamily] is ignored — pass
-  /// [fontFamily] directly to the [CatalystTypography] constructor instead.
-  factory CatalystThemeData.dark({
-    CatalystColorScheme? colorScheme,
+  /// [fontFamily] directly to the [Typography] constructor instead.
+  factory ThemeData.dark({
+    ColorScheme? colorScheme,
     String? fontFamily,
-    CatalystTypography? typography,
-    CatalystMotion? motion,
-    CatalystShadows? shadows,
-    CatalystBreakpoints? breakpoints,
+    Typography? typography,
+    Motion? motion,
+    Shadows? shadows,
+    Breakpoints? breakpoints,
   }) {
-    final cs = colorScheme ?? const CatalystColorScheme.dark();
+    final cs = colorScheme ?? const ColorScheme.dark();
     final typo = (typography ??
-            CatalystTypography(colorScheme: cs, fontFamily: fontFamily))
+            Typography(colorScheme: cs, fontFamily: fontFamily))
         .withColorScheme(cs);
-    return CatalystThemeData.raw(
+    return ThemeData.raw(
       colorScheme: cs,
       typography: typo,
-      motion: motion ?? const CatalystMotion(),
-      shadows: shadows ?? const CatalystShadows(),
-      breakpoints: breakpoints ?? const CatalystBreakpoints(),
+      motion: motion ?? const Motion(),
+      shadows: shadows ?? const Shadows(),
+      breakpoints: breakpoints ?? const Breakpoints(),
     );
   }
 
   /// Creates a theme from fully explicit sub-objects.
-  CatalystThemeData.raw({
+  ThemeData.raw({
     required this.colorScheme,
     required this.typography,
     required this.motion,
@@ -104,30 +104,30 @@ class CatalystThemeData {
   });
 
   /// The semantic colour scheme.
-  final CatalystColorScheme colorScheme;
+  final ColorScheme colorScheme;
 
   /// The typographic scale.
-  final CatalystTypography typography;
+  final Typography typography;
 
   /// Animation durations and curves.
-  final CatalystMotion motion;
+  final Motion motion;
 
   /// Shadow presets.
-  final CatalystShadows shadows;
+  final Shadows shadows;
 
   /// Responsive breakpoint thresholds.
-  final CatalystBreakpoints breakpoints;
+  final Breakpoints breakpoints;
 
   /// Returns a copy of this theme with the given fields replaced.
-  CatalystThemeData copyWith({
-    CatalystColorScheme? colorScheme,
-    CatalystTypography? typography,
-    CatalystMotion? motion,
-    CatalystShadows? shadows,
-    CatalystBreakpoints? breakpoints,
+  ThemeData copyWith({
+    ColorScheme? colorScheme,
+    Typography? typography,
+    Motion? motion,
+    Shadows? shadows,
+    Breakpoints? breakpoints,
   }) {
     final cs = colorScheme ?? this.colorScheme;
-    return CatalystThemeData.raw(
+    return ThemeData.raw(
       colorScheme: cs,
       typography: (typography ?? this.typography).withColorScheme(cs),
       motion: motion ?? this.motion,

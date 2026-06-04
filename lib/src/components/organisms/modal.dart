@@ -12,7 +12,7 @@ import '../atoms/divider.dart';
 /// bottom.
 ///
 /// ```dart
-/// CatalystModal(
+/// Modal(
 ///   title: const Text('Delete item?'),
 ///   body: const Text('This action cannot be undone.'),
 ///   actions: [
@@ -23,9 +23,9 @@ import '../atoms/divider.dart';
 ///   ],
 /// )
 /// ```
-class CatalystModal extends StatelessWidget {
+class Modal extends StatelessWidget {
   /// Creates a modal.
-  const CatalystModal({
+  const Modal({
     required this.title,
     required this.body,
     this.actions = const [],
@@ -100,7 +100,7 @@ class CatalystModal extends StatelessWidget {
               ),
               const SizedBox(height: CatalystSpacing.s2),
               if (actions.isNotEmpty) ...[
-                const CatalystDivider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(CatalystSpacing.s3),
                   child: Row(

@@ -4,17 +4,17 @@ import 'color_scheme.dart';
 
 /// The typographic scale used by Catalyst components.
 ///
-/// Create a [CatalystTypography] and pass it to [CatalystThemeData] to
+/// Create a [Typography] and pass it to [ThemeData] to
 /// customise the font family, sizes, weights, and individual styles.
 ///
 /// **Single font family:**
 /// ```dart
-/// CatalystTypography(fontFamily: 'Inter', colorScheme: myScheme)
+/// Typography(fontFamily: 'Inter', colorScheme: myScheme)
 /// ```
 ///
 /// **Different font families for headers and body:**
 /// ```dart
-/// CatalystTypography(
+/// Typography(
 ///   colorScheme: myScheme,
 ///   fontFamily: 'Inter',
 ///   headerFontFamily: 'Playfair Display',
@@ -23,7 +23,7 @@ import 'color_scheme.dart';
 ///
 /// **Override individual styles:**
 /// ```dart
-/// CatalystTypography(
+/// Typography(
 ///   colorScheme: myScheme,
 ///   display: TextStyle(fontSize: 48, fontWeight: FontWeight.w800),
 ///   body: TextStyle(fontSize: 15, height: 1.6),
@@ -43,7 +43,7 @@ import 'color_scheme.dart';
 /// and [colorScheme] are not merged into them. Styles that are not
 /// overridden continue to inherit the appropriate font family and the text
 /// colour from [colorScheme].
-class CatalystTypography {
+class Typography {
   /// Creates a typography scale.
   ///
   /// [fontFamily] is the typeface for body-level styles ([p1], [p2], [body],
@@ -56,13 +56,13 @@ class CatalystTypography {
   ///
   /// [colorScheme] binds the default text colour for non-overridden styles.
   /// It is set automatically when you attach this typography to a
-  /// [CatalystThemeData].
+  /// [ThemeData].
   ///
   /// Each named style parameter ([display], [h1], …, [micro]) replaces the
   /// computed default for that slot. Explicit overrides take precedence over
   /// both [fontFamily] and [headerFontFamily]. Pass `null` (the default) to
   /// keep the built-in scale for that style.
-  CatalystTypography({
+  Typography({
     required this.colorScheme,
     this.fontFamily,
     this.headerFontFamily,
@@ -100,7 +100,7 @@ class CatalystTypography {
   final String? headerFontFamily;
 
   /// The colour scheme that drives the default text colour.
-  final CatalystColorScheme colorScheme;
+  final ColorScheme colorScheme;
 
   final TextStyle? _display;
   final TextStyle? _h1;
@@ -176,8 +176,8 @@ class CatalystTypography {
   ///
   /// Parameters set to `null` retain their current value — either the
   /// previously supplied override or the computed default.
-  CatalystTypography copyWith({
-    CatalystColorScheme? colorScheme,
+  Typography copyWith({
+    ColorScheme? colorScheme,
     String? fontFamily,
     String? headerFontFamily,
     TextStyle? display,
@@ -191,7 +191,7 @@ class CatalystTypography {
     TextStyle? caption,
     TextStyle? micro,
   }) {
-    return CatalystTypography(
+    return Typography(
       colorScheme: colorScheme ?? this.colorScheme,
       fontFamily: fontFamily ?? this.fontFamily,
       headerFontFamily: headerFontFamily ?? this.headerFontFamily,
@@ -212,8 +212,8 @@ class CatalystTypography {
   ///
   /// All style overrides and font family settings are preserved; only the
   /// default text colour changes.
-  CatalystTypography withColorScheme(CatalystColorScheme colorScheme) {
-    return CatalystTypography(
+  Typography withColorScheme(ColorScheme colorScheme) {
+    return Typography(
       colorScheme: colorScheme,
       fontFamily: fontFamily,
       headerFontFamily: headerFontFamily,

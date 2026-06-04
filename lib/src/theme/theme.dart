@@ -2,22 +2,22 @@ import 'package:flutter/widgets.dart';
 
 import 'theme_data.dart';
 
-/// An [InheritedWidget] that provides [CatalystThemeData] to its subtree.
+/// An [InheritedWidget] that provides [ThemeData] to its subtree.
 ///
-/// Wrap your app (or any subtree) with [CatalystTheme] and access the data
-/// via [CatalystTheme.of], or the [BuildContext] extension getters
+/// Wrap your app (or any subtree) with [Theme] and access the data
+/// via [Theme.of], or the [BuildContext] extension getters
 /// `context.theme`, `context.colorScheme`, `context.typography`,
 /// `context.motion`, and `context.shadows`.
 ///
 /// ```dart
-/// CatalystTheme(
-///   data: CatalystThemeData.light(fontFamily: 'Inter'),
+/// Theme(
+///   data: ThemeData.light(fontFamily: 'Inter'),
 ///   child: MyApp(),
 /// )
 /// ```
-class CatalystTheme extends InheritedWidget {
+class Theme extends InheritedWidget {
   /// Creates a theme that propagates [data] to its [child] subtree.
-  CatalystTheme({required Widget child, required this.data, super.key})
+  Theme({required Widget child, required this.data, super.key})
     : super(
         child: DefaultTextStyle(
           style: data.typography.defaultStyle,
@@ -26,28 +26,28 @@ class CatalystTheme extends InheritedWidget {
       );
 
   /// The theme data provided to the subtree.
-  final CatalystThemeData data;
+  final ThemeData data;
 
-  /// Returns the [CatalystThemeData] from the nearest [CatalystTheme] ancestor.
+  /// Returns the [ThemeData] from the nearest [Theme] ancestor.
   ///
   /// Throws a descriptive error if no ancestor is found.
-  static CatalystThemeData of(BuildContext context) {
+  static ThemeData of(BuildContext context) {
     final theme =
-        context.dependOnInheritedWidgetOfExactType<CatalystTheme>()?.data;
+        context.dependOnInheritedWidgetOfExactType<Theme>()?.data;
     assert(
       theme != null,
-      'No CatalystTheme found in the widget tree. '
-      'Wrap your app or subtree with a CatalystTheme widget.',
+      'No Theme found in the widget tree. '
+      'Wrap your app or subtree with a Theme widget.',
     );
     return theme!;
   }
 
-  /// Returns the [CatalystThemeData] from the nearest [CatalystTheme] ancestor,
+  /// Returns the [ThemeData] from the nearest [Theme] ancestor,
   /// or `null` if none is found.
-  static CatalystThemeData? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<CatalystTheme>()?.data;
+  static ThemeData? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<Theme>()?.data;
   }
 
   @override
-  bool updateShouldNotify(CatalystTheme oldWidget) => oldWidget.data != data;
+  bool updateShouldNotify(Theme oldWidget) => oldWidget.data != data;
 }

@@ -5,20 +5,20 @@ typedef MotionSpec = ({Duration duration, Curve curve});
 
 /// The set of animation presets used by Catalyst components.
 ///
-/// Pass a custom [CatalystMotion] to [CatalystThemeData] to change durations
+/// Pass a custom [Motion] to [ThemeData] to change durations
 /// and curves globally across the library.
 ///
 /// ```dart
-/// CatalystMotion(
+/// Motion(
 ///   micro: (duration: Duration(milliseconds: 80), curve: Curves.easeOut),
 /// )
 /// ```
-class CatalystMotion {
+class Motion {
   /// Creates a motion preset bundle.
   ///
   /// All parameters have sensible defaults; supply only the presets you want
   /// to override.
-  const CatalystMotion({
+  const Motion({
     this.micro = (
       duration: const Duration(milliseconds: 120),
       curve: Curves.easeOut,

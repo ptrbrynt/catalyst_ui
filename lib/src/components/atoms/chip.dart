@@ -37,7 +37,7 @@ class ChipVariantStyle {
 ///
 ///   @override
 ///   ChipVariantStyle resolve(
-///       CatalystColorScheme cs, {required bool isSelected}) {
+///       ColorScheme cs, {required bool isSelected}) {
 ///     return ChipVariantStyle(
 ///       backgroundColor: isSelected ? cs.brand : cs.brandSoft,
 ///       foregroundColor: isSelected ? cs.onBrand : cs.brand,
@@ -59,7 +59,7 @@ abstract class ChipVariant {
 
   /// Resolves the visual style given [colorScheme] and the [isSelected] state.
   ChipVariantStyle resolve(
-    CatalystColorScheme colorScheme, {
+    ColorScheme colorScheme, {
     required bool isSelected,
   });
 }
@@ -69,7 +69,7 @@ class _StandardChipVariant extends ChipVariant {
 
   @override
   ChipVariantStyle resolve(
-    CatalystColorScheme cs, {
+    ColorScheme cs, {
     required bool isSelected,
   }) {
     final bg = isSelected ? cs.brand : cs.surface;
@@ -185,12 +185,12 @@ class _ChipState extends State<Chip> {
           child: MouseRegion(
             onEnter: (_) => _controller.update(WidgetState.hovered, true),
             onExit: (_) => _controller.update(WidgetState.hovered, false),
-            cursor: states.contains(WidgetState.disabled)
-                ? SystemMouseCursors.forbidden
-                : SystemMouseCursors.click,
+            cursor:
+                states.contains(WidgetState.disabled)
+                    ? SystemMouseCursors.forbidden
+                    : SystemMouseCursors.click,
             child: Focus(
-              onFocusChange: (f) =>
-                  _controller.update(WidgetState.focused, f),
+              onFocusChange: (f) => _controller.update(WidgetState.focused, f),
               child: AnimatedOpacity(
                 opacity: states.contains(WidgetState.disabled) ? 0.5 : 1,
                 duration: motion.micro.duration,

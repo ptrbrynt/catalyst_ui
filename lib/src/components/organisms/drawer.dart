@@ -11,9 +11,9 @@ import '../atoms/divider.dart';
 /// Present via `showGeneralDialog` or a similar route rather than placing
 /// directly in the widget tree. A close button is automatically shown in the
 /// header row.
-class CatalystDrawer extends StatelessWidget {
+class Drawer extends StatelessWidget {
   /// Creates a drawer.
-  const CatalystDrawer({
+  const Drawer({
     required this.title,
     required this.body,
     this.footer,
@@ -68,7 +68,7 @@ class CatalystDrawer extends StatelessWidget {
               ],
             ),
           ),
-          const CatalystDivider(),
+          const Divider(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(CatalystSpacing.s3),
@@ -76,7 +76,7 @@ class CatalystDrawer extends StatelessWidget {
             ),
           ),
           if (footer != null) ...[
-            const CatalystDivider(),
+            const Divider(),
             Padding(
               padding: const EdgeInsets.all(CatalystSpacing.s3),
               child: footer,

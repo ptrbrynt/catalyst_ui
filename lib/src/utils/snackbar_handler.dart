@@ -19,14 +19,14 @@ class _SnackbarHandlerScope extends InheritedWidget {
       state != oldWidget.state;
 }
 
-/// A widget that manages [CatalystSnackbar] overlays for its subtree.
+/// A widget that manages [Snackbar] overlays for its subtree.
 ///
-/// Place one [CatalystSnackbarHandler] near the root of your app (above the
+/// Place one [SnackbarHandler] near the root of your app (above the
 /// [Overlay]). Show snackbars via `context.showSnackbar(...)` or
-/// `CatalystSnackbarHandler.of(context).show(...)`.
-class CatalystSnackbarHandler extends StatefulWidget {
+/// `SnackbarHandler.of(context).show(...)`.
+class SnackbarHandler extends StatefulWidget {
   /// Creates a snackbar handler.
-  const CatalystSnackbarHandler({required this.child, super.key});
+  const SnackbarHandler({required this.child, super.key});
 
   /// Returns the [SnackbarHandlerState] from the nearest ancestor handler.
   static SnackbarHandlerState of(BuildContext context) {
@@ -39,11 +39,11 @@ class CatalystSnackbarHandler extends StatefulWidget {
   final Widget child;
 
   @override
-  State<CatalystSnackbarHandler> createState() => SnackbarHandlerState();
+  State<SnackbarHandler> createState() => SnackbarHandlerState();
 }
 
-/// State for [CatalystSnackbarHandler]. Use [show] to display a snackbar.
-class SnackbarHandlerState extends State<CatalystSnackbarHandler>
+/// State for [SnackbarHandler]. Use [show] to display a snackbar.
+class SnackbarHandlerState extends State<SnackbarHandler>
     with SingleTickerProviderStateMixin {
   OverlayEntry? _entry;
   Timer? _hideTimer;
@@ -92,7 +92,7 @@ class SnackbarHandlerState extends State<CatalystSnackbarHandler>
   /// Shows [snackbar] for [duration], replacing any currently visible one.
   void show(
     BuildContext callerContext,
-    CatalystSnackbar snackbar, [
+    Snackbar snackbar, [
     Duration duration = const Duration(seconds: 5),
   ]) {
     _hideTimer?.cancel();
@@ -103,11 +103,11 @@ class SnackbarHandlerState extends State<CatalystSnackbarHandler>
     _controller.value = 0;
     _pendingDuration = duration;
 
-    final themeData = CatalystTheme.of(callerContext);
+    final themeData = Theme.of(callerContext);
 
     _entry = OverlayEntry(
       builder:
-          (_) => CatalystTheme(
+          (_) => Theme(
             data: themeData,
             child: Align(
               alignment: Alignment.bottomRight,
@@ -148,13 +148,13 @@ class SnackbarHandlerState extends State<CatalystSnackbarHandler>
 }
 
 /// Snackbar display helper on [BuildContext].
-extension CatalystSnackbarContext on BuildContext {
+extension SnackbarContext on BuildContext {
   /// Displays [snackbar] for [duration] via the nearest
-  /// [CatalystSnackbarHandler].
+  /// [SnackbarHandler].
   void showSnackbar(
-    CatalystSnackbar snackbar, [
+    Snackbar snackbar, [
     Duration duration = const Duration(seconds: 5),
   ]) {
-    CatalystSnackbarHandler.of(this).show(this, snackbar, duration);
+    SnackbarHandler.of(this).show(this, snackbar, duration);
   }
 }

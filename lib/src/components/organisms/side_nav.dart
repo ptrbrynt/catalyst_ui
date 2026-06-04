@@ -113,8 +113,10 @@ class SideNav<T> extends StatelessWidget {
                   for (final item in items)
                     switch (item) {
                       SideNavGroupTitle<T>() => _buildGroupTitle(context, item),
-                      SideNavDestination<T>() =>
-                        _buildDestination(context, item),
+                      SideNavDestination<T>() => _buildDestination(
+                        context,
+                        item,
+                      ),
                     },
                 ],
               ),
@@ -134,25 +136,27 @@ class SideNav<T> extends StatelessWidget {
         return AnimatedContainer(
           duration: motion.micro.duration,
           curve: motion.micro.curve,
-          padding: show
-              ? const EdgeInsets.only(
-                  top: CatalystSpacing.s3,
-                  left: 10,
-                  right: 10,
-                  bottom: 6,
-                )
-              : EdgeInsets.zero,
-          child: show
-              ? Text(
-                  title.title.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: context.typography.fontFamily,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 10,
-                    color: context.colorScheme.textMuted,
-                  ),
-                )
-              : const SizedBox.shrink(),
+          padding:
+              show
+                  ? const EdgeInsets.only(
+                    top: CatalystSpacing.s3,
+                    left: 10,
+                    right: 10,
+                    bottom: 6,
+                  )
+                  : EdgeInsets.zero,
+          child:
+              show
+                  ? Text(
+                    title.title.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: context.typography.fontFamily,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 10,
+                      color: context.colorScheme.textMuted,
+                    ),
+                  )
+                  : const SizedBox.shrink(),
         );
       },
     );
@@ -195,21 +199,21 @@ class SideNav<T> extends StatelessWidget {
                   builder: (_, constraints) {
                     const vertPad = 9.0;
                     const iconSize = 18.0;
-                    final hPad =
-                        10.0 + (CatalystSpacing.s3 - 10.0) * t;
-                    final contentWidth =
-                        constraints.maxWidth - hPad * 2;
+                    final hPad = 10.0 + (CatalystSpacing.s3 - 10.0) * t;
+                    final contentWidth = constraints.maxWidth - hPad * 2;
                     // Shrinks to zero as the nav expands, centering
                     // the icon in the collapsed rail.
-                    final centerOffset =
-                        ((contentWidth - iconSize) / 2 * (1 - t))
-                            .clamp(0.0, double.infinity);
+                    final centerOffset = ((contentWidth - iconSize) /
+                            2 *
+                            (1 - t))
+                        .clamp(0.0, double.infinity);
 
                     return DecoratedBox(
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? cs.brand.withValues(alpha: 0.10)
-                            : null,
+                        color:
+                            isSelected
+                                ? cs.brand.withValues(alpha: 0.10)
+                                : null,
                         borderRadius: CatalystRadius.mdAll,
                       ),
                       child: Padding(

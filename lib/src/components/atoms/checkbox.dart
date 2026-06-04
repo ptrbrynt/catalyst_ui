@@ -4,7 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
 
-/// Controls the size of a [CatalystCheckbox].
+/// Controls the size of a [Checkbox].
 enum CheckboxSize {
   /// 16 × 16 px.
   small(16),
@@ -26,15 +26,15 @@ enum CheckboxSize {
 /// Pass `null` for [onChanged] to render the checkbox as disabled.
 ///
 /// ```dart
-/// CatalystCheckbox(
+/// Checkbox(
 ///   value: _checked,
 ///   onChanged: (v) => setState(() => _checked = v ?? false),
 ///   label: const Text('Accept terms'),
 /// )
 /// ```
-class CatalystCheckbox extends StatelessWidget {
+class Checkbox extends StatelessWidget {
   /// Creates a checkbox.
-  const CatalystCheckbox({
+  const Checkbox({
     required this.value,
     required this.onChanged,
     this.size = CheckboxSize.medium,
@@ -60,9 +60,10 @@ class CatalystCheckbox extends StatelessWidget {
     final cs = context.colorScheme;
 
     return MouseRegion(
-      cursor: onChanged != null
-          ? SystemMouseCursors.click
-          : SystemMouseCursors.forbidden,
+      cursor:
+          onChanged != null
+              ? SystemMouseCursors.click
+              : SystemMouseCursors.forbidden,
       child: GestureDetector(
         onTap: () => onChanged?.call(!value),
         child: AnimatedDefaultTextStyle(
@@ -93,13 +94,15 @@ class CatalystCheckbox extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: value ? cs.brand : cs.surface,
                       borderRadius: CatalystRadius.smAll,
-                      border: value
-                          ? null
-                          : Border.all(width: 1.5, color: cs.border),
+                      border:
+                          value
+                              ? null
+                              : Border.all(width: 1.5, color: cs.border),
                     ),
-                    child: value
-                        ? Icon(LucideIcons.check, size: size.dimension - 6)
-                        : null,
+                    child:
+                        value
+                            ? Icon(LucideIcons.check, size: size.dimension - 6)
+                            : null,
                   ),
                   if (label != null) label!,
                 ],

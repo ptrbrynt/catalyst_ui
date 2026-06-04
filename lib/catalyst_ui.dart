@@ -2,7 +2,7 @@
 ///
 /// No Material or Cupertino dependency. All design tokens — colours,
 /// typography, spacing, radius, motion, and shadows — are fully
-/// customisable via [CatalystThemeData]. Component variants (e.g.
+/// customisable via [ThemeData]. Component variants (e.g.
 /// [ButtonVariant], [ChipVariant], [BadgeVariant]) are abstract classes
 /// that you can subclass to define your own styles.
 ///
@@ -11,10 +11,10 @@
 /// ```dart
 /// import 'package:catalyst_ui/catalyst_ui.dart';
 ///
-/// CatalystTheme(
-///   data: CatalystThemeData.light(
+/// Theme(
+///   data: ThemeData.light(
 ///     fontFamily: 'Inter',
-///     colorScheme: const CatalystColorScheme.light().copyWith(
+///     colorScheme: const ColorScheme.light().copyWith(
 ///       brand: Color(0xFF7C3AED),
 ///       brandSoft: Color(0xFFEDE9FE),
 ///     ),
@@ -30,7 +30,7 @@
 ///   const OutlineButtonVariant();
 ///
 ///   @override
-///   ButtonVariantStyle resolve(CatalystColorScheme cs) => ButtonVariantStyle(
+///   ButtonVariantStyle resolve(ColorScheme cs) => ButtonVariantStyle(
 ///     backgroundColor: Colors.transparent,
 ///     foregroundColor: cs.brand,
 ///     borderColor: cs.brand,

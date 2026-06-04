@@ -75,8 +75,8 @@ class Avatar extends StatelessWidget {
 
   Color get _effectiveColor {
     if (color != null) return color!;
-    final code = name.codeUnits.first +
-        (name.codeUnits.elementAtOrNull(1) ?? 0);
+    final code =
+        name.codeUnits.first + (name.codeUnits.elementAtOrNull(1) ?? 0);
     return _palette[code % _palette.length];
   }
 
@@ -102,26 +102,27 @@ class Avatar extends StatelessWidget {
               borderRadius:
                   shape == BoxShape.circle ? null : CatalystRadius.smAll,
               color: _effectiveColor,
-              image: src != null
-                  ? DecorationImage(
-                      image: NetworkImage(src!),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
+              image:
+                  src != null
+                      ? DecorationImage(
+                        image: NetworkImage(src!),
+                        fit: BoxFit.cover,
+                      )
+                      : null,
             ),
             alignment: Alignment.center,
-            child: src != null
-                ? null
-                : Text(
-                    _initials,
-                    style: TextStyle(
-                      fontFamily: context.typography.fontFamily,
-                      fontWeight: FontWeight.w600,
-                      fontSize: size * 0.4,
-                      color:
-                          CatalystThemeData.textColorFor(_effectiveColor),
+            child:
+                src != null
+                    ? null
+                    : Text(
+                      _initials,
+                      style: TextStyle(
+                        fontFamily: context.typography.fontFamily,
+                        fontWeight: FontWeight.w600,
+                        fontSize: size * 0.4,
+                        color: ThemeData.textColorFor(_effectiveColor),
+                      ),
                     ),
-                  ),
           ),
           if (status != null)
             Align(

@@ -28,7 +28,7 @@ class ProgressBarToneStyle {
 ///   const SpeedTone();
 ///
 ///   @override
-///   ProgressBarToneStyle resolve(CatalystColorScheme cs) =>
+///   ProgressBarToneStyle resolve(ColorScheme cs) =>
 ///       ProgressBarToneStyle(fillColor: cs.brand);
 /// }
 /// ```
@@ -50,14 +50,14 @@ abstract class ProgressBarTone {
   static const ProgressBarTone danger = _DangerProgressBarTone();
 
   /// Resolves the visual style for this tone against [cs].
-  ProgressBarToneStyle resolve(CatalystColorScheme cs);
+  ProgressBarToneStyle resolve(ColorScheme cs);
 }
 
 class _BrandProgressBarTone extends ProgressBarTone {
   const _BrandProgressBarTone();
 
   @override
-  ProgressBarToneStyle resolve(CatalystColorScheme cs) =>
+  ProgressBarToneStyle resolve(ColorScheme cs) =>
       ProgressBarToneStyle(fillColor: cs.brand);
 }
 
@@ -65,7 +65,7 @@ class _SuccessProgressBarTone extends ProgressBarTone {
   const _SuccessProgressBarTone();
 
   @override
-  ProgressBarToneStyle resolve(CatalystColorScheme cs) =>
+  ProgressBarToneStyle resolve(ColorScheme cs) =>
       ProgressBarToneStyle(fillColor: cs.success);
 }
 
@@ -73,7 +73,7 @@ class _WarningProgressBarTone extends ProgressBarTone {
   const _WarningProgressBarTone();
 
   @override
-  ProgressBarToneStyle resolve(CatalystColorScheme cs) =>
+  ProgressBarToneStyle resolve(ColorScheme cs) =>
       ProgressBarToneStyle(fillColor: cs.warning);
 }
 
@@ -81,7 +81,7 @@ class _DangerProgressBarTone extends ProgressBarTone {
   const _DangerProgressBarTone();
 
   @override
-  ProgressBarToneStyle resolve(CatalystColorScheme cs) =>
+  ProgressBarToneStyle resolve(ColorScheme cs) =>
       ProgressBarToneStyle(fillColor: cs.danger);
 }
 
@@ -193,8 +193,7 @@ class _ProgressBarState extends State<ProgressBar>
 
   @override
   Widget build(BuildContext context) {
-    final fillColor =
-        widget.tone.resolve(context.colorScheme).fillColor;
+    final fillColor = widget.tone.resolve(context.colorScheme).fillColor;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -225,20 +224,22 @@ class _ProgressBarState extends State<ProgressBar>
             color: context.colorScheme.muted,
           ),
           child: LayoutBuilder(
-            builder: (ctx, constraints) => AnimatedBuilder(
-              animation: _controller,
-              builder: (_, _) => Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: widget.size.height,
-                  width: constraints.maxWidth * _controller.value,
-                  decoration: BoxDecoration(
-                    borderRadius: CatalystRadius.pillAll,
-                    color: fillColor,
-                  ),
+            builder:
+                (ctx, constraints) => AnimatedBuilder(
+                  animation: _controller,
+                  builder:
+                      (_, _) => Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: widget.size.height,
+                          width: constraints.maxWidth * _controller.value,
+                          decoration: BoxDecoration(
+                            borderRadius: CatalystRadius.pillAll,
+                            color: fillColor,
+                          ),
+                        ),
+                      ),
                 ),
-              ),
-            ),
           ),
         ),
       ],

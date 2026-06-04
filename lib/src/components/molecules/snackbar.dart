@@ -24,7 +24,7 @@ class SnackbarToneStyle {
   final Color foregroundColor;
 }
 
-/// Defines the background and foreground colours of a [CatalystSnackbar].
+/// Defines the background and foreground colours of a [Snackbar].
 ///
 /// Extend this class to create your own tones:
 ///
@@ -33,7 +33,7 @@ class SnackbarToneStyle {
 ///   const BrandSnackbarTone();
 ///
 ///   @override
-///   SnackbarToneStyle resolve(CatalystColorScheme cs) => SnackbarToneStyle(
+///   SnackbarToneStyle resolve(ColorScheme cs) => SnackbarToneStyle(
 ///     backgroundColor: cs.brand,
 ///     foregroundColor: cs.onBrand,
 ///   );
@@ -54,14 +54,14 @@ abstract class SnackbarTone {
   static const SnackbarTone danger = _DangerSnackbarTone();
 
   /// Resolves the visual style for this tone against [cs].
-  SnackbarToneStyle resolve(CatalystColorScheme cs);
+  SnackbarToneStyle resolve(ColorScheme cs);
 }
 
 class _DarkSnackbarTone extends SnackbarTone {
   const _DarkSnackbarTone();
 
   @override
-  SnackbarToneStyle resolve(CatalystColorScheme cs) => SnackbarToneStyle(
+  SnackbarToneStyle resolve(ColorScheme cs) => SnackbarToneStyle(
     backgroundColor: cs.inverse,
     foregroundColor: cs.onInverse,
   );
@@ -71,7 +71,7 @@ class _SuccessSnackbarTone extends SnackbarTone {
   const _SuccessSnackbarTone();
 
   @override
-  SnackbarToneStyle resolve(CatalystColorScheme cs) => SnackbarToneStyle(
+  SnackbarToneStyle resolve(ColorScheme cs) => SnackbarToneStyle(
     backgroundColor: cs.success,
     foregroundColor: cs.onSuccess,
   );
@@ -81,7 +81,7 @@ class _DangerSnackbarTone extends SnackbarTone {
   const _DangerSnackbarTone();
 
   @override
-  SnackbarToneStyle resolve(CatalystColorScheme cs) => SnackbarToneStyle(
+  SnackbarToneStyle resolve(ColorScheme cs) => SnackbarToneStyle(
     backgroundColor: cs.danger,
     foregroundColor: cs.onDanger,
   );
@@ -89,7 +89,7 @@ class _DangerSnackbarTone extends SnackbarTone {
 
 // ── Widget ───────────────────────────────────────────────────────────────────
 
-/// An optional call-to-action embedded in a [CatalystSnackbar].
+/// An optional call-to-action embedded in a [Snackbar].
 @immutable
 class SnackbarAction {
   /// Creates a snackbar action.
@@ -104,11 +104,11 @@ class SnackbarAction {
 
 /// A brief overlay notification typically shown at the bottom of the screen.
 ///
-/// Display via [CatalystSnackbarHandler] or the `context.showSnackbar`
+/// Display via [SnackbarHandler] or the `context.showSnackbar`
 /// extension rather than placing directly in the widget tree.
-class CatalystSnackbar extends StatelessWidget {
+class Snackbar extends StatelessWidget {
   /// Creates a snackbar. [tone] defaults to [SnackbarTone.dark].
-  const CatalystSnackbar({
+  const Snackbar({
     required this.message,
     this.tone = SnackbarTone.dark,
     this.action,
@@ -117,7 +117,7 @@ class CatalystSnackbar extends StatelessWidget {
   });
 
   /// Creates a green success snackbar.
-  const CatalystSnackbar.success({
+  const Snackbar.success({
     required this.message,
     this.action,
     this.icon = const Icon(LucideIcons.circleCheckBig),
@@ -125,7 +125,7 @@ class CatalystSnackbar extends StatelessWidget {
   }) : tone = SnackbarTone.success;
 
   /// Creates a red error snackbar.
-  const CatalystSnackbar.danger({
+  const Snackbar.danger({
     required this.message,
     this.action,
     this.icon = const Icon(LucideIcons.circleX),

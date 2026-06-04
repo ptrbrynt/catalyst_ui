@@ -87,35 +87,37 @@ class _PaginationState extends State<Pagination> {
             icon: const Icon(LucideIcons.chevronLeft, size: 16),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
-            onPressed: widget.currentPage > 0
-                ? () => widget.onChanged(widget.currentPage - 1)
-                : null,
+            onPressed:
+                widget.currentPage > 0
+                    ? () => widget.onChanged(widget.currentPage - 1)
+                    : null,
           ),
           for (final page in _pages)
             page == '...'
                 ? SizedBox(
-                    width: CatalystSpacing.s8,
-                    child: Center(
-                      child: Text(
-                        '…',
-                        style: TextStyle(
-                          fontFamily: context.typography.fontFamily,
-                          color: context.colorScheme.textMuted,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.center,
+                  width: CatalystSpacing.s8,
+                  child: Center(
+                    child: Text(
+                      '…',
+                      style: TextStyle(
+                        fontFamily: context.typography.fontFamily,
+                        color: context.colorScheme.textMuted,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  )
+                  ),
+                )
                 : _buildPageButton(context, int.parse(page)),
           Button.icon(
             icon: const Icon(LucideIcons.chevronRight, size: 16),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
-            onPressed: widget.currentPage < widget.pageCount
-                ? () => widget.onChanged(widget.currentPage + 1)
-                : null,
+            onPressed:
+                widget.currentPage < widget.pageCount
+                    ? () => widget.onChanged(widget.currentPage + 1)
+                    : null,
           ),
         ],
       ),

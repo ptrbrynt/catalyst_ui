@@ -8,13 +8,13 @@ import '../tokens/spacing.dart';
 /// Displays a modal dialog centred on screen with a fade + scale transition.
 ///
 /// Returns the value passed to `Navigator.pop`, or `null` if dismissed.
-Future<T?> showCatalystModal<T>(
+Future<T?> showModal<T>(
   BuildContext context,
   WidgetBuilder builder, {
   bool barrierDismissible = true,
   bool useRootNavigator = true,
 }) {
-  final themeData = CatalystTheme.of(context);
+  final themeData = Theme.of(context);
   return showGeneralDialog<T>(
     context: context,
     barrierColor: const Color.fromRGBO(11, 13, 18, 0.45),
@@ -36,7 +36,7 @@ Future<T?> showCatalystModal<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => CatalystTheme(
+    pageBuilder: (context, _, _) => Theme(
       data: themeData,
       child: SafeArea(
         child: Center(
@@ -54,14 +54,14 @@ Future<T?> showCatalystModal<T>(
 ///
 /// When [draggable] is `true` (the default) the sheet can be dismissed by
 /// dragging downward. Returns the value passed to `Navigator.pop`.
-Future<T?> showCatalystBottomSheet<T>(
+Future<T?> showBottomSheet<T>(
   BuildContext context,
   WidgetBuilder builder, {
   bool barrierDismissible = true,
   bool useRootNavigator = true,
   bool draggable = true,
 }) {
-  final themeData = CatalystTheme.of(context);
+  final themeData = Theme.of(context);
   return showGeneralDialog<T>(
     context: context,
     barrierColor: const Color.fromRGBO(11, 13, 18, 0.45),
@@ -86,7 +86,7 @@ Future<T?> showCatalystBottomSheet<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => CatalystTheme(
+    pageBuilder: (context, _, _) => Theme(
       data: themeData,
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -101,13 +101,13 @@ Future<T?> showCatalystBottomSheet<T>(
 /// Displays a drawer panel sliding in from the right edge.
 ///
 /// Returns the value passed to `Navigator.pop`.
-Future<T?> showCatalystDrawer<T>(
+Future<T?> showDrawer<T>(
   BuildContext context,
   WidgetBuilder builder, {
   bool barrierDismissible = true,
   bool useRootNavigator = true,
 }) {
-  final themeData = CatalystTheme.of(context);
+  final themeData = Theme.of(context);
   return showGeneralDialog<T>(
     context: context,
     barrierColor: const Color.fromRGBO(11, 13, 18, 0.45),
@@ -132,7 +132,7 @@ Future<T?> showCatalystDrawer<T>(
         ),
       );
     },
-    pageBuilder: (context, _, _) => CatalystTheme(
+    pageBuilder: (context, _, _) => Theme(
       data: themeData,
       child: Align(
         alignment: Alignment.centerRight,
