@@ -59,6 +59,8 @@ class _ListItemState extends State<ListItem> {
       curve: motion.standard.curve,
       padding: widget.padding,
       decoration: BoxDecoration(
+        color: _hovered ? context.colorScheme.muted : null,
+        borderRadius: Radii.smAll,
         border:
             widget.divider
                 ? Border(bottom: BorderSide(color: cs.borderSubtle))
@@ -101,62 +103,54 @@ class _ListItemState extends State<ListItem> {
                     });
                   }
                   : null,
-          child: AnimatedContainer(
-            duration: motion.micro.duration,
-            curve: motion.micro.curve,
-            decoration: BoxDecoration(
-              borderRadius: Radii.smAll,
-              color: _hovered ? context.colorScheme.muted : null,
-            ),
-            child: Row(
-              spacing: Spacing.s3,
-              children: [
-                if (widget.leading != null)
-                  IconTheme(
-                    data: IconThemeData(color: cs.brand),
-                    child: widget.leading!,
-                  ),
-                Expanded(
-                  child: AnimatedSize(
-                    duration: motion.standard.duration,
-                    curve: motion.standard.curve,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 2,
-                      children: [
+          child: Row(
+            spacing: Spacing.s3,
+            children: [
+              if (widget.leading != null)
+                IconTheme(
+                  data: IconThemeData(color: cs.brand),
+                  child: widget.leading!,
+                ),
+              Expanded(
+                child: AnimatedSize(
+                  duration: motion.standard.duration,
+                  curve: motion.standard.curve,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 2,
+                    children: [
+                      DefaultTextStyle(
+                        style: TextStyle(
+                          fontFamily: context.typography.fontFamily,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          height: 1.3,
+                          color: cs.text,
+                        ),
+                        child: widget.title,
+                      ),
+                      if (widget.subtitle != null)
                         DefaultTextStyle(
                           style: TextStyle(
                             fontFamily: context.typography.fontFamily,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            height: 1.3,
-                            color: cs.text,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            height: 1.4,
+                            color: cs.textMuted,
                           ),
-                          child: widget.title,
+                          child: widget.subtitle!,
                         ),
-                        if (widget.subtitle != null)
-                          DefaultTextStyle(
-                            style: TextStyle(
-                              fontFamily: context.typography.fontFamily,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              height: 1.4,
-                              color: cs.textMuted,
-                            ),
-                            child: widget.subtitle!,
-                          ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
-                if (widget.trailing != null)
-                  IconTheme(
-                    data: IconThemeData(color: cs.textMuted, size: 16),
-                    child: widget.trailing!,
-                  ),
-              ],
-            ),
+              ),
+              if (widget.trailing != null)
+                IconTheme(
+                  data: IconThemeData(color: cs.textMuted, size: 16),
+                  child: widget.trailing!,
+                ),
+            ],
           ).withBrightness(_pressed ? 0.92 : 1),
         ),
       ),
