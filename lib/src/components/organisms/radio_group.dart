@@ -301,6 +301,7 @@ class RadioGroup<T> extends StatelessWidget {
               onOptionSelected?.call(selected ? option.value : null);
             },
             trailingRadio: trailingRadio,
+            fullWidth: true,
           ),
       ],
     );
@@ -338,6 +339,7 @@ class RadioGroup<T> extends StatelessWidget {
         for (final option in opts) ...[
           Radio(
             value: option.value == value,
+            fullWidth: true,
             label: inlineDescription
                 ? Row(
                     spacing: Spacing.s2,
@@ -345,7 +347,7 @@ class RadioGroup<T> extends StatelessWidget {
                       option.label,
                       if (option.description != null)
                         DefaultTextStyle(
-                          style: context.typography.p3.copyWith(
+                          style: context.typography.caption.copyWith(
                             color: context.colorScheme.textMuted,
                           ),
                           child: option.description!,

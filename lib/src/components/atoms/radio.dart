@@ -40,6 +40,7 @@ class Radio extends StatelessWidget {
     this.size = RadioSize.medium,
     this.onSelected,
     this.trailingRadio = false,
+    this.fullWidth = false,
     super.key,
   });
 
@@ -57,6 +58,10 @@ class Radio extends StatelessWidget {
 
   /// If `true`, the radio icon will appear at the end of the widget.
   final bool trailingRadio;
+
+  /// If `true`, the Radio will expand to fill all available horizontal space.
+  /// Otherwise, it will be as small as the label allows.
+  final bool fullWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,11 @@ class Radio extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (!trailingRadio) _radio(motion, cs),
-                if (label != null) Expanded(child: label!),
+                if (label != null)
+                  switch (fullWidth) {
+                    true => Expanded(child: label!),
+                    false => label!,
+                  },
                 if (trailingRadio) _radio(motion, cs),
               ],
             ),

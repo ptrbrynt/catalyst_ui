@@ -482,6 +482,19 @@ class _ModalShowcaseState extends State<ModalShowcase> {
 
 // ─── RadioGroup ──────────────────────────────────────────────────────────────
 
+enum _RadioGroupShowcaseStyle {
+  simpleList,
+  simpleListInline,
+  simpleListWithTrailingRadio,
+  listWithDescription,
+  listWithInlineDescription,
+  listWithTrailingRadio,
+  table,
+  panel,
+  cards,
+  stackedCards,
+}
+
 class RadioGroupShowcase extends StatefulWidget {
   const RadioGroupShowcase({super.key});
 
@@ -490,119 +503,169 @@ class RadioGroupShowcase extends StatefulWidget {
 }
 
 class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
-  String? selectedValue;
+  String? _selectedValue;
+  _RadioGroupShowcaseStyle _style = _RadioGroupShowcaseStyle.panel;
+
+  static const _notificationOptions = <RadioGroupOption<String>>[
+    RadioGroupOption(
+      value: 'email',
+      label: Text('Email'),
+      description: Text('Receive updates via email'),
+    ),
+    RadioGroupOption(
+      value: 'sms',
+      label: Text('Phone (SMS)'),
+      description: Text('Receive updates via text message'),
+    ),
+    RadioGroupOption(
+      value: 'push',
+      label: Text('Push notification'),
+      description: Text('Receive updates via push notification'),
+    ),
+  ];
+
+  static const _planTableOptions = <RadioGroupTableOption<String>>[
+    RadioGroupTableOption(
+      value: 'startup',
+      columns: [Text('Startup'), Text('\$29 / mo'), Text('Up to 5 jobs')],
+    ),
+    RadioGroupTableOption(
+      value: 'business',
+      columns: [Text('Business'), Text('\$99 / mo'), Text('Up to 50 jobs')],
+    ),
+    RadioGroupTableOption(
+      value: 'enterprise',
+      columns: [Text('Enterprise'), Text('\$249 / mo'), Text('Up to 1000 jobs')],
+    ),
+  ];
+
+  static const _planCardOptions = <RadioGroupCardOption<String>>[
+    RadioGroupCardOption(value: 'startup', childBuilder: _planCardChild),
+    RadioGroupCardOption(value: 'business', childBuilder: _planCardChild),
+    RadioGroupCardOption(value: 'enterprise', childBuilder: _planCardChild),
+  ];
+
+  static Widget _planCardChild(BuildContext context, bool isSelected) =>
+      Text(isSelected ? 'Selected' : 'Select');
 
   @override
   Widget build(BuildContext context) {
-    return ShowcasePage(title: 'RadioGroup', preview: _cards());
-  }
-
-  Widget _panel() {
-    return RadioGroup<String>.panel(
-      value: selectedValue,
-      onOptionSelected: (value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
-      options: <String>['Email', 'Phone (SMS)', 'Push notification']
-          .map(
-            (i) => RadioGroupOption(
-              value: i,
-              label: Text(i),
-              description: Text('Some more information'),
+    return ShowcasePage(
+      title: 'RadioGroup',
+      preview: _buildPreview(),
+      controls: [
+        SelectControl<_RadioGroupShowcaseStyle>(
+          label: 'Style',
+          value: _style,
+          options: const [
+            (_RadioGroupShowcaseStyle.simpleList, 'Simple list'),
+            (
+              _RadioGroupShowcaseStyle.simpleListInline,
+              'Simple list (inline)',
             ),
-          )
-          .toList(),
-      title: Text('Notifications'),
-      subtitle: Text('How do you prefer to receive notifications?'),
-    );
-  }
-
-  Widget _table() {
-    return RadioGroup<String>.table(
-      value: selectedValue,
-      onOptionSelected: (value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
-      tableOptions: [
-        RadioGroupTableOption(
-          value: 'Startup',
-          columns: [
-            Text('Startup'),
-            Text('\$29 / mo'),
-            Text('Up to 5 active job postings'),
+            (
+              _RadioGroupShowcaseStyle.simpleListWithTrailingRadio,
+              'Simple list (trailing radio)',
+            ),
+            (
+              _RadioGroupShowcaseStyle.listWithDescription,
+              'List with description',
+            ),
+            (
+              _RadioGroupShowcaseStyle.listWithInlineDescription,
+              'List with inline description',
+            ),
+            (
+              _RadioGroupShowcaseStyle.listWithTrailingRadio,
+              'List with trailing radio',
+            ),
+            (_RadioGroupShowcaseStyle.table, 'Table'),
+            (_RadioGroupShowcaseStyle.panel, 'Panel'),
+            (_RadioGroupShowcaseStyle.cards, 'Cards'),
+            (_RadioGroupShowcaseStyle.stackedCards, 'Cards (stacked)'),
           ],
-        ),
-        RadioGroupTableOption(
-          value: 'Business',
-          columns: [
-            Text('Business'),
-            Text('\$99 / mo'),
-            Text('Up to 50 active job postings'),
-          ],
-        ),
-        RadioGroupTableOption(
-          value: 'Enterprise',
-          columns: [
-            Text('Enterprise'),
-            Text('\$249 / mo'),
-            Text('Up to 1000 active job postings'),
-          ],
+          onChanged: (v) => setState(() {
+            _style = v;
+            _selectedValue = null;
+          }),
         ),
       ],
     );
   }
 
-  Widget _cards() {
-    return RadioGroup<String>.cards(
-      stacked: false,
-      value: selectedValue,
-      onOptionSelected: (value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
-      cardOptions: [
-        RadioGroupCardOption(
-          value: 'Startup',
-          childBuilder: (context, isSelected) => Text('Startup'),
-        ),
-        RadioGroupCardOption(
-          value: 'Business',
-          childBuilder: (context, isSelected) => Text('Business'),
-        ),
-        RadioGroupCardOption(
-          value: 'Enterprise',
-          childBuilder: (context, isSelected) => Text('Enterprise'),
-        ),
-      ],
-    );
-  }
-
-  Widget _listWithTrailingRadio() {
-    return RadioGroup<String>.listWithTrailingRadio(
-      value: selectedValue,
-      onOptionSelected: (value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
-      options: <String>['Email', 'Phone (SMS)', 'Push notification']
-          .map(
-            (i) => RadioGroupOption(
-              value: i,
-              label: Text(i),
-              description: Text('Some more information'),
-            ),
-          )
-          .toList(),
-      title: Text('Notifications'),
-      subtitle: Text('How do you prefer to receive notifications?'),
-    );
-  }
+  Widget _buildPreview() => switch (_style) {
+    _RadioGroupShowcaseStyle.simpleList => RadioGroup<String>.simpleList(
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      options: _notificationOptions,
+      title: const Text('Notifications'),
+      subtitle: const Text('How do you prefer to receive notifications?'),
+    ),
+    _RadioGroupShowcaseStyle.simpleListInline => RadioGroup<String>.simpleList(
+      inline: true,
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      options: _notificationOptions,
+      title: const Text('Notifications'),
+      subtitle: const Text('How do you prefer to receive notifications?'),
+    ),
+    _RadioGroupShowcaseStyle.simpleListWithTrailingRadio =>
+      RadioGroup<String>.simpleListWithTrailingRadio(
+        value: _selectedValue,
+        onOptionSelected: (v) => setState(() => _selectedValue = v),
+        options: _notificationOptions,
+        title: const Text('Notifications'),
+        subtitle: const Text('How do you prefer to receive notifications?'),
+      ),
+    _RadioGroupShowcaseStyle.listWithDescription =>
+      RadioGroup<String>.listWithDescription(
+        value: _selectedValue,
+        onOptionSelected: (v) => setState(() => _selectedValue = v),
+        options: _notificationOptions,
+        title: const Text('Notifications'),
+        subtitle: const Text('How do you prefer to receive notifications?'),
+      ),
+    _RadioGroupShowcaseStyle.listWithInlineDescription =>
+      RadioGroup<String>.listWithDescription(
+        inlineDescription: true,
+        value: _selectedValue,
+        onOptionSelected: (v) => setState(() => _selectedValue = v),
+        options: _notificationOptions,
+        title: const Text('Notifications'),
+        subtitle: const Text('How do you prefer to receive notifications?'),
+      ),
+    _RadioGroupShowcaseStyle.listWithTrailingRadio =>
+      RadioGroup<String>.listWithTrailingRadio(
+        value: _selectedValue,
+        onOptionSelected: (v) => setState(() => _selectedValue = v),
+        options: _notificationOptions,
+        title: const Text('Notifications'),
+        subtitle: const Text('How do you prefer to receive notifications?'),
+      ),
+    _RadioGroupShowcaseStyle.table => RadioGroup<String>.table(
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      tableOptions: _planTableOptions,
+    ),
+    _RadioGroupShowcaseStyle.panel => RadioGroup<String>.panel(
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      options: _notificationOptions,
+      title: const Text('Notifications'),
+      subtitle: const Text('How do you prefer to receive notifications?'),
+    ),
+    _RadioGroupShowcaseStyle.cards => RadioGroup<String>.cards(
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      cardOptions: _planCardOptions,
+    ),
+    _RadioGroupShowcaseStyle.stackedCards => RadioGroup<String>.cards(
+      stacked: true,
+      value: _selectedValue,
+      onOptionSelected: (v) => setState(() => _selectedValue = v),
+      cardOptions: _planCardOptions,
+    ),
+  };
 }
 
 // ─── SideNav ─────────────────────────────────────────────────────────────────
