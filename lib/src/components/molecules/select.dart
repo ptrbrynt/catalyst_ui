@@ -49,8 +49,8 @@ enum SelectSize {
 class Select<T> extends StatefulWidget {
   /// Creates a select field.
   const Select({
-    required this.trailingIcon,
-    required this.checkIcon,
+    this.trailingIcon,
+    this.checkIcon,
     super.key,
     this.label,
     this.value,
@@ -90,15 +90,13 @@ class Select<T> extends StatefulWidget {
   /// The height variant.
   final SelectSize size;
 
-  /// Icon to display at the end of this [Select].
-  ///
-  /// Typically a downward chevron.
-  final IconData trailingIcon;
+  /// Icon to display at the end of this [Select]. Defaults to
+  /// `Iconography.expandIcon`.
+  final IconData? trailingIcon;
 
-  /// Icon to display on selected options.
-  ///
-  /// Typically a check.
-  final IconData checkIcon;
+  /// Icon to display on selected options. Defaults to
+  /// `Iconography.checkIcon`.
+  final IconData? checkIcon;
 
   @override
   State<Select<T>> createState() => _SelectState<T>();
@@ -142,7 +140,7 @@ class _SelectState<T> extends State<Select<T>> {
           widget.onChanged?.call(v);
           _close();
         },
-        checkIcon: widget.checkIcon,
+        checkIcon: widget.checkIcon ?? context.iconography.checkIcon,
         onDismiss: _close,
       ),
     );
@@ -252,7 +250,7 @@ class _SelectState<T> extends State<Select<T>> {
                         duration: motion.micro.duration,
                         curve: motion.micro.curve,
                         child: Icon(
-                          widget.trailingIcon,
+                          widget.trailingIcon ?? context.iconography.expandIcon,
                           size: 18,
                           color: cs.textMuted,
                         ),

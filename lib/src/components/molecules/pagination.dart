@@ -23,8 +23,8 @@ class Pagination extends StatefulWidget {
     required this.currentPage,
     required this.pageCount,
     required this.onChanged,
-    required this.forwardIcon,
-    required this.backIcon,
+    this.forwardIcon,
+    this.backIcon,
     super.key,
   });
 
@@ -37,11 +37,13 @@ class Pagination extends StatefulWidget {
   /// Called with the zero-based index of the newly selected page.
   final ValueChanged<int> onChanged;
 
-  /// Icon to display on the "next page" button
-  final IconData forwardIcon;
+  /// Icon to display on the "next page" button. Defaults to
+  /// `Iconography.forwardIcon` from `ThemeData`.
+  final IconData? forwardIcon;
 
-  /// Icon to display on the "previous page" button
-  final IconData backIcon;
+  /// Icon to display on the "previous page" button. Defaults to
+  /// `Iconography.backIcon` from `ThemeData`.
+  final IconData? backIcon;
 
   @override
   State<Pagination> createState() => _PaginationState();
@@ -91,7 +93,10 @@ class _PaginationState extends State<Pagination> {
         spacing: Spacing.s1,
         children: [
           Button.icon(
-            icon: Icon(widget.backIcon, size: 16),
+            icon: Icon(
+              widget.backIcon ?? context.iconography.backIcon,
+              size: 16,
+            ),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
             onPressed: widget.currentPage > 0
@@ -117,7 +122,10 @@ class _PaginationState extends State<Pagination> {
                   )
                 : _buildPageButton(context, int.parse(page)),
           Button.icon(
-            icon: Icon(widget.forwardIcon, size: 16),
+            icon: Icon(
+              widget.forwardIcon ?? context.iconography.forwardIcon,
+              size: 16,
+            ),
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
             onPressed: widget.currentPage < widget.pageCount

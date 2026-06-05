@@ -17,7 +17,7 @@ class ErrorState extends StatelessWidget {
   /// Creates a standard-sized error state (64 px icon circle).
   const ErrorState({
     required this.title,
-    required this.icon,
+    this.icon,
     this.description,
     this.onRetry,
     super.key,
@@ -26,14 +26,15 @@ class ErrorState extends StatelessWidget {
   /// Creates a large error state (88 px icon circle).
   const ErrorState.large({
     required this.title,
-    required this.icon,
+    this.icon,
     this.description,
     this.onRetry,
     super.key,
   }) : _large = true;
 
-  /// The icon inside the red circle.
-  final IconData icon;
+  /// The icon inside the red circle. If `null`, defaults to the `alertIcon`
+  /// supplied by `ThemeData.iconography`.
+  final IconData? icon;
 
   /// The primary error heading.
   final Widget title;
@@ -52,7 +53,7 @@ class ErrorState extends StatelessWidget {
 
     final body = _large
         ? EmptyState.large(
-            icon: icon,
+            icon: icon ?? context.iconography.alertIcon,
             iconBackgroundColor: cs.dangerSoft,
             iconColor: cs.danger,
             title: title,
@@ -60,7 +61,7 @@ class ErrorState extends StatelessWidget {
             action: _retryButton,
           )
         : EmptyState(
-            icon: icon,
+            icon: icon ?? context.iconography.alertIcon,
             iconBackgroundColor: cs.dangerSoft,
             iconColor: cs.danger,
             title: title,

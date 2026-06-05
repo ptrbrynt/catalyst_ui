@@ -12,7 +12,7 @@ import '../atoms/button.dart';
 class AppBar extends StatelessWidget {
   /// Creates an app bar.
   const AppBar({
-    required this.backIcon,
+    this.backIcon,
     super.key,
     this.title,
     this.automaticallyImplyLeading = true,
@@ -32,8 +32,9 @@ class AppBar extends StatelessWidget {
   /// An optional trailing action widget.
   final Widget? trailing;
 
-  /// Icon to display on the default back button.
-  final IconData backIcon;
+  /// Icon to display on the default back button. If `null`, defaults to the
+  /// `backIcon` supplied in `ThemeData.iconography`.
+  final IconData? backIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,7 @@ class AppBar extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return Button.icon(
-      icon: Icon(backIcon),
+      icon: Icon(backIcon ?? context.iconography.backIcon),
       variant: ButtonVariant.ghost,
       onPressed: () => Navigator.pop(context),
       size: ButtonSize.medium,

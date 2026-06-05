@@ -36,7 +36,7 @@ class Checkbox extends StatelessWidget {
   const Checkbox({
     required this.value,
     required this.onChanged,
-    required this.checkIcon,
+    this.checkIcon,
     this.size = CheckboxSize.medium,
     this.label,
     super.key,
@@ -54,8 +54,9 @@ class Checkbox extends StatelessWidget {
   /// The size variant.
   final CheckboxSize size;
 
-  /// The icon to display when checked.
-  final IconData checkIcon;
+  /// The icon to display when checked. If `null`, defaults to the
+  /// `checkIcon` from `ThemeData.typography`
+  final IconData? checkIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,10 @@ class Checkbox extends StatelessWidget {
                           : Border.all(width: 1.5, color: cs.border),
                     ),
                     child: value
-                        ? Icon(checkIcon, size: size.dimension - 6)
+                        ? Icon(
+                            checkIcon ?? context.iconography.checkIcon,
+                            size: size.dimension - 6,
+                          )
                         : null,
                   ),
                   ?label,

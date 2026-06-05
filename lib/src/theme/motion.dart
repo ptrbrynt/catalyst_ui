@@ -13,6 +13,7 @@ typedef MotionSpec = ({Duration duration, Curve curve});
 ///   micro: (duration: Duration(milliseconds: 80), curve: Curves.easeOut),
 /// )
 /// ```
+
 class Motion {
   /// Creates a motion preset bundle.
   ///

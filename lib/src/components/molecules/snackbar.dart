@@ -118,7 +118,7 @@ class Snackbar extends StatelessWidget {
   /// Creates a green success snackbar.
   const Snackbar.success({
     required this.message,
-    required this.icon,
+    this.icon,
     this.action,
     super.key,
   }) : tone = SnackbarTone.success;
@@ -126,7 +126,7 @@ class Snackbar extends StatelessWidget {
   /// Creates a red error snackbar.
   const Snackbar.danger({
     required this.message,
-    required this.icon,
+    this.icon,
     this.action,
     super.key,
   }) : tone = SnackbarTone.danger;

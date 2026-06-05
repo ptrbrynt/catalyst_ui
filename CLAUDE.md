@@ -16,6 +16,7 @@ lib/
     │   ├── color_scheme.dart
     │   ├── color_utils.dart  # WCAG luminance helper (free function)
     │   ├── extensions.dart   # BuildContext extensions
+    │   ├── iconography.dart  # Required icon-data set
     │   ├── motion.dart
     │   ├── shadows.dart
     │   ├── theme.dart        # Theme (InheritedWidget)
@@ -64,7 +65,7 @@ Provider
                     └── child
 ```
 
-`ThemeData` aggregates five sub-objects: `colorScheme`, `typography`, `motion`, `shadows`, `breakpoints`. Components read them via `BuildContext` extensions defined in `extensions.dart`:
+`ThemeData` aggregates six sub-objects: `colorScheme`, `typography`, `motion`, `shadows`, `breakpoints`, `iconography`. Components read them via `BuildContext` extensions defined in `extensions.dart`:
 
 ```dart
 context.colorScheme   // ColorScheme
@@ -72,6 +73,7 @@ context.typography    // Typography
 context.motion        // Motion
 context.shadows       // Shadows
 context.breakpoints   // Breakpoints
+context.iconography   // Iconography
 ```
 
 ### `Typography`
@@ -89,6 +91,37 @@ Both `copyWith` and `withColorScheme` must thread **all** fields — `fontFamily
 ### `color_utils.dart`
 
 `getTextColorFor(Color bg)` is a free function (not a static method on `ThemeData`) to avoid a circular dependency: `ColorScheme` needs it for its `on*` computed getters, but `ColorScheme` is imported by `ThemeData`. Keeping it in a standalone file breaks the cycle.
+
+---
+
+## Iconography system
+
+`Iconography` is a required parameter on `ThemeData.light()` and `ThemeData.dark()`. It holds the `IconData` slots used by built-in components. The library ships no icon data — callers supply values from whichever icon package their app uses.
+
+Current slots:
+
+| Field | Used by |
+|---|---|
+| `checkIcon` | `Checkbox`, `Chip` (selected state), `Select` (selected item), `Stepper` (completed step) |
+| `backIcon` | `AppBar` (back button), `Pagination` |
+| `forwardIcon` | `Breadcrumb` (separator), `Pagination` |
+| `expandIcon` | `Select` (closed state) |
+| `collapseIcon` | `Select` (open state) |
+| `closeIcon` | `Drawer` (close button) |
+| `removeIcon` | `Chip` (removable variant) |
+| `alertIcon` | `ErrorState` (default icon) |
+
+### Component pattern: optional override with `Iconography` fallback
+
+Components that use a semantic icon expose it as an optional `IconData?` parameter. When `null`, they fall back to the appropriate `context.iconography` slot:
+
+```dart
+Icon(widget.backIcon ?? context.iconography.backIcon)
+```
+
+This means callers can omit the parameter entirely and get the theme-level icon, or pass a specific `IconData` to override it for that instance.
+
+Components that use icons for caller-supplied content (e.g. `Button`'s leading/trailing icon, `ActionTile`'s icon, `BottomNavItem`'s icon) take a `Widget` and are not part of the `Iconography` system — callers always provide those explicitly.
 
 ---
 
@@ -167,7 +200,7 @@ Enums are closed — users cannot add cases. Abstract classes let users subclass
 Checklist for each new widget:
 
 - [ ] Import only `flutter/widgets.dart` (and `flutter/services.dart` / `flutter/foundation.dart` if needed).
-- [ ] Use `context.colorScheme`, `context.typography`, `context.motion`, `context.shadows`, `context.breakpoints` — never hardcode colours, fonts, durations, or breakpoint values.
+- [ ] Use `context.colorScheme`, `context.typography`, `context.motion`, `context.shadows`, `context.breakpoints`, `context.iconography` — never hardcode colours, fonts, durations, breakpoint values, or icon data.
 - [ ] All public symbols have `///` doc comments.
 - [ ] If variant- or tone-based: define `FooVariant`/`FooTone` (abstract), `FooVariantStyle`/`FooToneStyle` (@immutable), private built-in implementations, and static const presets. See existing tones (`AlertTone`, `CardTone`, etc.) or variants (`ButtonVariant`, `ChipVariant`) for reference.
 - [ ] Run `dart analyze lib/` — zero issues required.
@@ -226,6 +259,6 @@ Rules enforced include `public_member_api_docs`, `lines_longer_than_80_chars`, `
 | `time`               | Duration arithmetic helpers                                   |
 | `very_good_analysis` | Strict lint ruleset (dev only)                                |
 
-Icons are passed as `Widget` parameters by callers — the library ships no icon set.
+Icons are supplied by callers via `Iconography`, a required parameter on `ThemeData.light()` and `ThemeData.dark()`. The library ships no built-in icon data — pass `IconData` values from whichever icon package the consuming app uses (e.g. `LucideIcons.check`). Access icon data in components via `context.iconography`.
 
 No Material, no Cupertino, no third-party UI frameworks.

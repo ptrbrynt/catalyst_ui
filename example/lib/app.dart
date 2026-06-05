@@ -1,5 +1,6 @@
 import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'pages/home.dart';
 
@@ -10,14 +11,24 @@ class ShowcaseApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconography = Iconography(
+      checkIcon: LucideIcons.check,
+      backIcon: LucideIcons.chevronLeft,
+      forwardIcon: LucideIcons.chevronRight,
+      expandIcon: LucideIcons.chevronDown,
+      collapseIcon: LucideIcons.chevronUp,
+      closeIcon: LucideIcons.x,
+      removeIcon: LucideIcons.x,
+      alertIcon: LucideIcons.alertTriangle,
+    );
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeMode,
       builder: (context, mode, _) => WidgetsApp(
         debugShowCheckedModeBanner: false,
         color: const Color(0xFF6366F1),
         builder: (context, child) => CatalystProvider(
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData.light(iconography: iconography),
+          darkTheme: ThemeData.dark(iconography: iconography),
           themeMode: mode,
           child: child!,
         ),
@@ -30,10 +41,9 @@ class ShowcaseApp extends StatelessWidget {
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(
-              position: Tween(
-                begin: const Offset(1, 0),
-                end: Offset.zero,
-              ).chain(CurveTween(curve: const Cubic(0.2, 0, 0, 1))).animate(animation),
+              position: Tween(begin: const Offset(1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: const Cubic(0.2, 0, 0, 1)))
+                  .animate(animation),
               child: child,
             );
           },

@@ -94,7 +94,7 @@ class Chip extends StatefulWidget {
   const Chip({
     required this.isSelected,
     required this.child,
-    required IconData this.checkIcon,
+    this.checkIcon,
     this.onTap,
     this.variant = ChipVariant.standard,
     super.key,
@@ -104,7 +104,7 @@ class Chip extends StatefulWidget {
   /// Creates a removable chip that shows a close (×) icon.
   const Chip.removable({
     required this.child,
-    required IconData this.removeIcon,
+    this.removeIcon,
     this.onTap,
     this.variant = ChipVariant.standard,
     super.key,
@@ -218,14 +218,19 @@ class _ChipState extends State<Chip> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           if (widget.isSelected) ...[
-                            Icon(widget.checkIcon),
+                            Icon(
+                              widget.checkIcon ?? context.iconography.checkIcon,
+                            ),
                             const SizedBox(width: 6),
                           ] else
                             const SizedBox(width: 4),
                           widget.child,
                           if (widget.isRemovable) ...[
                             const SizedBox(width: 6),
-                            Icon(widget.removeIcon),
+                            Icon(
+                              widget.removeIcon ??
+                                  context.iconography.removeIcon,
+                            ),
                           ] else
                             const SizedBox(width: 4),
                         ],

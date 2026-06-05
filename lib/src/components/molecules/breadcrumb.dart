@@ -18,7 +18,7 @@ class Breadcrumb extends StatefulWidget {
   const Breadcrumb({
     required this.items,
     required this.onItemTapped,
-    required this.separatorIcon,
+    this.separatorIcon,
     super.key,
   });
 
@@ -28,8 +28,9 @@ class Breadcrumb extends StatefulWidget {
   /// Called with the index of a tapped ancestor item.
   final void Function(int index) onItemTapped;
 
-  /// Icon to display between the items.
-  final IconData separatorIcon;
+  /// Icon to display between the items. If `null`, defaults to the
+  /// `forwardIcon` supplied by `ThemeData.iconography`.
+  final IconData? separatorIcon;
 
   @override
   State<Breadcrumb> createState() => _BreadcrumbState();
@@ -65,7 +66,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
               _buildItem(i, context, cs),
               if (i < widget.items.length - 1)
                 Icon(
-                  widget.separatorIcon,
+                  widget.separatorIcon ?? context.iconography.forwardIcon,
                   size: 14,
                   color: cs.textSubtle,
                 ),

@@ -15,7 +15,7 @@ class Drawer extends StatelessWidget {
   const Drawer({
     required this.title,
     required this.body,
-    required this.closeIcon,
+    this.closeIcon,
     this.footer,
     super.key,
   });
@@ -29,8 +29,8 @@ class Drawer extends StatelessWidget {
   /// An optional footer widget pinned below the body.
   final Widget? footer;
 
-  /// Icon to display on the close button.
-  final IconData closeIcon;
+  /// Icon to display on the close button. Defaults to `Iconography.closeIcon`.
+  final IconData? closeIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class Drawer extends StatelessWidget {
                 Button.icon(
                   size: ButtonSize.small,
                   variant: ButtonVariant.ghost,
-                  icon: Icon(closeIcon),
+                  icon: Icon(closeIcon ?? context.iconography.closeIcon),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:catalyst_ui/src/theme/iconography.dart';
 import 'package:flutter/widgets.dart';
 
 import '../tokens/breakpoints.dart';
@@ -27,6 +28,9 @@ extension ThemeContext on BuildContext {
 
   /// Shorthand for `context.theme.breakpoints`.
   Breakpoints get breakpoints => theme.breakpoints;
+
+  /// Shorthand for `context.theme.iconography`.
+  Iconography get iconography => theme.iconography;
 }
 
 /// Brightness manipulation for widgets via a colour-matrix filter.
@@ -38,10 +42,26 @@ extension BrightnessFilter on Widget {
   Widget withBrightness(double amount) {
     return ColorFiltered(
       colorFilter: ColorFilter.matrix([
-        amount, 0, 0, 0, 0,
-        0, amount, 0, 0, 0,
-        0, 0, amount, 0, 0,
-        0, 0, 0, 1, 0,
+        amount,
+        0,
+        0,
+        0,
+        0,
+        0,
+        amount,
+        0,
+        0,
+        0,
+        0,
+        0,
+        amount,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
       ]),
       child: this,
     );

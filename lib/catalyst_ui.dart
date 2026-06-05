@@ -43,18 +43,16 @@ library;
 export 'src/components/atoms/atoms.dart';
 export 'src/components/molecules/molecules.dart';
 export 'src/components/organisms/organisms.dart';
-
 // Theme
 export 'src/theme/color_scheme.dart';
 export 'src/theme/extensions.dart';
+export 'src/theme/iconography.dart';
 export 'src/theme/motion.dart';
 export 'src/theme/shadows.dart';
 export 'src/theme/theme.dart';
 export 'src/theme/theme_data.dart';
 export 'src/theme/typography.dart';
-
 // Tokens
 export 'src/tokens/tokens.dart';
-
 // Utils
 export 'src/utils/utils.dart';

@@ -20,7 +20,7 @@ class Stepper extends StatefulWidget {
   const Stepper({
     required this.current,
     required this.steps,
-    required this.checkIcon,
+    this.checkIcon,
     super.key,
   });
 
@@ -30,8 +30,8 @@ class Stepper extends StatefulWidget {
   /// The ordered list of step labels.
   final List<String> steps;
 
-  /// Icon to display on completed steps.
-  final IconData checkIcon;
+  /// Icon to display on completed steps. Defaults to `Iconography.checkIcon`.
+  final IconData? checkIcon;
 
   @override
   State<Stepper> createState() => _StepperState();
@@ -139,7 +139,11 @@ class _StepperState extends State<Stepper> {
               switchInCurve: motion.micro.curve,
               switchOutCurve: motion.micro.curve,
               child: isDone
-                  ? Icon(widget.checkIcon, size: 14, color: indicatorFg)
+                  ? Icon(
+                      widget.checkIcon ?? context.iconography.checkIcon,
+                      size: 14,
+                      color: indicatorFg,
+                    )
                   : Text('${i + 1}'),
             ),
           ),
