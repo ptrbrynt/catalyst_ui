@@ -306,8 +306,6 @@ class PremiumBadgeVariant extends BadgeVariant {
 
 #### Custom `AlertTone`
 
-`AlertToneStyle` includes the leading icon, so custom tones have full control over appearance:
-
 ```dart
 class MaintenanceTone extends AlertTone {
   const MaintenanceTone();
@@ -316,11 +314,14 @@ class MaintenanceTone extends AlertTone {
   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
     backgroundColor: cs.warningSoft,
     accentColor: cs.warning,
-    icon: LucideIcons.wrench,
   );
 }
 
-Alert(tone: const MaintenanceTone(), title: const Text('Scheduled maintenance'))
+Alert(
+  tone: const MaintenanceTone(),
+  icon: const Icon(Icons.build),
+  title: const Text('Scheduled maintenance'),
+)
 ```
 
 #### Custom `CardTone`
@@ -384,13 +385,14 @@ StatusDot(tone: StatusTone.custom(const Color(0xFF9333EA)))
 | `ProgressBar`             | Animated linear progress bar with tone variants                                    |
 | `StatusDot`               | Coloured presence dot with `success`, `warning`, `danger`, `info`, `neutral` tones |
 | `Avatar` / `AvatarStack`  | Circular image/initials avatar, stackable                                          |
+| `Slider`                  | Draggable horizontal slider for selecting a value within a range                   |
 | `Divider`                 | Horizontal and vertical dividers                                                   |
 
 ### Molecules
 
 | Widget             | Description                                                            |
 | ------------------ | ---------------------------------------------------------------------- |
-| `ActionTile`       | Tappable tile with circular icon, title, subtitle, duration, and badge |
+| `ActionTile`       | Tappable tile with circular icon, title, subtitle, and badge           |
 | `Alert`            | Inline status banner with tone variants                                |
 | `Breadcrumb`       | Navigation breadcrumb trail                                            |
 | `Card`             | Themed card surface with tone variants                                 |
@@ -410,15 +412,17 @@ StatusDot(tone: StatusTone.custom(const Color(0xFF9333EA)))
 
 | Widget                            | Description                                            |
 | --------------------------------- | ------------------------------------------------------ |
-| `AppBar`                          | Top app bar with adaptive back button (platform-aware) |
-| `BottomNav<T>`                    | Bottom navigation bar with typed destinations          |
-| `BottomSheet`                     | Persistent bottom sheet with drag handle               |
-| `Drawer`                          | Side drawer panel with header and optional footer      |
-| `EmptyState` / `EmptyState.large` | Empty content placeholder                              |
-| `ErrorState` / `ErrorState.large` | Error state with retry action                          |
-| `Modal`                           | Centred dialog with title, body, and actions           |
-| `SideNav<T>`                      | Sidebar navigation with destinations and group titles  |
-| `TopBar<T>`                       | Segmented top navigation bar                           |
+| `AppBar`                          | Top app bar with adaptive back button (platform-aware)                 |
+| `BottomNav<T>`                    | Bottom navigation bar with typed destinations                          |
+| `BottomSheet`                     | Persistent bottom sheet with drag handle                               |
+| `Drawer`                          | Side drawer panel with header and optional footer                      |
+| `EmptyState` / `EmptyState.large` | Empty content placeholder                                              |
+| `ErrorState` / `ErrorState.large` | Error state with retry action                                          |
+| `FormLayout`                      | Multi-group form with stacked, two-column, and two-column-card layouts |
+| `Modal`                           | Centred dialog with title, body, and actions                           |
+| `RadioGroup<T>`                   | Radio selection group with list, table, and card layout variants       |
+| `SideNav<T>`                      | Sidebar navigation with destinations and group titles                  |
+| `TopBar<T>`                       | Segmented top navigation bar                                           |
 
 ---
 

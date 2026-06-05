@@ -7,7 +7,7 @@ import '../../tokens/spacing.dart';
 ///
 /// ```dart
 /// EmptyState(
-///   icon: LucideIcons.inbox,
+///   icon: const Icon(Icons.inbox),
 ///   title: const Text('Nothing here yet'),
 ///   description: const Text('Add your first item to get started.'),
 ///   action: Button(label: const Text('Add item'), ...),

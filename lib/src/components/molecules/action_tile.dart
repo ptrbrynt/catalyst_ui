@@ -13,7 +13,7 @@ import '../atoms/badge.dart';
 ///
 /// ```dart
 /// ActionTile(
-///   icon: const Icon(LucideIcons.calendar),
+///   icon: const Icon(Icons.calendar_today),
 ///   iconBackgroundColor: Color(0xFFEEF2FF),
 ///   title: const Text('Book appointment'),
 ///   onTap: _handleTap,

@@ -24,7 +24,7 @@ enum StatDelta {
 ///   value: '£12,400',
 ///   trend: 'vs last month',
 ///   delta: StatDelta.positive,
-///   icon: const Icon(LucideIcons.trendingUp),
+///   icon: const Icon(Icons.trending_up),
 /// )
 /// ```
 class StatCard extends StatelessWidget {

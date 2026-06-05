@@ -166,7 +166,7 @@ Enums are closed — users cannot add cases. Abstract classes let users subclass
 
 Checklist for each new widget:
 
-- [ ] Import only `flutter/widgets.dart` (plus `lucide_icons_flutter` if icons needed).
+- [ ] Import only `flutter/widgets.dart` (and `flutter/services.dart` / `flutter/foundation.dart` if needed).
 - [ ] Use `context.colorScheme`, `context.typography`, `context.motion`, `context.shadows`, `context.breakpoints` — never hardcode colours, fonts, durations, or breakpoint values.
 - [ ] All public symbols have `///` doc comments.
 - [ ] If variant- or tone-based: define `FooVariant`/`FooTone` (abstract), `FooVariantStyle`/`FooToneStyle` (@immutable), private built-in implementations, and static const presets. See existing tones (`AlertTone`, `CardTone`, etc.) or variants (`ButtonVariant`, `ChipVariant`) for reference.
@@ -219,12 +219,13 @@ Rules enforced include `public_member_api_docs`, `lines_longer_than_80_chars`, `
 
 ## Dependency notes
 
-| Package                | Purpose                                                       |
-| ---------------------- | ------------------------------------------------------------- |
-| `lucide_icons_flutter` | Icon set used throughout components                           |
-| `intl`                 | Locale-aware formatting (used in pagination and date display) |
-| `dartx`                | Iterable / String extensions                                  |
-| `time`                 | Duration arithmetic helpers                                   |
-| `very_good_analysis`   | Strict lint ruleset (dev only)                                |
+| Package              | Purpose                                                       |
+| -------------------- | ------------------------------------------------------------- |
+| `intl`               | Locale-aware formatting (used in pagination and date display) |
+| `dartx`              | Iterable / String extensions                                  |
+| `time`               | Duration arithmetic helpers                                   |
+| `very_good_analysis` | Strict lint ruleset (dev only)                                |
+
+Icons are passed as `Widget` parameters by callers — the library ships no icon set.
 
 No Material, no Cupertino, no third-party UI frameworks.

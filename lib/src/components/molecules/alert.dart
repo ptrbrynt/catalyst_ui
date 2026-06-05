@@ -23,7 +23,7 @@ class AlertToneStyle {
   final Color accentColor;
 }
 
-/// Defines the colour and icon of an [Alert].
+/// Defines the colour of an [Alert].
 ///
 /// Extend this class to create your own tones:
 ///
@@ -35,7 +35,6 @@ class AlertToneStyle {
 ///   AlertToneStyle resolve(ColorScheme cs) => AlertToneStyle(
 ///     backgroundColor: cs.warningSoft,
 ///     accentColor: cs.warning,
-///     icon: LucideIcons.wrench,
 ///   );
 /// }
 /// ```

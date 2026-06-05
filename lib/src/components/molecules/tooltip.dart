@@ -22,7 +22,7 @@ enum TooltipSide {
 /// ```dart
 /// Tooltip(
 ///   content: 'Save changes',
-///   child: const Icon(LucideIcons.save),
+///   child: const Icon(Icons.save),
 /// )
 /// ```
 class Tooltip extends StatefulWidget {
