@@ -244,15 +244,14 @@ class _TextFieldState extends State<TextField> {
                   fontWeight: FontWeight.w500,
                   color: cs.text,
                 ),
-                children:
-                    widget.required
-                        ? [
-                          TextSpan(
-                            text: ' *',
-                            style: TextStyle(color: cs.danger),
-                          ),
-                        ]
-                        : null,
+                children: widget.required
+                    ? [
+                        TextSpan(
+                          text: ' *',
+                          style: TextStyle(color: cs.danger),
+                        ),
+                      ]
+                    : null,
               ),
             ),
             const SizedBox(height: 6),
@@ -266,7 +265,9 @@ class _TextFieldState extends State<TextField> {
               child: AnimatedContainer(
                 duration: motion.standard.duration,
                 curve: motion.standard.curve,
-                height: height,
+                height: (widget.expands || widget.maxLines != 1)
+                    ? null
+                    : height,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: widget.enabled ? cs.surface : cs.muted,
@@ -293,18 +294,16 @@ class _TextFieldState extends State<TextField> {
                           if (widget.placeholder != null)
                             ValueListenableBuilder<TextEditingValue>(
                               valueListenable: _controller,
-                              builder:
-                                  (_, value, _) =>
-                                      value.text.isEmpty
-                                          ? Text(
-                                            widget.placeholder!,
-                                            style: typo.body.copyWith(
-                                              color: cs.textSubtle,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                          : const SizedBox.shrink(),
+                              builder: (_, value, _) => value.text.isEmpty
+                                  ? Text(
+                                      widget.placeholder!,
+                                      style: typo.body.copyWith(
+                                        color: cs.textSubtle,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  : const SizedBox.shrink(),
                             ),
                           EditableText(
                             controller: _controller,
