@@ -23,6 +23,8 @@ class Slider extends StatefulWidget {
     required this.onChanged,
     this.min = 0,
     this.max = 1,
+    this.onChangeStarted,
+    this.onChangeEnded,
     super.key,
   }) : assert(min < max, 'min must be less than max');
 
@@ -31,6 +33,12 @@ class Slider extends StatefulWidget {
 
   /// Called continuously as the user drags. Pass `null` to disable.
   final ValueChanged<double>? onChanged;
+
+  /// Called when the user begins dragging.
+  final VoidCallback? onChangeStarted;
+
+  /// Called when the user stops dragging.
+  final VoidCallback? onChangeEnded;
 
   /// The minimum selectable value. Defaults to `0`.
   final double min;
@@ -79,10 +87,9 @@ class _SliderState extends State<Slider> {
     final fraction = (_value - widget.min) / (widget.max - widget.min);
 
     return MouseRegion(
-      cursor:
-          _disabled
-              ? SystemMouseCursors.forbidden
-              : SystemMouseCursors.resizeLeftRight,
+      cursor: _disabled
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.resizeLeftRight,
       child: AnimatedOpacity(
         duration: motion.micro.duration,
         curve: motion.micro.curve,
@@ -94,18 +101,27 @@ class _SliderState extends State<Slider> {
             final fillWidth = thumbLeft + _kThumbSize / 2;
 
             return GestureDetector(
-              onHorizontalDragStart:
-                  _disabled
-                      ? null
-                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
-              onHorizontalDragUpdate:
-                  _disabled
-                      ? null
-                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
-              onTapDown:
-                  _disabled
-                      ? null
-                      : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
+              onHorizontalDragStart: _disabled
+                  ? null
+                  : (d) {
+                      widget.onChangeStarted?.call();
+                      _updateFromDx(d.localPosition.dx, trackWidth);
+                    },
+              onHorizontalDragUpdate: _disabled
+                  ? null
+                  : (d) => _updateFromDx(d.localPosition.dx, trackWidth),
+              onHorizontalDragEnd: _disabled
+                  ? null
+                  : (_) => widget.onChangeEnded?.call(),
+              onTapDown: _disabled
+                  ? null
+                  : (d) {
+                      widget.onChangeStarted?.call();
+                      _updateFromDx(d.localPosition.dx, trackWidth);
+                    },
+              onTapUp: _disabled
+                  ? null
+                  : (_) => widget.onChangeEnded?.call(),
               child: SizedBox(
                 height: _kThumbSize,
                 child: Stack(
