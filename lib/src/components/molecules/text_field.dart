@@ -268,7 +268,10 @@ class _TextFieldState extends State<TextField> {
                 height: (widget.expands || widget.maxLines != 1)
                     ? null
                     : height,
-                padding: const EdgeInsets.symmetric(horizontal: 14),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: (widget.expands || widget.maxLines != 1) ? 12 : 0,
+                ),
                 decoration: BoxDecoration(
                   color: widget.enabled ? cs.surface : cs.muted,
                   borderRadius: Radii.lgAll,
