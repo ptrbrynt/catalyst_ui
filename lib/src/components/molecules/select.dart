@@ -11,13 +11,17 @@ import '../../tokens/spacing.dart';
 @immutable
 class SelectOption<T> {
   /// Creates a select option.
-  const SelectOption({required this.value, required this.label});
+  const SelectOption({required this.value, required this.label, this.icon});
 
   /// The value this option represents.
   final T value;
 
   /// The text label displayed in the dropdown and trigger.
   final String label;
+
+  /// Optional icon displayed to the left of the [label] in both the trigger
+  /// and the dropdown row.
+  final IconData? icon;
 }
 
 /// The height variant of a [Select] field.
@@ -34,13 +38,20 @@ enum SelectSize {
 
 /// A dropdown field for selecting a single value from a list of options.
 ///
+/// Options may include an optional [SelectOption.icon] that is displayed to
+/// the left of the label in both the trigger and the dropdown rows.
+///
 /// ```dart
 /// Select<String>(
 ///   label: 'Country',
 ///   placeholder: 'Pick a country…',
 ///   value: _country,
 ///   options: const [
-///     SelectOption(value: 'gb', label: 'United Kingdom'),
+///     SelectOption(
+///       value: 'gb',
+///       label: 'United Kingdom',
+///       icon: MyIcons.flagGb,
+///     ),
 ///     SelectOption(value: 'us', label: 'United States'),
 ///   ],
 ///   onChanged: (v) => setState(() => _country = v),
@@ -234,6 +245,14 @@ class _SelectState<T> extends State<Select<T>> {
                   ),
                   child: Row(
                     children: [
+                      if (selected?.icon != null) ...[
+                        Icon(
+                          selected!.icon,
+                          size: 18,
+                          color: cs.text,
+                        ),
+                        const SizedBox(width: 8),
+                      ],
                       Expanded(
                         child: Text(
                           selected?.label ?? widget.placeholder ?? '',
@@ -407,6 +426,14 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: Row(
             children: [
+              if (widget.option.icon != null) ...[
+                Icon(
+                  widget.option.icon,
+                  size: 16,
+                  color: widget.colorScheme.textMuted,
+                ),
+                const SizedBox(width: 8),
+              ],
               Expanded(
                 child: Text(
                   widget.option.label,
