@@ -7,9 +7,18 @@ import '../../theme/typography.dart';
 import '../../tokens/radius.dart';
 import '../../tokens/spacing.dart';
 
-/// A single item in a [Select] dropdown.
+/// A sealed base class for items that can appear in a [Select] dropdown.
+///
+/// Use [SelectOption] for selectable entries and [SelectDivider] to insert a
+/// visual separator between groups of options.
+sealed class SelectItem<T> {
+  /// Creates a select item.
+  const SelectItem();
+}
+
+/// A single selectable item in a [Select] dropdown.
 @immutable
-class SelectOption<T> {
+class SelectOption<T> extends SelectItem<T> {
   /// Creates a select option.
   const SelectOption({required this.value, required this.label, this.icon});
 
@@ -22,6 +31,14 @@ class SelectOption<T> {
   /// Optional icon displayed to the left of the [label] in both the trigger
   /// and the dropdown row.
   final IconData? icon;
+}
+
+/// A visual divider that can be placed between groups of options in a [Select]
+/// dropdown.
+@immutable
+class SelectDivider<T> extends SelectItem<T> {
+  /// Creates a select divider.
+  const SelectDivider();
 }
 
 /// The height variant of a [Select] field.
@@ -38,8 +55,10 @@ enum SelectSize {
 
 /// A dropdown field for selecting a single value from a list of options.
 ///
-/// Options may include an optional [SelectOption.icon] that is displayed to
-/// the left of the label in both the trigger and the dropdown rows.
+/// The [options] list accepts [SelectOption] entries and [SelectDivider]
+/// entries, which render as a thin horizontal separator between groups.
+/// [SelectOption] entries may include an optional icon displayed to the left
+/// of the label in both the trigger and the dropdown rows.
 ///
 /// ```dart
 /// Select<String>(
@@ -53,6 +72,8 @@ enum SelectSize {
 ///       icon: MyIcons.flagGb,
 ///     ),
 ///     SelectOption(value: 'us', label: 'United States'),
+///     SelectDivider(),
+///     SelectOption(value: 'ca', label: 'Canada'),
 ///   ],
 ///   onChanged: (v) => setState(() => _country = v),
 /// )
@@ -83,8 +104,10 @@ class Select<T> extends StatefulWidget {
   /// Called when the user selects a different option.
   final ValueChanged<T>? onChanged;
 
-  /// The list of options shown in the dropdown.
-  final List<SelectOption<T>> options;
+  /// The list of items shown in the dropdown.
+  ///
+  /// May contain [SelectOption] entries and [SelectDivider] entries.
+  final List<SelectItem<T>> options;
 
   /// Placeholder text when no value is selected.
   final String? placeholder;
@@ -185,6 +208,7 @@ class _SelectState<T> extends State<Select<T>> {
     final hasError = widget.error != null;
 
     final selected = widget.options
+        .whereType<SelectOption<T>>()
         .where((o) => o.value == widget.value)
         .firstOrNull;
 
@@ -312,7 +336,7 @@ class _SelectDropdown<T> extends StatelessWidget {
 
   final LayerLink layerLink;
   final double triggerWidth;
-  final List<SelectOption<T>> options;
+  final List<SelectItem<T>> options;
   final T? value;
   final ColorScheme colorScheme;
   final Typography typography;
@@ -363,15 +387,20 @@ class _SelectDropdown<T> extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        for (final opt in options)
-                          _SelectOptionRow<T>(
-                            option: opt,
-                            isSelected: opt.value == value,
-                            onTap: () => onSelect(opt.value),
-                            colorScheme: colorScheme,
-                            typography: typography,
-                            checkIcon: checkIcon,
-                          ),
+                        for (final item in options)
+                          switch (item) {
+                            SelectOption<T>() => _SelectOptionRow<T>(
+                              option: item,
+                              isSelected: item.value == value,
+                              onTap: () => onSelect(item.value),
+                              colorScheme: colorScheme,
+                              typography: typography,
+                              checkIcon: checkIcon,
+                            ),
+                            SelectDivider<T>() => _SelectItemDivider(
+                              colorScheme: colorScheme,
+                            ),
+                          },
                       ],
                     ),
                   ),
@@ -381,6 +410,20 @@ class _SelectDropdown<T> extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SelectItemDivider extends StatelessWidget {
+  const _SelectItemDivider({required this.colorScheme});
+
+  final ColorScheme colorScheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 1,
+      color: colorScheme.border,
     );
   }
 }
