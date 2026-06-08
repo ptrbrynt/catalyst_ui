@@ -63,23 +63,20 @@ class AppBar extends StatelessWidget {
           ),
           child: SafeArea(
             bottom: false,
-            child: Row(
-              spacing: 4,
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                SizedBox.square(
-                  dimension: 44,
-                  child:
-                      leading ??
-                      (automaticallyImplyLeading
-                          ? _backButton(context)
-                          : const SizedBox.shrink()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    leading ??
+                        (automaticallyImplyLeading
+                            ? _backButton(context)
+                            : const SizedBox.shrink()),
+                    ?trailing,
+                  ],
                 ),
-                Expanded(
-                  child: Center(
-                    child: title ?? const SizedBox.shrink(),
-                  ),
-                ),
-                SizedBox.square(dimension: 44, child: trailing),
+                ?title,
               ],
             ),
           ),
