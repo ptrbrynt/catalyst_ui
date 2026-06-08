@@ -366,6 +366,7 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
                   widget.option.label,
                   style: widget.typography.p3.copyWith(
                     color: widget.colorScheme.text,
+                    height: 1,
                   ),
                 ),
               ),
