@@ -185,6 +185,7 @@ class Badge extends StatelessWidget {
     this.variant = BadgeVariant.neutral,
     this.showDot = false,
     this.size = BadgeSize.medium,
+    this.elevated = false,
     super.key,
   });
 
@@ -196,6 +197,9 @@ class Badge extends StatelessWidget {
 
   /// Shows a small coloured dot before [child] when `true`.
   final bool showDot;
+
+  /// Adds a small shadow to this badge when `true`.
+  final bool elevated;
 
   /// The label content, typically a [Text] widget.
   final Widget child;
@@ -222,6 +226,7 @@ class Badge extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: Radii.pillAll,
           color: style.backgroundColor,
+          boxShadow: elevated ? context.shadows.sm : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
