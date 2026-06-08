@@ -67,9 +67,11 @@ enum MenuButtonAlignment {
 
 /// A button that opens a contextual dropdown menu when tapped.
 ///
-/// The [child] widget acts as the trigger. The [items] list defines the menu
-/// contents: use [MenuOption] for actionable rows and [MenuDivider] to
-/// separate groups.
+/// Instead of accepting a fixed child widget, [MenuButton] uses a [build]
+/// callback that receives the current [BuildContext] and an `open` callback.
+/// Wire `open` to the trigger's tap handler so the caller controls exactly
+/// when the menu opens — this avoids gesture conflicts with interactive
+/// widgets such as [Button].
 ///
 /// By default the dropdown aligns its leading edge to the trigger's leading
 /// edge. Set [alignment] to [MenuButtonAlignment.end] to align the trailing
@@ -92,23 +94,26 @@ enum MenuButtonAlignment {
 ///       onTap: _onDelete,
 ///     ),
 ///   ],
-///   child: const Icon(LucideIcons.moreVertical),
+///   build: (context, open) => Button(
+///     label: 'Options',
+///     onTap: open,
+///   ),
 /// )
 /// ```
 class MenuButton extends StatefulWidget {
   /// Creates a menu button.
   const MenuButton({
-    required this.child,
+    required this.build,
     required this.items,
     super.key,
     this.alignment = MenuButtonAlignment.start,
-    this.disabled = false,
   });
 
-  /// The widget that acts as the trigger.
+  /// Builds the trigger widget.
   ///
-  /// Tapping this widget opens or closes the dropdown.
-  final Widget child;
+  /// The `open` callback opens (or closes) the dropdown; wire it to the
+  /// trigger's tap handler.
+  final Widget Function(BuildContext context, VoidCallback open) build;
 
   /// The list of items shown in the dropdown.
   ///
@@ -119,9 +124,6 @@ class MenuButton extends StatefulWidget {
   ///
   /// Defaults to [MenuButtonAlignment.start].
   final MenuButtonAlignment alignment;
-
-  /// When `true`, the trigger is non-interactive and the menu cannot be opened.
-  final bool disabled;
 
   @override
   State<MenuButton> createState() => _MenuButtonState();
@@ -172,10 +174,7 @@ class _MenuButtonState extends State<MenuButton> {
     if (mounted) setState(() {});
   }
 
-  void _toggle() {
-    if (widget.disabled) return;
-    _isOpen ? _close() : _open();
-  }
+  void _toggle() => _isOpen ? _close() : _open();
 
   @override
   void dispose() {
@@ -186,24 +185,9 @@ class _MenuButtonState extends State<MenuButton> {
 
   @override
   Widget build(BuildContext context) {
-    final motion = context.motion;
-
     return CompositedTransformTarget(
       link: _link,
-      child: GestureDetector(
-        onTap: _toggle,
-        child: MouseRegion(
-          cursor: widget.disabled
-              ? SystemMouseCursors.forbidden
-              : SystemMouseCursors.click,
-          child: AnimatedOpacity(
-            duration: motion.standard.duration,
-            curve: motion.standard.curve,
-            opacity: widget.disabled ? 0.5 : 1,
-            child: widget.child,
-          ),
-        ),
-      ),
+      child: widget.build(context, _toggle),
     );
   }
 }
