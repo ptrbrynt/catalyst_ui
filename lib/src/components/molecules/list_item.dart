@@ -11,6 +11,7 @@ class ListItem extends StatefulWidget {
     required this.title,
     this.divider = true,
     this.padding = const EdgeInsets.all(Spacing.s4),
+    this.borderRadius = .zero,
     this.leading,
     this.subtitle,
     this.trailing,
@@ -39,6 +40,9 @@ class ListItem extends StatefulWidget {
   /// Inner padding applied to the row.
   final EdgeInsets padding;
 
+  /// Optional border radius
+  final BorderRadius borderRadius;
+
   @override
   State<ListItem> createState() => _ListItemState();
 }
@@ -60,49 +64,44 @@ class _ListItemState extends State<ListItem> {
       padding: widget.padding,
       decoration: BoxDecoration(
         color: _hovered ? context.colorScheme.muted : null,
-        borderRadius: Radii.smAll,
-        border:
-            widget.divider
-                ? Border(bottom: BorderSide(color: cs.borderSubtle))
-                : null,
+        borderRadius: widget.borderRadius,
+        border: widget.divider
+            ? Border(bottom: BorderSide(color: cs.borderSubtle))
+            : null,
       ),
       child: MouseRegion(
         cursor: _interactive ? SystemMouseCursors.click : MouseCursor.defer,
-        onEnter:
-            _interactive
-                ? (_) {
-                  setState(() {
-                    _hovered = true;
-                  });
-                }
-                : null,
-        onExit:
-            _interactive
-                ? (_) {
-                  setState(() {
-                    _pressed = false;
-                    _hovered = false;
-                  });
-                }
-                : null,
+        onEnter: _interactive
+            ? (_) {
+                setState(() {
+                  _hovered = true;
+                });
+              }
+            : null,
+        onExit: _interactive
+            ? (_) {
+                setState(() {
+                  _pressed = false;
+                  _hovered = false;
+                });
+              }
+            : null,
         child: GestureDetector(
           onTap: widget.onTap,
-          onTapDown:
-              _interactive
-                  ? (_) {
-                    setState(() {
-                      _pressed = true;
-                    });
-                  }
-                  : null,
-          onTapUp:
-              _interactive
-                  ? (_) {
-                    setState(() {
-                      _pressed = false;
-                    });
-                  }
-                  : null,
+          onTapDown: _interactive
+              ? (_) {
+                  setState(() {
+                    _pressed = true;
+                  });
+                }
+              : null,
+          onTapUp: _interactive
+              ? (_) {
+                  setState(() {
+                    _pressed = false;
+                  });
+                }
+              : null,
           child: Row(
             spacing: Spacing.s3,
             children: [
