@@ -117,51 +117,47 @@ class Typography {
     double size,
     FontWeight weight, {
     double? height,
-  }) =>
-      base.copyWith(fontSize: size, fontWeight: weight, height: height);
+  }) => base.copyWith(fontSize: size, fontWeight: weight, height: height);
 
   /// The default body style; used as the ambient [DefaultTextStyle].
   TextStyle get defaultStyle => body;
 
   /// 40 sp bold — hero numbers and large display text.
   TextStyle get display =>
-      _display ?? _style(_headerBase, 40, FontWeight.w700, height: 1.1);
+      _display ?? _style(_headerBase, 40, FontWeight.w700, height: 1);
 
   /// 28 sp semibold — page-level heading.
   TextStyle get h1 =>
-      _h1 ?? _style(_headerBase, 28, FontWeight.w600, height: 1.2);
+      _h1 ?? _style(_headerBase, 28, FontWeight.w600, height: 1);
 
   /// 22 sp semibold — section heading.
   TextStyle get h2 =>
-      _h2 ?? _style(_headerBase, 22, FontWeight.w600, height: 1.25);
+      _h2 ?? _style(_headerBase, 22, FontWeight.w600, height: 1);
 
   /// 18 sp medium — sub-section heading.
   TextStyle get h3 =>
-      _h3 ?? _style(_headerBase, 18, FontWeight.w500, height: 1.3);
+      _h3 ?? _style(_headerBase, 18, FontWeight.w500, height: 1);
 
   /// 20 sp medium — large paragraph text.
-  TextStyle get p1 =>
-      _p1 ?? _style(_bodyBase, 20, FontWeight.w500, height: 1.5);
+  TextStyle get p1 => _p1 ?? _style(_bodyBase, 20, FontWeight.w500, height: 1);
 
   /// 18 sp regular — secondary paragraph text.
-  TextStyle get p2 =>
-      _p2 ?? _style(_bodyBase, 18, FontWeight.w400, height: 1.5);
+  TextStyle get p2 => _p2 ?? _style(_bodyBase, 18, FontWeight.w400, height: 1);
 
   /// 16 sp regular — default body copy.
   TextStyle get body =>
-      _body ?? _style(_bodyBase, 16, FontWeight.w400, height: 1.5);
+      _body ?? _style(_bodyBase, 16, FontWeight.w400, height: 1);
 
   /// 14 sp regular — supporting body copy.
-  TextStyle get p3 =>
-      _p3 ?? _style(_bodyBase, 14, FontWeight.w400, height: 1.5);
+  TextStyle get p3 => _p3 ?? _style(_bodyBase, 14, FontWeight.w400, height: 1);
 
   /// 12 sp regular — captions and helper text.
   TextStyle get caption =>
-      _caption ?? _style(_bodyBase, 12, FontWeight.w400, height: 1.4);
+      _caption ?? _style(_bodyBase, 12, FontWeight.w400, height: 1);
 
   /// 10 sp medium — micro labels and badges.
   TextStyle get micro =>
-      _micro ?? _style(_bodyBase, 10, FontWeight.w500, height: 1.2);
+      _micro ?? _style(_bodyBase, 10, FontWeight.w500, height: 1);
 
   /// Returns a copy with the specified fields replaced.
   ///
