@@ -3,6 +3,7 @@ export 'alert.dart';
 export 'breadcrumb.dart';
 export 'card.dart';
 export 'list_item.dart';
+export 'menu_button.dart';
 export 'pagination.dart';
 export 'segmented_control.dart';
 export 'select.dart';

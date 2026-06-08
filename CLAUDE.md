@@ -102,7 +102,7 @@ Current slots:
 
 | Field | Used by |
 |---|---|
-| `checkIcon` | `Checkbox`, `Chip` (selected state), `Select` (selected item), `Stepper` (completed step) |
+| `checkIcon` | `Checkbox`, `Chip` (selected state), `MenuButton` (selected option), `Select` (selected item), `Stepper` (completed step) |
 | `backIcon` | `AppBar` (back button), `Pagination` |
 | `forwardIcon` | `Breadcrumb` (separator), `Pagination` |
 | `expandIcon` | `Select` (closed state) |
