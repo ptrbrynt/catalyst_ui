@@ -25,6 +25,7 @@ class MenuOption extends MenuItem {
     required this.label,
     this.icon,
     this.selected = false,
+    this.isDestructive = false,
     this.onTap,
   });
 
@@ -43,6 +44,9 @@ class MenuOption extends MenuItem {
   ///
   /// The dropdown closes automatically before [onTap] is invoked.
   final VoidCallback? onTap;
+
+  /// Uses destructive colors from the theme if `true`.
+  final bool isDestructive;
 }
 
 /// A visual divider that can be placed between groups of items in a
@@ -92,6 +96,7 @@ enum MenuButtonAlignment {
 ///       label: 'Delete',
 ///       icon: LucideIcons.trash2,
 ///       onTap: _onDelete,
+///       isDestructive: true,
 ///     ),
 ///   ],
 ///   build: (context, open) => Button(
@@ -356,8 +361,10 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
               if (widget.option.icon != null) ...[
                 Icon(
                   widget.option.icon,
-                  size: 16,
-                  color: widget.colorScheme.textMuted,
+                  size: 14,
+                  color: widget.option.isDestructive
+                      ? widget.colorScheme.danger
+                      : widget.colorScheme.textMuted,
                 ),
                 const SizedBox(width: 8),
               ],
@@ -365,7 +372,9 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
                 child: Text(
                   widget.option.label,
                   style: widget.typography.p3.copyWith(
-                    color: widget.colorScheme.text,
+                    color: widget.option.isDestructive
+                        ? widget.colorScheme.danger
+                        : widget.colorScheme.text,
                   ),
                 ),
               ),
@@ -373,7 +382,7 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
                 const SizedBox(width: 8),
                 Icon(
                   widget.checkIcon,
-                  size: 16,
+                  size: 14,
                   color: widget.colorScheme.brand,
                 ),
               ],

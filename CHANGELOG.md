@@ -1,3 +1,7 @@
+# 0.1.2-beta
+
+- Add `isDestructive` property to `MenuOption`s
+
 # 0.1.1-beta
 
 - Add start/end scale and min/max selectable bounds to Slider
