@@ -1,3 +1,7 @@
+# 0.1.3-beta
+
+- Add `IgnorePointer` to `TextField` in read-only mode to ensure the whole widget can be tapped (e.g. when wrapped in a `GestureDetector`)
+
 # 0.1.2-beta
 
 - Add `isDestructive` property to `MenuOption`s
