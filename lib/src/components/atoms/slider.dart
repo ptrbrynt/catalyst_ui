@@ -5,8 +5,15 @@ import '../../tokens/radius.dart';
 
 const double _kTrackHeight = 4;
 const double _kThumbSize = 20;
+const double _kTickWidth = 2;
+const double _kTickHeight = 8;
 
 /// A draggable horizontal slider for selecting a value within a range.
+///
+/// The visual scale runs from [start] to [end]. The selectable range can be
+/// narrowed to [min]–[max]: portions of the track outside that range are
+/// rendered in a dimmed style with a tick mark at each boundary, and the thumb
+/// cannot be dragged beyond those bounds.
 ///
 /// Pass `null` for [onChanged] to render the slider as disabled.
 ///
@@ -21,12 +28,19 @@ class Slider extends StatefulWidget {
   const Slider({
     required this.value,
     required this.onChanged,
-    this.min = 0,
-    this.max = 1,
+    this.start = 0,
+    this.end = 1,
+    double? min,
+    double? max,
     this.onChangeStarted,
     this.onChangeEnded,
     super.key,
-  }) : assert(min < max, 'min must be less than max');
+  }) : min = min ?? start,
+       max = max ?? end,
+       assert(start < end, 'start must be less than end'),
+       assert((min ?? start) < (max ?? end), 'min must be less than max'),
+       assert((min ?? start) >= start, 'min must be >= start'),
+       assert((max ?? end) <= end, 'max must be <= end');
 
   /// The current value, which must be within [[min], [max]].
   final double value;
@@ -40,10 +54,22 @@ class Slider extends StatefulWidget {
   /// Called when the user stops dragging.
   final VoidCallback? onChangeEnded;
 
-  /// The minimum selectable value. Defaults to `0`.
+  /// Where the slider scale begins. Defaults to `0`.
+  final double start;
+
+  /// Where the slider scale ends. Defaults to `1`.
+  final double end;
+
+  /// The minimum selectable value. Defaults to [start].
+  ///
+  /// When greater than [start], a dimmed track overlay and a tick mark are
+  /// shown between [start] and this value to indicate the restricted zone.
   final double min;
 
-  /// The maximum selectable value. Defaults to `1`.
+  /// The maximum selectable value. Defaults to [end].
+  ///
+  /// When less than [end], a dimmed track overlay and a tick mark are shown
+  /// between this value and [end] to indicate the restricted zone.
   final double max;
 
   @override
@@ -75,7 +101,8 @@ class _SliderState extends State<Slider> {
     final usableWidth = trackWidth - _kThumbSize;
     if (usableWidth <= 0) return;
     final fraction = ((dx - _kThumbSize / 2) / usableWidth).clamp(0.0, 1.0);
-    final newValue = widget.min + fraction * (widget.max - widget.min);
+    final rawValue = widget.start + fraction * (widget.end - widget.start);
+    final newValue = rawValue.clamp(widget.min, widget.max);
     setState(() => _value = newValue);
     widget.onChanged?.call(newValue);
   }
@@ -84,7 +111,9 @@ class _SliderState extends State<Slider> {
   Widget build(BuildContext context) {
     final cs = context.colorScheme;
     final motion = context.motion;
-    final fraction = (_value - widget.min) / (widget.max - widget.min);
+    final fraction = (_value - widget.start) / (widget.end - widget.start);
+    final hasMinBound = widget.min != widget.start;
+    final hasMaxBound = widget.max != widget.end;
 
     return MouseRegion(
       cursor: _disabled
@@ -99,6 +128,17 @@ class _SliderState extends State<Slider> {
             final trackWidth = constraints.maxWidth;
             final thumbLeft = fraction * (trackWidth - _kThumbSize);
             final fillWidth = thumbLeft + _kThumbSize / 2;
+
+            double pixelForValue(double v) =>
+                (v - widget.start) /
+                    (widget.end - widget.start) *
+                    (trackWidth - _kThumbSize) +
+                _kThumbSize / 2;
+
+            final minPixel =
+                hasMinBound ? pixelForValue(widget.min) : null;
+            final maxPixel =
+                hasMaxBound ? pixelForValue(widget.max) : null;
 
             return GestureDetector(
               onHorizontalDragStart: _disabled
@@ -119,9 +159,7 @@ class _SliderState extends State<Slider> {
                       widget.onChangeStarted?.call();
                       _updateFromDx(d.localPosition.dx, trackWidth);
                     },
-              onTapUp: _disabled
-                  ? null
-                  : (_) => widget.onChangeEnded?.call(),
+              onTapUp: _disabled ? null : (_) => widget.onChangeEnded?.call(),
               child: SizedBox(
                 height: _kThumbSize,
                 child: Stack(
@@ -153,6 +191,53 @@ class _SliderState extends State<Slider> {
                         ),
                       ),
                     ),
+                    // Restricted-zone overlays and boundary ticks
+                    if (minPixel != null) ...[
+                      Positioned(
+                        left: 0,
+                        width: minPixel,
+                        top: (_kThumbSize - _kTrackHeight) / 2,
+                        height: _kTrackHeight,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: cs.subtle),
+                        ),
+                      ),
+                      Positioned(
+                        left: minPixel - _kTickWidth / 2,
+                        top: (_kThumbSize - _kTickHeight) / 2,
+                        width: _kTickWidth,
+                        height: _kTickHeight,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: Radii.pillAll,
+                            color: cs.border,
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (maxPixel != null) ...[
+                      Positioned(
+                        left: maxPixel,
+                        right: 0,
+                        top: (_kThumbSize - _kTrackHeight) / 2,
+                        height: _kTrackHeight,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: cs.subtle),
+                        ),
+                      ),
+                      Positioned(
+                        left: maxPixel - _kTickWidth / 2,
+                        top: (_kThumbSize - _kTickHeight) / 2,
+                        width: _kTickWidth,
+                        height: _kTickHeight,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: Radii.pillAll,
+                            color: cs.border,
+                          ),
+                        ),
+                      ),
+                    ],
                     // Thumb
                     Positioned(
                       left: thumbLeft,

@@ -100,7 +100,7 @@ class SliderControl extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 4),
-        Slider(value: value, min: min, max: max, onChanged: onChanged),
+        Slider(value: value, start: min, end: max, onChanged: onChanged),
       ],
     );
   }
