@@ -1,3 +1,7 @@
+# 0.1.7-beta
+
+- Add ViewInsets to `BottomSheet` bottom padding
+
 # 0.1.6-beta
 
 - Increase `Slider` touch target with invisible vertical hit slop
