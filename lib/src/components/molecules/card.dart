@@ -102,7 +102,7 @@ class _TintCardTone extends CardTone {
 ///
 /// ```dart
 /// Card(
-///   tone: CardTone.surface,
+///   tone: CardTone.subtle,
 ///   child: const Text('Hello'),
 /// )
 /// ```
@@ -112,7 +112,7 @@ class Card extends StatelessWidget {
     required this.child,
     super.key,
     this.padding = const EdgeInsets.all(Spacing.s3),
-    this.tone = CardTone.subtle,
+    this.tone = CardTone.surface,
     this.interactive = false,
     this.onTap,
   });
@@ -143,6 +143,7 @@ class Card extends StatelessWidget {
       child: AnimatedContainer(
         duration: motion.standard.duration,
         curve: motion.standard.curve,
+        clipBehavior: .antiAlias,
         decoration: BoxDecoration(
           color: style.backgroundColor,
           border: Border.all(color: style.borderColor),
@@ -156,10 +157,9 @@ class Card extends StatelessWidget {
           child: IconTheme(
             data: IconThemeData(color: fg),
             child: MouseRegion(
-              cursor:
-                  (interactive || onTap != null)
-                      ? SystemMouseCursors.click
-                      : MouseCursor.defer,
+              cursor: (interactive || onTap != null)
+                  ? SystemMouseCursors.click
+                  : MouseCursor.defer,
               child: child,
             ),
           ),

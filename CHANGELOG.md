@@ -1,3 +1,8 @@
+# 0.1.4-beta
+
+- `Card` default tone is now `.surface`
+- Add `.antialias` clip behavior to `Card`
+
 # 0.1.3-beta
 
 - Add `IgnorePointer` to `TextField` in read-only mode to ensure the whole widget can be tapped (e.g. when wrapped in a `GestureDetector`)
