@@ -1,6 +1,6 @@
 name: catalyst_ui
 description: "A flexible, theme-driven UI component library for Flutter. No Material or Cupertino dependency — fully customisable design tokens, colour schemes, typography, and user-defined component variants."
-version: 0.1.5-beta
+version: 0.1.6-beta
 repository: https://github.com/ptrbrynt/catalyst_ui
 issue_tracker: https://github.com/ptrbrynt/catalyst_ui/issues
 

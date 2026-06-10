@@ -1,3 +1,7 @@
+# 0.1.6-beta
+
+- Increase `Slider` touch target with invisible vertical hit slop
+
 # 0.1.5-beta
 
 - Auto-determine `MenuButton` dropdown alignment from available screen space
