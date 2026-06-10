@@ -57,18 +57,6 @@ class MenuDivider extends MenuItem {
   const MenuDivider();
 }
 
-/// Controls which side of the trigger the [MenuButton] dropdown aligns to.
-enum MenuButtonAlignment {
-  /// The dropdown's leading edge aligns with the trigger's leading edge.
-  start,
-
-  /// The dropdown's trailing edge aligns with the trigger's trailing edge.
-  ///
-  /// Use this when the trigger sits near the right edge of the screen so the
-  /// dropdown doesn't overflow off-screen.
-  end,
-}
-
 /// A button that opens a contextual dropdown menu when tapped.
 ///
 /// Instead of accepting a fixed child widget, [MenuButton] uses a [build]
@@ -77,10 +65,10 @@ enum MenuButtonAlignment {
 /// when the menu opens — this avoids gesture conflicts with interactive
 /// widgets such as [Button].
 ///
-/// By default the dropdown aligns its leading edge to the trigger's leading
-/// edge. Set [alignment] to [MenuButtonAlignment.end] to align the trailing
-/// edges instead (useful when the trigger is near the right side of the
-/// screen).
+/// The dropdown position is determined automatically: it opens below the
+/// trigger unless there is insufficient space, in which case it opens above.
+/// Horizontally it aligns to the trigger's leading edge unless that would
+/// overflow the screen, in which case it aligns to the trailing edge.
 ///
 /// ```dart
 /// MenuButton(
@@ -111,7 +99,6 @@ class MenuButton extends StatefulWidget {
     required this.build,
     required this.items,
     super.key,
-    this.alignment = MenuButtonAlignment.start,
   });
 
   /// Builds the trigger widget.
@@ -124,11 +111,6 @@ class MenuButton extends StatefulWidget {
   ///
   /// May contain [MenuOption] entries and [MenuDivider] entries.
   final List<MenuItem> items;
-
-  /// Which side of the trigger the dropdown aligns to.
-  ///
-  /// Defaults to [MenuButtonAlignment.start].
-  final MenuButtonAlignment alignment;
 
   @override
   State<MenuButton> createState() => _MenuButtonState();
@@ -148,12 +130,14 @@ class _MenuButtonState extends State<MenuButton> {
 
     final renderBox = context.findRenderObject()! as RenderBox;
     final triggerGlobal = renderBox.localToGlobal(Offset.zero);
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenSize = MediaQuery.of(context).size;
     const dropdownMaxHeight = 240.0;
     final spaceBelow =
-        screenHeight - triggerGlobal.dy - renderBox.size.height - 4;
+        screenSize.height - triggerGlobal.dy - renderBox.size.height - 4;
     final showAbove = spaceBelow < dropdownMaxHeight;
     final dropdownWidth = math.max<double>(renderBox.size.width, 160);
+    final alignEnd =
+        triggerGlobal.dx + dropdownWidth > screenSize.width;
 
     _overlay = OverlayEntry(
       builder: (_) => _MenuButtonDropdown(
@@ -164,7 +148,7 @@ class _MenuButtonState extends State<MenuButton> {
         typography: typo,
         shadows: sh,
         showAbove: showAbove,
-        alignment: widget.alignment,
+        alignEnd: alignEnd,
         checkIcon: checkIcon,
         onDismiss: _close,
       ),
@@ -206,7 +190,7 @@ class _MenuButtonDropdown extends StatelessWidget {
     required this.typography,
     required this.shadows,
     required this.showAbove,
-    required this.alignment,
+    required this.alignEnd,
     required this.checkIcon,
     required this.onDismiss,
   });
@@ -221,24 +205,24 @@ class _MenuButtonDropdown extends StatelessWidget {
   /// Whether the dropdown should open above the trigger.
   final bool showAbove;
 
-  final MenuButtonAlignment alignment;
+  /// Whether the dropdown's trailing edge should align with the trigger's
+  /// trailing edge (used when there is insufficient space to the right).
+  final bool alignEnd;
   final IconData checkIcon;
   final VoidCallback onDismiss;
 
   Alignment get _targetAnchor {
-    final isEnd = alignment == MenuButtonAlignment.end;
     if (showAbove) {
-      return isEnd ? Alignment.topRight : Alignment.topLeft;
+      return alignEnd ? Alignment.topRight : Alignment.topLeft;
     }
-    return isEnd ? Alignment.bottomRight : Alignment.bottomLeft;
+    return alignEnd ? Alignment.bottomRight : Alignment.bottomLeft;
   }
 
   Alignment get _followerAnchor {
-    final isEnd = alignment == MenuButtonAlignment.end;
     if (showAbove) {
-      return isEnd ? Alignment.bottomRight : Alignment.bottomLeft;
+      return alignEnd ? Alignment.bottomRight : Alignment.bottomLeft;
     }
-    return isEnd ? Alignment.topRight : Alignment.topLeft;
+    return alignEnd ? Alignment.topRight : Alignment.topLeft;
   }
 
   @override
