@@ -7,6 +7,7 @@ const double _kTrackHeight = 4;
 const double _kThumbSize = 20;
 const double _kTickWidth = 2;
 const double _kTickHeight = 8;
+const double _kHitSlop = 12;
 
 /// A draggable horizontal slider for selecting a value within a range.
 ///
@@ -161,7 +162,7 @@ class _SliderState extends State<Slider> {
                     },
               onTapUp: _disabled ? null : (_) => widget.onChangeEnded?.call(),
               child: SizedBox(
-                height: _kThumbSize,
+                height: _kThumbSize + _kHitSlop * 2,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -169,7 +170,7 @@ class _SliderState extends State<Slider> {
                     Positioned(
                       left: 0,
                       right: 0,
-                      top: (_kThumbSize - _kTrackHeight) / 2,
+                      top: _kHitSlop + (_kThumbSize - _kTrackHeight) / 2,
                       height: _kTrackHeight,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -182,7 +183,7 @@ class _SliderState extends State<Slider> {
                     Positioned(
                       left: 0,
                       width: fillWidth,
-                      top: (_kThumbSize - _kTrackHeight) / 2,
+                      top: _kHitSlop + (_kThumbSize - _kTrackHeight) / 2,
                       height: _kTrackHeight,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -196,7 +197,7 @@ class _SliderState extends State<Slider> {
                       Positioned(
                         left: 0,
                         width: minPixel,
-                        top: (_kThumbSize - _kTrackHeight) / 2,
+                        top: _kHitSlop + (_kThumbSize - _kTrackHeight) / 2,
                         height: _kTrackHeight,
                         child: DecoratedBox(
                           decoration: BoxDecoration(color: cs.subtle),
@@ -204,7 +205,7 @@ class _SliderState extends State<Slider> {
                       ),
                       Positioned(
                         left: minPixel - _kTickWidth / 2,
-                        top: (_kThumbSize - _kTickHeight) / 2,
+                        top: _kHitSlop + (_kThumbSize - _kTickHeight) / 2,
                         width: _kTickWidth,
                         height: _kTickHeight,
                         child: DecoratedBox(
@@ -219,7 +220,7 @@ class _SliderState extends State<Slider> {
                       Positioned(
                         left: maxPixel,
                         right: 0,
-                        top: (_kThumbSize - _kTrackHeight) / 2,
+                        top: _kHitSlop + (_kThumbSize - _kTrackHeight) / 2,
                         height: _kTrackHeight,
                         child: DecoratedBox(
                           decoration: BoxDecoration(color: cs.subtle),
@@ -227,7 +228,7 @@ class _SliderState extends State<Slider> {
                       ),
                       Positioned(
                         left: maxPixel - _kTickWidth / 2,
-                        top: (_kThumbSize - _kTickHeight) / 2,
+                        top: _kHitSlop + (_kThumbSize - _kTickHeight) / 2,
                         width: _kTickWidth,
                         height: _kTickHeight,
                         child: DecoratedBox(
@@ -241,7 +242,7 @@ class _SliderState extends State<Slider> {
                     // Thumb
                     Positioned(
                       left: thumbLeft,
-                      top: 0,
+                      top: _kHitSlop,
                       child: Container(
                         width: _kThumbSize,
                         height: _kThumbSize,
