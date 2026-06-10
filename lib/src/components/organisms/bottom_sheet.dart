@@ -128,10 +128,9 @@ class _DragHandleState extends State<_DragHandle> {
         });
       },
       child: MouseRegion(
-        cursor:
-            _isDragging && _isHovered
-                ? SystemMouseCursors.grabbing
-                : SystemMouseCursors.grab,
+        cursor: _isDragging && _isHovered
+            ? SystemMouseCursors.grabbing
+            : SystemMouseCursors.grab,
         onEnter: (_) {
           setState(() {
             _isHovered = true;
@@ -145,9 +144,9 @@ class _DragHandleState extends State<_DragHandle> {
         },
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: Spacing.s2,
-            bottom: Spacing.s3,
+            bottom: Spacing.s3 + MediaQuery.viewInsetsOf(context).bottom,
           ),
           child: DecoratedBox(
             decoration: BoxDecoration(
