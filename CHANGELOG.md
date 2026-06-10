@@ -1,3 +1,7 @@
+# 0.1.5-beta
+
+- Auto-determine `MenuButton` dropdown alignment from available screen space
+
 # 0.1.4-beta
 
 - `Card` default tone is now `.surface`
