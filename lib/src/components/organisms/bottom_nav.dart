@@ -52,7 +52,7 @@ class BottomNav<T> extends StatelessWidget {
     return AnimatedContainer(
       duration: motion.micro.duration,
       curve: motion.micro.curve,
-      height: 56 + MediaQuery.paddingOf(context).bottom,
+      height: 64 + MediaQuery.paddingOf(context).bottom,
       decoration: BoxDecoration(
         color: cs.surface,
         border: Border(top: BorderSide(color: cs.borderSubtle)),

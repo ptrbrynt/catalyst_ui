@@ -1,3 +1,7 @@
+# 0.1.8-beta
+
+- Increase height of `BottomNav`
+
 # 0.1.7-beta
 
 - Add ViewInsets to `BottomSheet` bottom padding
