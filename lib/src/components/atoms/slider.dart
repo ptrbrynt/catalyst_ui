@@ -136,10 +136,8 @@ class _SliderState extends State<Slider> {
                     (trackWidth - _kThumbSize) +
                 _kThumbSize / 2;
 
-            final minPixel =
-                hasMinBound ? pixelForValue(widget.min) : null;
-            final maxPixel =
-                hasMaxBound ? pixelForValue(widget.max) : null;
+            final minPixel = hasMinBound ? pixelForValue(widget.min) : null;
+            final maxPixel = hasMaxBound ? pixelForValue(widget.max) : null;
 
             return GestureDetector(
               onHorizontalDragStart: _disabled
@@ -154,13 +152,12 @@ class _SliderState extends State<Slider> {
               onHorizontalDragEnd: _disabled
                   ? null
                   : (_) => widget.onChangeEnded?.call(),
-              onTapDown: _disabled
+              onTapUp: _disabled
                   ? null
                   : (d) {
-                      widget.onChangeStarted?.call();
                       _updateFromDx(d.localPosition.dx, trackWidth);
                     },
-              onTapUp: _disabled ? null : (_) => widget.onChangeEnded?.call(),
+
               child: SizedBox(
                 height: _kThumbSize + _kHitSlop * 2,
                 child: Stack(

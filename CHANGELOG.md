@@ -1,3 +1,7 @@
+# 0.1.9-beta
+
+- Fix callback bug on Slider
+
 # 0.1.8-beta
 
 - Increase height of `BottomNav`
