@@ -142,9 +142,9 @@ class _SelectState<T> extends State<Select<T>> {
   bool get _isOpen => _overlay != null;
 
   double get _triggerHeight => switch (widget.size) {
-    SelectSize.small => 48,
-    SelectSize.medium => 52,
-    SelectSize.large => 56.0,
+    SelectSize.small => 44,
+    SelectSize.medium => 48,
+    SelectSize.large => 52.0,
   };
 
   void _open() {
@@ -454,7 +454,7 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48),
+      constraints: const BoxConstraints(minHeight: 44),
       child: GestureDetector(
         onTap: widget.onTap,
         child: MouseRegion(

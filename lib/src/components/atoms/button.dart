@@ -176,14 +176,14 @@ enum ButtonSize {
   /// 16px tall; 15 sp text; 20 px icons;
   link(height: null, horizontalPadding: 0, fontSize: 15, iconSize: 20, gap: 8),
 
-  /// 48 px tall; 14 sp text; 18 px icons.
-  small(height: 48, horizontalPadding: 14, fontSize: 14, iconSize: 18, gap: 6),
+  /// 44 px tall; 14 sp text; 18 px icons.
+  small(height: 44, horizontalPadding: 14, fontSize: 14, iconSize: 18, gap: 6),
 
-  /// 52 px tall; 15 sp text; 20 px icons.
-  medium(height: 52, horizontalPadding: 16, fontSize: 15, iconSize: 20, gap: 8),
+  /// 48 px tall; 15 sp text; 20 px icons.
+  medium(height: 48, horizontalPadding: 16, fontSize: 15, iconSize: 20, gap: 8),
 
   /// 52 px tall; 16 sp text; 24 px icons (default).
-  large(height: 56, horizontalPadding: 20, fontSize: 16, iconSize: 24, gap: 10),
+  large(height: 52, horizontalPadding: 20, fontSize: 16, iconSize: 24, gap: 10),
 
   /// 60 px tall; 16 sp text; 24 px icons.
   extraLarge(
@@ -248,7 +248,8 @@ class Button extends StatefulWidget {
     this.variant = ButtonVariant.primary,
     this.semanticsLabel,
     super.key,
-  }) : _isSquare = false;
+  }) : _isSquare = false,
+       shape = .rectangle;
 
   /// Creates a square icon-only button.
   const Button.icon({
@@ -259,6 +260,7 @@ class Button extends StatefulWidget {
     this.elevated = false,
     this.size = ButtonSize.large,
     this.variant = ButtonVariant.primary,
+    this.shape = .rectangle,
     super.key,
   }) : label = icon,
        fullWidth = false,
@@ -297,6 +299,9 @@ class Button extends StatefulWidget {
 
   /// Optional semantics label
   final String? semanticsLabel;
+
+  /// Box shape.
+  final BoxShape shape;
 
   @override
   State<Button> createState() => _ButtonState();
@@ -383,7 +388,8 @@ class _ButtonState extends State<Button> {
       height: h,
       width: widget._isSquare ? h : null,
       decoration: BoxDecoration(
-        borderRadius: Radii.lgAll,
+        shape: widget.shape,
+        borderRadius: widget.shape == .rectangle ? Radii.lgAll : null,
         boxShadow: widget.elevated ? (style.shadows ?? []) : null,
         border: style.borderColor != null
             ? Border.all(color: style.borderColor!)

@@ -198,9 +198,9 @@ class _TextFieldState extends State<TextField> {
     final errored = widget.error != null;
 
     final height = switch (widget.size) {
-      TextFieldSize.small => 48.0,
-      TextFieldSize.medium => 52.0,
-      TextFieldSize.large => 56.0,
+      TextFieldSize.small => 44.0,
+      TextFieldSize.medium => 48.0,
+      TextFieldSize.large => 52.0,
     };
 
     final Color borderColor;

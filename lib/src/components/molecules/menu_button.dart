@@ -327,7 +327,7 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48),
+      constraints: const BoxConstraints(minHeight: 44),
       child: GestureDetector(
         onTap: widget.onTap,
         child: MouseRegion(

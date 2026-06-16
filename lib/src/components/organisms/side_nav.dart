@@ -194,7 +194,7 @@ class SideNav<T> extends StatelessWidget {
               curve: motion.micro.curve,
               builder: (context, t, _) {
                 return ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 48),
+                  constraints: const BoxConstraints(minHeight: 44),
                   child: LayoutBuilder(
                     builder: (_, constraints) {
                       const vertPad = 9.0;

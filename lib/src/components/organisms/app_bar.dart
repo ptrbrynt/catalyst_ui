@@ -47,13 +47,13 @@ class AppBar extends StatelessWidget {
     return AnimatedDefaultTextStyle(
       duration: motion.standard.duration,
       curve: motion.standard.curve,
-      style: context.typography.h2,
+      style: context.typography.h3,
       child: IconTheme(
         data: IconThemeData(color: cs.text),
         child: AnimatedContainer(
           duration: motion.standard.duration,
           curve: motion.standard.curve,
-          height: 72 + MediaQuery.paddingOf(context).top,
+          height: 56 + MediaQuery.paddingOf(context).top,
           padding: const EdgeInsets.symmetric(horizontal: Spacing.s2),
           decoration: BoxDecoration(
             color: cs.surface,

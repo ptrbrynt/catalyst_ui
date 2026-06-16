@@ -1,3 +1,8 @@
+# 0.2.4
+
+- Reduce minimum tap target size to 44
+- Support circular icon buttons
+
 # 0.2.3
 
 - Increase default AppBar text size to 20
