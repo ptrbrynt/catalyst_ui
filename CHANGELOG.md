@@ -1,3 +1,7 @@
+# 0.1.10-beta
+
+- Fix accessibility issues
+
 # 0.1.9-beta
 
 - Fix callback bug on Slider

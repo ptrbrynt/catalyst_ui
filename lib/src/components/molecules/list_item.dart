@@ -58,17 +58,22 @@ class _ListItemState extends State<ListItem> {
     final cs = context.colorScheme;
     final motion = context.motion;
 
-    return AnimatedContainer(
-      duration: motion.standard.duration,
-      curve: motion.standard.curve,
-      padding: widget.padding,
-      decoration: BoxDecoration(
-        color: _hovered ? context.colorScheme.muted : null,
-        borderRadius: widget.borderRadius,
-        border: widget.divider
-            ? Border(bottom: BorderSide(color: cs.borderSubtle))
-            : null,
-      ),
+    return GestureDetector(
+      onTap: widget.onTap,
+      onTapDown: _interactive
+          ? (_) {
+              setState(() {
+                _pressed = true;
+              });
+            }
+          : null,
+      onTapUp: _interactive
+          ? (_) {
+              setState(() {
+                _pressed = false;
+              });
+            }
+          : null,
       child: MouseRegion(
         cursor: _interactive ? SystemMouseCursors.click : MouseCursor.defer,
         onEnter: _interactive
@@ -86,22 +91,17 @@ class _ListItemState extends State<ListItem> {
                 });
               }
             : null,
-        child: GestureDetector(
-          onTap: widget.onTap,
-          onTapDown: _interactive
-              ? (_) {
-                  setState(() {
-                    _pressed = true;
-                  });
-                }
-              : null,
-          onTapUp: _interactive
-              ? (_) {
-                  setState(() {
-                    _pressed = false;
-                  });
-                }
-              : null,
+        child: AnimatedContainer(
+          duration: motion.standard.duration,
+          curve: motion.standard.curve,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            color: _hovered ? context.colorScheme.muted : null,
+            borderRadius: widget.borderRadius,
+            border: widget.divider
+                ? Border(bottom: BorderSide(color: cs.borderSubtle))
+                : null,
+          ),
           child: Row(
             spacing: Spacing.s3,
             children: [

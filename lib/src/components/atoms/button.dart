@@ -246,6 +246,7 @@ class Button extends StatefulWidget {
     this.fullWidth = false,
     this.size = ButtonSize.large,
     this.variant = ButtonVariant.primary,
+    this.semanticsLabel,
     super.key,
   }) : _isSquare = false;
 
@@ -253,6 +254,7 @@ class Button extends StatefulWidget {
   const Button.icon({
     required Widget icon,
     required this.onPressed,
+    required String this.semanticsLabel,
     this.loading = false,
     this.elevated = false,
     this.size = ButtonSize.large,
@@ -293,6 +295,9 @@ class Button extends StatefulWidget {
 
   final bool _isSquare;
 
+  /// Optional semantics label
+  final String? semanticsLabel;
+
   @override
   State<Button> createState() => _ButtonState();
 }
@@ -327,7 +332,7 @@ class _ButtonState extends State<Button> {
     final isDisabled = states.contains(WidgetState.disabled);
     final isPressed = states.contains(WidgetState.pressed);
 
-    return DefaultTextStyle(
+    final result = DefaultTextStyle(
       style: TextStyle(
         fontFamily: context.typography.fontFamily,
         fontSize: widget.size.fontSize,
@@ -347,10 +352,9 @@ class _ButtonState extends State<Button> {
           child: MouseRegion(
             onEnter: (_) => _controller.update(WidgetState.hovered, true),
             onExit: (_) => _controller.update(WidgetState.hovered, false),
-            cursor:
-                isDisabled || widget.loading
-                    ? SystemMouseCursors.forbidden
-                    : SystemMouseCursors.click,
+            cursor: isDisabled || widget.loading
+                ? SystemMouseCursors.forbidden
+                : SystemMouseCursors.click,
             child: Focus(
               onFocusChange: (f) => _controller.update(WidgetState.focused, f),
               child: _buildContainer(style, isDisabled, isPressed),
@@ -359,6 +363,10 @@ class _ButtonState extends State<Button> {
         ),
       ),
     );
+    if (widget.semanticsLabel != null) {
+      return Semantics(label: widget.semanticsLabel, child: result);
+    }
+    return result;
   }
 
   Widget _buildContainer(
@@ -376,16 +384,14 @@ class _ButtonState extends State<Button> {
       decoration: BoxDecoration(
         borderRadius: Radii.lgAll,
         boxShadow: widget.elevated ? (style.shadows ?? []) : null,
-        border:
-            style.borderColor != null
-                ? Border.all(color: style.borderColor!)
-                : null,
+        border: style.borderColor != null
+            ? Border.all(color: style.borderColor!)
+            : null,
         color: style.backgroundColor?.withAlpha(isDisabled ? 20 : 255),
       ),
-      padding:
-          widget._isSquare
-              ? null
-              : EdgeInsets.symmetric(horizontal: widget.size.horizontalPadding),
+      padding: widget._isSquare
+          ? null
+          : EdgeInsets.symmetric(horizontal: widget.size.horizontalPadding),
       child: Stack(
         alignment: Alignment.center,
         children: [
