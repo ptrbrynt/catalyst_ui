@@ -32,15 +32,14 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
                 backIcon: LucideIcons.chevronLeft,
                 automaticallyImplyLeading: false,
                 title: _hasTitle ? const Text('Page Title') : null,
-                trailing: _hasTrailing
-                    ? Button.icon(
-                        icon: const Icon(LucideIcons.bell),
-                        variant: ButtonVariant.ghost,
-                        size: ButtonSize.medium,
-                        onPressed: () {},
-                        semanticsLabel: 'Notifications',
-                      )
-                    : null,
+                actions: [
+                  if (_hasTrailing)
+                    AppBarAction(
+                      icon: LucideIcons.bell,
+                      semanticsLabel: 'Notifications',
+                      onTap: () {},
+                    ),
+                ],
               ),
               ColoredBox(
                 color: context.colorScheme.canvas,

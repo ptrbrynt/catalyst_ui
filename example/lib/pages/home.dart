@@ -56,16 +56,36 @@ class HomePage extends StatelessWidget {
       child: SizedBox.expand(
         child: Column(
           children: [
-            AppBar(
-              backIcon: LucideIcons.chevronLeft,
-              title: const Text('Catalyst UI'),
-              automaticallyImplyLeading: false,
-              trailing: _ThemeToggle(),
+            ValueListenableBuilder(
+              valueListenable: themeMode,
+              builder: (context, mode, _) {
+                final isDark =
+                    mode == ThemeMode.dark ||
+                    (mode == ThemeMode.system &&
+                        MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark);
+                return AppBar(
+                  backIcon: LucideIcons.chevronLeft,
+                  title: const Text('Catalyst UI'),
+                  automaticallyImplyLeading: false,
+                  actions: [_themeToggle(context, isDark: isDark)],
+                );
+              },
             ),
             Expanded(child: ListView(children: items)),
           ],
         ),
       ),
+    );
+  }
+
+  AppBarAction _themeToggle(BuildContext context, {required bool isDark}) {
+    return AppBarAction(
+      icon: isDark ? LucideIcons.sun : LucideIcons.moon,
+      semanticsLabel: 'Toggle Dark Theme',
+      onTap: () {
+        themeMode.value = isDark ? ThemeMode.light : ThemeMode.dark;
+      },
     );
   }
 }
@@ -87,30 +107,6 @@ class _SectionHeader extends StatelessWidget {
           letterSpacing: 0.8,
         ),
       ),
-    );
-  }
-}
-
-class _ThemeToggle extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeMode,
-      builder: (context, mode, _) {
-        final isDark =
-            mode == ThemeMode.dark ||
-            (mode == ThemeMode.system &&
-                MediaQuery.platformBrightnessOf(context) == Brightness.dark);
-        return Button.icon(
-          icon: Icon(isDark ? LucideIcons.sun : LucideIcons.moon),
-          variant: ButtonVariant.ghost,
-          size: ButtonSize.medium,
-          onPressed: () {
-            themeMode.value = isDark ? ThemeMode.light : ThemeMode.dark;
-          },
-          semanticsLabel: 'Toggle Dark Theme',
-        );
-      },
     );
   }
 }

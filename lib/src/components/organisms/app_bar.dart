@@ -1,8 +1,43 @@
+import 'package:catalyst_ui/catalyst_ui.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../theme/extensions.dart';
-import '../../tokens/spacing.dart';
-import '../atoms/button.dart';
+/// Defines the color scheme for an [AppBarAction]
+enum ActionTone {
+  /// Brand-color
+  primary,
+
+  /// Success color
+  success,
+
+  /// Danger color
+  danger,
+
+  /// Neutral foreground color
+  neutral,
+}
+
+/// Defines an action in an [AppBar]
+class AppBarAction {
+  /// Creates an [AppBarAction]
+  const AppBarAction({
+    required this.icon,
+    required this.semanticsLabel,
+    required this.onTap,
+    this.tone = .neutral,
+  });
+
+  /// The icon to display in the app bar
+  final IconData icon;
+
+  /// A semantics label and tooltip text
+  final String semanticsLabel;
+
+  /// Called when the user taps this action
+  final VoidCallback onTap;
+
+  /// Defines the color scheme for this action
+  final ActionTone tone;
+}
 
 /// A top application bar for mobile screens.
 ///
@@ -17,7 +52,7 @@ class AppBar extends StatelessWidget {
     this.title,
     this.automaticallyImplyLeading = true,
     this.leading,
-    this.trailing,
+    this.actions = const [],
   });
 
   /// An optional centred widget, typically a [Text] title.
@@ -29,8 +64,9 @@ class AppBar extends StatelessWidget {
   /// Overrides the auto-generated leading widget.
   final Widget? leading;
 
-  /// An optional trailing action widget.
-  final Widget? trailing;
+  /// Optional list of [AppBarAction]s to show on the trailing end of this
+  /// app bar.
+  final List<AppBarAction> actions;
 
   /// Icon to display on the default back button. If `null`, defaults to the
   /// `backIcon` supplied in `ThemeData.iconography`.
@@ -68,7 +104,12 @@ class AppBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ?resolvedLeading,
-                    ?trailing,
+                    Row(
+                      children: [
+                        for (final action in actions)
+                          _actionWidget(context, action),
+                      ],
+                    ),
                   ],
                 ),
                 ?title,
@@ -84,12 +125,43 @@ class AppBar extends StatelessWidget {
     if (!(ModalRoute.canPopOf(context) ?? false)) {
       return const SizedBox.shrink();
     }
-    return Button.icon(
-      icon: Icon(backIcon ?? context.iconography.backIcon),
-      semanticsLabel: 'Back',
-      variant: ButtonVariant.ghost,
-      onPressed: () => Navigator.pop(context),
-      size: ButtonSize.medium,
+    return _actionWidget(
+      context,
+      AppBarAction(
+        icon: backIcon ?? context.iconography.backIcon,
+        semanticsLabel: 'Back',
+        onTap: () => Navigator.pop(context),
+      ),
+    );
+  }
+
+  Widget _actionWidget(BuildContext context, AppBarAction action) {
+    return Tooltip(
+      content: action.semanticsLabel,
+      child: Semantics(
+        label: action.semanticsLabel,
+        child: GestureDetector(
+          onTap: action.onTap,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: SizedBox.square(
+              dimension: 44,
+              child: Center(
+                child: Icon(
+                  action.icon,
+                  size: 20,
+                  color: switch (action.tone) {
+                    .danger => context.colorScheme.danger,
+                    .neutral => context.colorScheme.text,
+                    .primary => context.colorScheme.brand,
+                    .success => context.colorScheme.success,
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

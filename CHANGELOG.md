@@ -1,3 +1,7 @@
+# 0.2.5
+
+- Replace `AppBar.trailing` with `AppBar.actions` for more consistent design
+
 # 0.2.4
 
 - Reduce minimum tap target size to 44
