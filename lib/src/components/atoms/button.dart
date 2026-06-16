@@ -177,7 +177,7 @@ enum ButtonSize {
   link(height: null, horizontalPadding: 0, fontSize: 15, iconSize: 20, gap: 8),
 
   /// 36 px tall; 14 sp text; 16 px icons.
-  small(height: 48, horizontalPadding: 14, fontSize: 14, iconSize: 16, gap: 6),
+  small(height: 48, horizontalPadding: 14, fontSize: 14, iconSize: 18, gap: 6),
 
   /// 44 px tall; 15 sp text; 20 px icons.
   medium(height: 52, horizontalPadding: 16, fontSize: 15, iconSize: 20, gap: 8),

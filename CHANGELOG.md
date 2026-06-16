@@ -1,3 +1,7 @@
+# 0.2.1
+
+- More accessibility fixes
+
 # 0.2.0
 
 - Fix touch-target-related accessibility issues

@@ -55,7 +55,7 @@ class AppBar extends StatelessWidget {
         child: AnimatedContainer(
           duration: motion.standard.duration,
           curve: motion.standard.curve,
-          height: 56 + MediaQuery.paddingOf(context).top,
+          height: 72 + MediaQuery.paddingOf(context).top,
           padding: const EdgeInsets.symmetric(horizontal: Spacing.s2),
           decoration: BoxDecoration(
             color: cs.surface,
