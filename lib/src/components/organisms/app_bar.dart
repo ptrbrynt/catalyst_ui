@@ -91,6 +91,7 @@ class AppBar extends StatelessWidget {
     }
     return Button.icon(
       icon: Icon(backIcon ?? context.iconography.backIcon),
+      semanticsLabel: 'Back',
       variant: ButtonVariant.ghost,
       onPressed: () => Navigator.pop(context),
       size: ButtonSize.medium,

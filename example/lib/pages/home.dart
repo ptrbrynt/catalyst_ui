@@ -108,6 +108,7 @@ class _ThemeToggle extends StatelessWidget {
           onPressed: () {
             themeMode.value = isDark ? ThemeMode.light : ThemeMode.dark;
           },
+          semanticsLabel: 'Toggle Dark Theme',
         );
       },
     );

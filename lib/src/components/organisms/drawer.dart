@@ -64,6 +64,7 @@ class Drawer extends StatelessWidget {
                 ),
                 Button.icon(
                   size: ButtonSize.small,
+                  semanticsLabel: 'Close',
                   variant: ButtonVariant.ghost,
                   icon: Icon(closeIcon ?? context.iconography.closeIcon),
                   onPressed: () => Navigator.pop(context),

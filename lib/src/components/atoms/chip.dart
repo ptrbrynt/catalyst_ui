@@ -203,44 +203,50 @@ class _ChipState extends State<Chip> {
                 opacity: states.contains(WidgetState.disabled) ? 0.5 : 1,
                 duration: motion.micro.duration,
                 curve: motion.micro.curve,
-                child:
-                    AnimatedContainer(
-                      duration: motion.micro.duration,
-                      curve: motion.micro.curve,
-                      height: 32,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: Radii.pillAll,
-                        border: Border.all(color: style.borderColor),
-                        color: style.backgroundColor,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (widget.isSelected) ...[
-                            Icon(
-                              widget.checkIcon ?? context.iconography.checkIcon,
-                            ),
-                            const SizedBox(width: 6),
-                          ] else
-                            const SizedBox(width: 4),
-                          widget.child,
-                          if (widget.isRemovable) ...[
-                            const SizedBox(width: 6),
-                            Icon(
-                              widget.removeIcon ??
-                                  context.iconography.removeIcon,
-                            ),
-                          ] else
-                            const SizedBox(width: 4),
-                        ],
-                      ),
-                    ).withBrightness(
-                      states.contains(WidgetState.pressed) &&
-                              !states.contains(WidgetState.disabled)
-                          ? 0.92
-                          : 1,
-                    ),
+                child: SizedBox(
+                  height: 48,
+                  child: Align(
+                    child:
+                        AnimatedContainer(
+                          duration: motion.micro.duration,
+                          curve: motion.micro.curve,
+                          height: 32,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: Radii.pillAll,
+                            border: Border.all(color: style.borderColor),
+                            color: style.backgroundColor,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (widget.isSelected) ...[
+                                Icon(
+                                  widget.checkIcon ??
+                                      context.iconography.checkIcon,
+                                ),
+                                const SizedBox(width: 6),
+                              ] else
+                                const SizedBox(width: 4),
+                              widget.child,
+                              if (widget.isRemovable) ...[
+                                const SizedBox(width: 6),
+                                Icon(
+                                  widget.removeIcon ??
+                                      context.iconography.removeIcon,
+                                ),
+                              ] else
+                                const SizedBox(width: 4),
+                            ],
+                          ),
+                        ).withBrightness(
+                          states.contains(WidgetState.pressed) &&
+                                  !states.contains(WidgetState.disabled)
+                              ? 0.92
+                              : 1,
+                        ),
+                  ),
+                ),
               ),
             ),
           ),

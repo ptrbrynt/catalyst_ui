@@ -97,6 +97,7 @@ class _PaginationState extends State<Pagination> {
               widget.backIcon ?? context.iconography.backIcon,
               size: 16,
             ),
+            semanticsLabel: 'Previous page',
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
             onPressed: widget.currentPage > 0
@@ -126,6 +127,7 @@ class _PaginationState extends State<Pagination> {
               widget.forwardIcon ?? context.iconography.forwardIcon,
               size: 16,
             ),
+            semanticsLabel: 'Next page',
             variant: ButtonVariant.ghost,
             size: ButtonSize.small,
             onPressed: widget.currentPage < widget.pageCount

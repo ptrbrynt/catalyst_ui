@@ -67,10 +67,9 @@ class FormLayout extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(Spacing.s8),
       decoration: BoxDecoration(
-        color:
-            style == FormLayoutStyle.twoColumnWithCards
-                ? context.colorScheme.subtle
-                : context.colorScheme.canvas,
+        color: style == FormLayoutStyle.twoColumnWithCards
+            ? context.colorScheme.subtle
+            : context.colorScheme.canvas,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -124,7 +123,10 @@ class FormLayout extends StatelessWidget {
       FormLayoutStyle.twoColumn => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: Spacing.s4,
-        children: [Expanded(child: titles), Expanded(child: fieldsColumn)],
+        children: [
+          Expanded(child: titles),
+          Expanded(child: fieldsColumn),
+        ],
       ),
       FormLayoutStyle.twoColumnWithCards => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +136,6 @@ class FormLayout extends StatelessWidget {
           Expanded(
             child: Card(
               padding: const EdgeInsets.all(Spacing.s8),
-              tone: CardTone.surface,
               child: fieldsColumn,
             ),
           ),

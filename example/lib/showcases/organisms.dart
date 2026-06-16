@@ -38,6 +38,7 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
                         variant: ButtonVariant.ghost,
                         size: ButtonSize.medium,
                         onPressed: () {},
+                        semanticsLabel: 'Notifications',
                       )
                     : null,
               ),
@@ -535,7 +536,11 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
     ),
     RadioGroupTableOption(
       value: 'enterprise',
-      columns: [Text('Enterprise'), Text('\$249 / mo'), Text('Up to 1000 jobs')],
+      columns: [
+        Text('Enterprise'),
+        Text('\$249 / mo'),
+        Text('Up to 1000 jobs'),
+      ],
     ),
   ];
 
@@ -559,10 +564,7 @@ class _RadioGroupShowcaseState extends State<RadioGroupShowcase> {
           value: _style,
           options: const [
             (_RadioGroupShowcaseStyle.simpleList, 'Simple list'),
-            (
-              _RadioGroupShowcaseStyle.simpleListInline,
-              'Simple list (inline)',
-            ),
+            (_RadioGroupShowcaseStyle.simpleListInline, 'Simple list (inline)'),
             (
               _RadioGroupShowcaseStyle.simpleListWithTrailingRadio,
               'Simple list (trailing radio)',
@@ -775,12 +777,14 @@ class _TopBarShowcaseState extends State<TopBarShowcase> {
                   variant: ButtonVariant.ghost,
                   size: ButtonSize.medium,
                   onPressed: () {},
+                  semanticsLabel: 'Notifications',
                 ),
                 Button.icon(
                   icon: const Icon(LucideIcons.user),
                   variant: ButtonVariant.ghost,
                   size: ButtonSize.medium,
                   onPressed: () {},
+                  semanticsLabel: 'Profile',
                 ),
               ]
             : [],

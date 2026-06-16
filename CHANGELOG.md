@@ -1,3 +1,7 @@
+# 0.1.11-beta
+
+- Fix more accessibility issues
+
 # 0.1.10-beta
 
 - Fix accessibility issues

@@ -134,6 +134,7 @@ class IntControl extends StatelessWidget {
               icon: const Icon(LucideIcons.minus),
               variant: ButtonVariant.secondary,
               size: ButtonSize.small,
+              semanticsLabel: 'Decrement',
               onPressed: value > min ? () => onChanged(value - 1) : null,
             ),
             SizedBox(
@@ -146,6 +147,7 @@ class IntControl extends StatelessWidget {
               icon: const Icon(LucideIcons.plus),
               variant: ButtonVariant.secondary,
               size: ButtonSize.small,
+              semanticsLabel: 'Increment',
               onPressed: value < max ? () => onChanged(value + 1) : null,
             ),
           ],

@@ -184,18 +184,22 @@ class Snackbar extends StatelessWidget {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: action!.onPressed,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.s1,
-                        vertical: Spacing.s2,
-                      ),
-                      child: Opacity(
-                        opacity: 0.85,
-                        child: Text(
-                          action!.label,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13,
+                    child: SizedBox(
+                      height: 48,
+                      child: Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.s1,
+                          ),
+                          child: Opacity(
+                            opacity: 0.85,
+                            child: Text(
+                              action!.label,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
                           ),
                         ),
                       ),
