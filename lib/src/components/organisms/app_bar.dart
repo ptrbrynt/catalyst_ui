@@ -41,15 +41,13 @@ class AppBar extends StatelessWidget {
     final cs = context.colorScheme;
     final motion = context.motion;
 
+    final resolvedLeading =
+        leading ?? (automaticallyImplyLeading ? _backButton(context) : null);
+
     return AnimatedDefaultTextStyle(
       duration: motion.standard.duration,
       curve: motion.standard.curve,
-      style: TextStyle(
-        fontFamily: context.typography.fontFamily,
-        fontWeight: FontWeight.w600,
-        fontSize: 17,
-        color: cs.text,
-      ),
+      style: context.typography.h2,
       child: IconTheme(
         data: IconThemeData(color: cs.text),
         child: AnimatedContainer(
@@ -69,10 +67,7 @@ class AppBar extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    leading ??
-                        (automaticallyImplyLeading
-                            ? _backButton(context)
-                            : const SizedBox.shrink()),
+                    ?resolvedLeading,
                     ?trailing,
                   ],
                 ),

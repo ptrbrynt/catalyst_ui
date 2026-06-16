@@ -1,3 +1,7 @@
+# 0.2.3
+
+- Increase default AppBar text size to 20
+
 # 0.2.2
 
 - Fix sizes of various components to improve accessibility
