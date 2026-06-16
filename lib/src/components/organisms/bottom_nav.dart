@@ -74,31 +74,34 @@ class BottomNav<T> extends StatelessWidget {
     final motion = context.motion;
     final itemColor = isSelected ? cs.brand : cs.textSubtle;
 
-    return AnimatedDefaultTextStyle(
-      duration: motion.micro.duration,
-      curve: motion.micro.curve,
-      style: TextStyle(
-        fontFamily: context.typography.fontFamily,
-        fontWeight: FontWeight.w500,
-        fontSize: 11,
-        color: itemColor,
-      ),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+      child: AnimatedDefaultTextStyle(
+        duration: motion.micro.duration,
+        curve: motion.micro.curve,
+        style: TextStyle(
+          fontFamily: context.typography.fontFamily,
+          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          color: itemColor,
+        ),
         child: GestureDetector(
           onTap: () => onItemSelected(d.value),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: Spacing.s2,
-            ),
-            child: Column(
-              spacing: Spacing.s1,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(d.icon, size: 22, color: itemColor),
-                Text(d.label, textAlign: TextAlign.center),
-              ],
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: Spacing.s2,
+              ),
+              child: Column(
+                spacing: Spacing.s1,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(d.icon, size: 22, color: itemColor),
+                  Text(d.label, textAlign: TextAlign.center),
+                ],
+              ),
             ),
           ),
         ),

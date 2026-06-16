@@ -1,3 +1,7 @@
+# 0.2.6
+
+- Improve bottom nav tap target size
+
 # 0.2.5
 
 - Replace `AppBar.trailing` with `AppBar.actions` for more consistent design
