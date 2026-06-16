@@ -376,7 +376,7 @@ class _ButtonState extends State<Button> {
   ) {
     final motion = context.motion;
     final h = widget.size.height;
-    final visual = AnimatedContainer(
+    return AnimatedContainer(
       duration: motion.standard.duration,
       curve: motion.standard.curve,
       clipBehavior: Clip.antiAlias,
@@ -414,19 +414,6 @@ class _ButtonState extends State<Button> {
         ],
       ),
     ).withBrightness(isPressed && !isDisabled ? 0.92 : 1);
-
-    // Ensure the GestureDetector (and thus the semantic tap target) meets the
-    // 48 dp Android minimum. The visual size stays as designed; transparent
-    // space pads the touch area.
-    const minTap = 48.0;
-    if (h != null && h < minTap) {
-      return SizedBox(
-        height: minTap,
-        width: widget._isSquare ? minTap : null,
-        child: Align(child: visual),
-      );
-    }
-    return visual;
   }
 
   Widget _buildContent() {
