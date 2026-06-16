@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
-import '../../tokens/spacing.dart';
 
 /// Controls the height of a [TextField].
 enum TextFieldSize {
@@ -199,8 +198,8 @@ class _TextFieldState extends State<TextField> {
     final errored = widget.error != null;
 
     final height = switch (widget.size) {
-      TextFieldSize.small => Spacing.s10,
-      TextFieldSize.medium => Spacing.s12,
+      TextFieldSize.small => 48.0,
+      TextFieldSize.medium => 52.0,
       TextFieldSize.large => 56.0,
     };
 
@@ -318,8 +317,7 @@ class _TextFieldState extends State<TextField> {
                               style: typo.body.copyWith(color: cs.text),
                               cursorColor: cs.brand,
                               backgroundCursorColor: cs.border,
-                              selectionColor:
-                                  cs.brand.withValues(alpha: 0.2),
+                              selectionColor: cs.brand.withValues(alpha: 0.2),
                               keyboardType: widget.keyboardType,
                               obscureText: widget.obscureText,
                               readOnly: widget.readOnly || !widget.enabled,

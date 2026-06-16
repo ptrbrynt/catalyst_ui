@@ -135,9 +135,8 @@ class _MenuButtonState extends State<MenuButton> {
     final spaceBelow =
         screenSize.height - triggerGlobal.dy - renderBox.size.height - 4;
     final showAbove = spaceBelow < dropdownMaxHeight;
-    final dropdownWidth = math.max<double>(renderBox.size.width, 160);
-    final alignEnd =
-        triggerGlobal.dx + dropdownWidth > screenSize.width;
+    final dropdownWidth = math.max<double>(renderBox.size.width, 200);
+    final alignEnd = triggerGlobal.dx + dropdownWidth > screenSize.width;
 
     _overlay = OverlayEntry(
       builder: (_) => _MenuButtonDropdown(
@@ -327,50 +326,53 @@ class _MenuOptionRowState extends State<_MenuOptionRow> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          color: (widget.option.selected || _hovered)
-              ? widget.colorScheme.subtle
-              : null,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-          child: Row(
-            children: [
-              if (widget.option.icon != null) ...[
-                Icon(
-                  widget.option.icon,
-                  size: 14,
-                  color: widget.option.isDestructive
-                      ? widget.colorScheme.danger
-                      : widget.colorScheme.textMuted,
-                ),
-                const SizedBox(width: 8),
-              ],
-              Expanded(
-                child: Text(
-                  widget.option.label,
-                  style: widget.typography.p3.copyWith(
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 48),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 120),
+            curve: Curves.easeOut,
+            color: (widget.option.selected || _hovered)
+                ? widget.colorScheme.subtle
+                : null,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            child: Row(
+              children: [
+                if (widget.option.icon != null) ...[
+                  Icon(
+                    widget.option.icon,
+                    size: 20,
                     color: widget.option.isDestructive
                         ? widget.colorScheme.danger
-                        : widget.colorScheme.text,
+                        : widget.colorScheme.textMuted,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                Expanded(
+                  child: Text(
+                    widget.option.label,
+                    style: widget.typography.p3.copyWith(
+                      color: widget.option.isDestructive
+                          ? widget.colorScheme.danger
+                          : widget.colorScheme.text,
+                    ),
                   ),
                 ),
-              ),
-              if (widget.option.selected) ...[
-                const SizedBox(width: 8),
-                Icon(
-                  widget.checkIcon,
-                  size: 14,
-                  color: widget.colorScheme.brand,
-                ),
+                if (widget.option.selected) ...[
+                  const SizedBox(width: 8),
+                  Icon(
+                    widget.checkIcon,
+                    size: 20,
+                    color: widget.colorScheme.brand,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

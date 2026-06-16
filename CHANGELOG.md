@@ -1,3 +1,7 @@
+# 0.2.2
+
+- Fix sizes of various components to improve accessibility
+
 # 0.2.1
 
 - More accessibility fixes

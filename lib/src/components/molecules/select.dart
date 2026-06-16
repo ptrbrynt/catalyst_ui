@@ -5,7 +5,6 @@ import '../../theme/extensions.dart';
 import '../../theme/shadows.dart';
 import '../../theme/typography.dart';
 import '../../tokens/radius.dart';
-import '../../tokens/spacing.dart';
 
 /// A sealed base class for items that can appear in a [Select] dropdown.
 ///
@@ -143,8 +142,8 @@ class _SelectState<T> extends State<Select<T>> {
   bool get _isOpen => _overlay != null;
 
   double get _triggerHeight => switch (widget.size) {
-    SelectSize.small => Spacing.s10,
-    SelectSize.medium => Spacing.s12,
+    SelectSize.small => 48,
+    SelectSize.medium => 52,
     SelectSize.large => 56.0,
   };
 
@@ -454,46 +453,49 @@ class _SelectOptionRowState<T> extends State<_SelectOptionRow<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          curve: Curves.easeOut,
-          color: (widget.isSelected || _hovered)
-              ? widget.colorScheme.subtle
-              : null,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-          child: Row(
-            children: [
-              if (widget.option.icon != null) ...[
-                Icon(
-                  widget.option.icon,
-                  size: 16,
-                  color: widget.colorScheme.textMuted,
-                ),
-                const SizedBox(width: 8),
-              ],
-              Expanded(
-                child: Text(
-                  widget.option.label,
-                  style: widget.typography.p3.copyWith(
-                    color: widget.colorScheme.text,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 48),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 120),
+            curve: Curves.easeOut,
+            color: (widget.isSelected || _hovered)
+                ? widget.colorScheme.subtle
+                : null,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            child: Row(
+              children: [
+                if (widget.option.icon != null) ...[
+                  Icon(
+                    widget.option.icon,
+                    size: 16,
+                    color: widget.colorScheme.textMuted,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                Expanded(
+                  child: Text(
+                    widget.option.label,
+                    style: widget.typography.p3.copyWith(
+                      color: widget.colorScheme.text,
+                    ),
                   ),
                 ),
-              ),
-              if (widget.isSelected) ...[
-                const SizedBox(width: 8),
-                Icon(
-                  widget.checkIcon,
-                  size: 16,
-                  color: widget.colorScheme.brand,
-                ),
+                if (widget.isSelected) ...[
+                  const SizedBox(width: 8),
+                  Icon(
+                    widget.checkIcon,
+                    size: 16,
+                    color: widget.colorScheme.brand,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
