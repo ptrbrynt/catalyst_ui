@@ -168,10 +168,9 @@ class Snackbar extends StatelessWidget {
             borderRadius: Radii.xlAll,
             boxShadow: context.shadows.lg,
           ),
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 420, minHeight: 56),
           padding: const EdgeInsets.symmetric(
             horizontal: Spacing.s3,
-            vertical: Spacing.s4,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -191,14 +190,12 @@ class Snackbar extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             horizontal: Spacing.s1,
                           ),
-                          child: Opacity(
-                            opacity: 0.85,
-                            child: Text(
-                              action!.label,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13,
-                              ),
+                          child: Text(
+                            action!.label,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: style.foregroundColor,
                             ),
                           ),
                         ),
