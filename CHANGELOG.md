@@ -1,3 +1,7 @@
+# 0.2.7
+
+- Fix Snackbar being obscured by software keyboard
+
 # 0.2.6
 
 - Improve bottom nav tap target size

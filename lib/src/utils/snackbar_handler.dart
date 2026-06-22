@@ -107,7 +107,7 @@ class SnackbarHandlerState extends State<SnackbarHandler>
 
     _entry = OverlayEntry(
       builder:
-          (_) => Theme(
+          (ctx) => Theme(
             data: themeData,
             child: Align(
               alignment: Alignment.bottomRight,
@@ -115,11 +115,16 @@ class SnackbarHandlerState extends State<SnackbarHandler>
                 opacity: _animation,
                 child: ScaleTransition(
                   scale: Tween<double>(begin: 0.9, end: 1).animate(_animation),
-                  child: SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: const EdgeInsets.all(Spacing.s4),
-                      child: snackbar,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.viewInsetsOf(ctx).bottom,
+                    ),
+                    child: SafeArea(
+                      top: false,
+                      child: Padding(
+                        padding: const EdgeInsets.all(Spacing.s4),
+                        child: snackbar,
+                      ),
                     ),
                   ),
                 ),
