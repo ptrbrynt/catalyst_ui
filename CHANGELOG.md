@@ -1,3 +1,7 @@
+# 0.3.0
+
+- Add `DatePicker` and `TimePicker`
+
 # 0.2.7
 
 - Fix Snackbar being obscured by software keyboard
