@@ -161,10 +161,11 @@ class _MultiSelectState<T> extends State<MultiSelect<T>> {
   @override
   void didUpdateWidget(MultiSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // The open OverlayEntry's builder closure reads `widget.value` directly;
-    // an OverlayEntry only rebuilds when explicitly told to, so without this
-    // the checkboxes would not reflect a toggle while the dropdown is open.
-    _overlay?.markNeedsBuild();
+    if (_overlay != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _overlay?.markNeedsBuild(),
+      );
+    }
   }
 
   @override

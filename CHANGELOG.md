@@ -1,3 +1,7 @@
+# 0.4.1
+
+- Fix layout bug in `MultiSelect`
+
 # 0.4.0
 
 - Add `MultiSelect`
