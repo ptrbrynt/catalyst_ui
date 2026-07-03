@@ -1,3 +1,7 @@
+# 0.4.0
+
+- Add `MultiSelect`
+
 # 0.3.0
 
 - Add `DatePicker` and `TimePicker`
