@@ -148,6 +148,12 @@ final List<ComponentEntry> registry = [
     build: () => const SelectShowcase(),
   ),
   ComponentEntry(
+    name: 'MultiSelect',
+    category: 'Molecules',
+    description: 'Multi-value dropdown selection field',
+    build: () => const MultiSelectShowcase(),
+  ),
+  ComponentEntry(
     name: 'Snackbar',
     category: 'Molecules',
     description: 'Transient notification toast',

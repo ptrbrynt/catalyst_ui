@@ -480,6 +480,84 @@ class _SelectShowcaseState extends State<SelectShowcase> {
   }
 }
 
+// ─── MultiSelect ────────────────────────────────────────────────────────────
+
+class MultiSelectShowcase extends StatefulWidget {
+  const MultiSelectShowcase({super.key});
+  @override
+  State<MultiSelectShowcase> createState() => _MultiSelectShowcaseState();
+}
+
+class _MultiSelectShowcaseState extends State<MultiSelectShowcase> {
+  List<String> _values = [];
+  SelectSize _size = SelectSize.medium;
+  bool _disabled = false;
+  bool _hasLabel = true;
+  bool _hasHelper = false;
+  bool _hasError = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShowcasePage(
+      title: 'MultiSelect',
+      preview: SizedBox(
+        width: 280,
+        child: MultiSelect<String>(
+          label: _hasLabel ? 'Countries' : null,
+          value: _values,
+          size: _size,
+          disabled: _disabled,
+          placeholder: 'Select countries…',
+          helper: _hasHelper ? 'Choose one or more countries' : null,
+          error: _hasError ? 'Please select a country' : null,
+          options: const [
+            SelectOption(value: 'us', label: 'United States'),
+            SelectOption(value: 'gb', label: 'United Kingdom'),
+            SelectOption(value: 'ca', label: 'Canada'),
+            SelectOption(value: 'au', label: 'Australia'),
+            SelectOption(value: 'de', label: 'Germany'),
+          ],
+          onChanged: _disabled ? null : (v) => setState(() => _values = v),
+          trailingIcon: LucideIcons.chevronDown,
+          checkIcon: LucideIcons.check,
+        ),
+      ),
+      controls: [
+        SelectControl<SelectSize>(
+          label: 'Size',
+          value: _size,
+          options: const [
+            (SelectSize.small, 'Small'),
+            (SelectSize.medium, 'Medium'),
+            (SelectSize.large, 'Large'),
+          ],
+          onChanged: (v) => setState(() => _size = v),
+        ),
+        BoolControl(
+          label: 'Disabled',
+          value: _disabled,
+          onChanged: (v) => setState(() => _disabled = v),
+        ),
+        BoolControl(
+          label: 'Has label',
+          value: _hasLabel,
+          onChanged: (v) => setState(() => _hasLabel = v),
+        ),
+        BoolControl(
+          label: 'Has helper',
+          value: _hasHelper,
+          onChanged: (v) => setState(() => _hasHelper = v),
+        ),
+        BoolControl(
+          label: 'Show error',
+          value: _hasError,
+          onChanged: (v) => setState(() => _hasError = v),
+        ),
+      ],
+    );
+  }
+}
+
 // ─── Snackbar ─────────────────────────────────────────────────────────────────
 
 class SnackbarShowcase extends StatefulWidget {
