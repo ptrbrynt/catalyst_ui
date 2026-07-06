@@ -102,4 +102,5 @@ Button(
 )
 ```
 
-Next: learn how the theme system works, or browse the component reference.
+Next: learn how the [theme system](/theming/color-scheme) works, or browse the
+[component reference](/components/atoms/button).

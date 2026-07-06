@@ -75,11 +75,8 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            // TODO(Task 3): restore `to: '/getting-started'` once that page exists.
-            {label: 'Getting Started', href: '#'},
-            // TODO(Task 8): restore `to: '/components/atoms/button'` once
-            // component pages exist.
-            {label: 'Components', href: '#'},
+            {label: 'Getting Started', to: '/getting-started'},
+            {label: 'Components', to: '/components/atoms/button'},
           ],
         },
         {
