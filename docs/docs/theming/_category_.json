@@ -1,0 +1,8 @@
+{
+  "label": "Theming",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Design tokens and the typed theme system."
+  }
+}
