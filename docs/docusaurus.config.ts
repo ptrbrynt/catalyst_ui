@@ -14,7 +14,12 @@ const config: Config = {
   projectName: 'catalyst_ui',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {defaultLocale: 'en', locales: ['en']},
 
