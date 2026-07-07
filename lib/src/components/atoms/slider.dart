@@ -140,6 +140,7 @@ class _SliderState extends State<Slider> {
             final maxPixel = hasMaxBound ? pixelForValue(widget.max) : null;
 
             return GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onHorizontalDragStart: _disabled
                   ? null
                   : (d) {

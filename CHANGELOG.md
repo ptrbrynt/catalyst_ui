@@ -1,3 +1,7 @@
+# 0.4.2
+
+- Fix `Slider` touch target not registering taps/drags in the padded hit area around the thumb
+
 # 0.4.1
 
 - Fix layout bug in `MultiSelect`
