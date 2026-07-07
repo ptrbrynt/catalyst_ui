@@ -2,6 +2,8 @@
 
 A flexible, theme-driven UI component library for Flutter — no Material or Cupertino dependency. Every design token is fully customisable, and variant-based components (`Button`, `Chip`, `Badge`) accept user-defined variants so you can extend the design system without forking the library.
 
+📖 **[Read the documentation →](https://ptrbrynt.github.io/catalyst_ui/)** — getting started, theming, architecture, and a reference page for every component.
+
 ---
 
 ## Features
