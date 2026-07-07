@@ -102,11 +102,11 @@ Current slots:
 
 | Field | Used by |
 |---|---|
-| `checkIcon` | `Checkbox`, `Chip` (selected state), `MenuButton` (selected option), `Select` (selected item), `Stepper` (completed step) |
-| `backIcon` | `AppBar` (back button), `Pagination` |
-| `forwardIcon` | `Breadcrumb` (separator), `Pagination` |
-| `expandIcon` | `Select` (closed state) |
-| `collapseIcon` | `Select` (open state) |
+| `checkIcon` | `Checkbox`, `Chip` (selected state), `MenuButton` (selected option), `Select` / `MultiSelect` (selected item), `Stepper` (completed step) |
+| `backIcon` | `AppBar` (back button), `Pagination`, `DatePicker` (previous month) |
+| `forwardIcon` | `Breadcrumb` (separator), `Pagination`, `DatePicker` (next month) |
+| `expandIcon` | `Select` / `MultiSelect` (dropdown chevron — rotated 180° when open) |
+| `collapseIcon` | *Reserved — currently unused.* `Select`/`MultiSelect` rotate `expandIcon` rather than swapping to a separate icon. Still required; supply a value for forward compatibility. |
 | `closeIcon` | `Drawer` (close button) |
 | `removeIcon` | `Chip` (removable variant) |
 | `alertIcon` | `ErrorState` (default icon) |
