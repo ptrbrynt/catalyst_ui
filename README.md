@@ -31,34 +31,48 @@ dependencies:
 
 ## Quick start
 
-Wrap the root of your navigator with `Provider`. The provider sets up the theme, automatic dark/light switching, and all overlay dependencies in one step:
+Wrap the root of your navigator with `CatalystProvider`. It sets up the theme, automatic dark/light switching, and all overlay dependencies in one step.
+
+catalyst_ui ships no icon data — you supply an `Iconography` from whichever icon package your app uses (here, `lucide_icons`). `ThemeData.light()` and `ThemeData.dark()` both require it:
 
 ```dart
 import 'package:catalyst_ui/catalyst_ui.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
+final appIconography = Iconography(
+  checkIcon: LucideIcons.check,
+  backIcon: LucideIcons.arrowLeft,
+  forwardIcon: LucideIcons.arrowRight,
+  expandIcon: LucideIcons.chevronDown,
+  collapseIcon: LucideIcons.chevronUp,
+  closeIcon: LucideIcons.x,
+  removeIcon: LucideIcons.x,
+  alertIcon: LucideIcons.triangleAlert,
+);
 
 // Light theme only:
-Provider(
-  theme: ThemeData.light(fontFamily: 'Inter'),
+CatalystProvider(
+  theme: ThemeData.light(fontFamily: 'Inter', iconography: appIconography),
   child: MyHomePage(),
 )
 
 // Automatic dark / light switching — follows the OS setting:
-Provider(
-  theme: ThemeData.light(fontFamily: 'Inter'),
-  darkTheme: ThemeData.dark(fontFamily: 'Inter'),
+CatalystProvider(
+  theme: ThemeData.light(fontFamily: 'Inter', iconography: appIconography),
+  darkTheme: ThemeData.dark(fontFamily: 'Inter', iconography: appIconography),
   child: MyHomePage(),
 )
 
 // Force a specific mode regardless of the OS setting:
-Provider(
-  theme: ThemeData.light(fontFamily: 'Inter'),
-  darkTheme: ThemeData.dark(fontFamily: 'Inter'),
+CatalystProvider(
+  theme: ThemeData.light(fontFamily: 'Inter', iconography: appIconography),
+  darkTheme: ThemeData.dark(fontFamily: 'Inter', iconography: appIconography),
   themeMode: ThemeMode.dark,
   child: MyHomePage(),
 )
 ```
 
-`Provider` is router-agnostic — place it inside any app widget (`WidgetsApp`, `MaterialApp`, `GoRouter`, etc.) wherever an `Overlay` is available.
+`CatalystProvider` is router-agnostic — place it inside any app widget (`WidgetsApp`, `MaterialApp`, `GoRouter`, etc.) wherever an `Overlay` is available.
 
 ---
 
