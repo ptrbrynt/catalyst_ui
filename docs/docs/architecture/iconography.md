@@ -62,10 +62,10 @@ class Iconography {
 | Field | Used by |
 |---|---|
 | `checkIcon` | Checkbox, Chip (selected state), MenuButton (selected option), Select (selected item), Stepper (completed step) |
-| `backIcon` | AppBar (back button), Pagination |
-| `forwardIcon` | Breadcrumb (separator), Pagination |
-| `expandIcon` | Select (closed state) |
-| `collapseIcon` | Select (open state) |
+| `backIcon` | AppBar (back button), Pagination, DatePicker (previous month) |
+| `forwardIcon` | Breadcrumb (separator), Pagination, DatePicker (next month) |
+| `expandIcon` | Select and MultiSelect (dropdown chevron — rotated 180° when open) |
+| `collapseIcon` | *Reserved.* Currently unused by built-in components — Select rotates `expandIcon` rather than swapping to a separate icon. Supply a value (it is required) for forward compatibility. |
 | `closeIcon` | Drawer (close button) |
 | `removeIcon` | Chip (removable variant) |
 | `alertIcon` | ErrorState (default icon) |
