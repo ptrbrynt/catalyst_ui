@@ -21,3 +21,6 @@ Thumbs.db
 
 # Superpowers scratch state
 .superpowers/
+
+# Docusaurus preview cache (written at repo root when running from here)
+.cache/
