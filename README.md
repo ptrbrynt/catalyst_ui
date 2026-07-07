@@ -82,12 +82,14 @@ CatalystProvider(
 
 Three named constructors cover the common cases:
 
+Each requires an `Iconography` (see [Quick start](#quick-start) for how to build `appIconography`):
+
 ```dart
 // Light theme with default tokens
-ThemeData.light()
+ThemeData.light(iconography: appIconography)
 
 // Dark theme
-ThemeData.dark()
+ThemeData.dark(iconography: appIconography)
 
 // Full control — supply every sub-object explicitly
 ThemeData.raw(
@@ -95,19 +97,23 @@ ThemeData.raw(
   typography: ...,
   motion: ...,
   shadows: ...,
+  breakpoints: ...,
+  iconography: appIconography,
 )
 ```
 
 Use `copyWith` to override individual tokens:
 
 ```dart
-ThemeData.light(fontFamily: 'Inter').copyWith(
+ThemeData.light(fontFamily: 'Inter', iconography: appIconography).copyWith(
   colorScheme: const ColorScheme.light().copyWith(
     brand: const Color(0xFF7C3AED),
     brandSoft: const Color(0xFFEDE9FE),
   ),
 )
 ```
+
+> **Note:** the token-focused snippets below omit the required `iconography:` argument for brevity. In real code every `ThemeData.light()` / `ThemeData.dark()` call must pass it — see [Quick start](#quick-start).
 
 ### Colour scheme
 
