@@ -423,7 +423,6 @@ StatusDot(tone: StatusTone.custom(const Color(0xFF9333EA)))
 | `SegmentedControl` | Exclusive option picker                                                |
 | `Select<T>`        | Overlay dropdown with typed options                                    |
 | `Snackbar`         | Toast notification (show via `context.showSnackbar(...)`)              |
-| `StatCard`         | Metric card with trend and delta                                       |
 | `Stepper`          | Linear multi-step progress indicator                                   |
 | `Tabs`             | Tab bar + tab view                                                     |
 | `TextField`        | Text input with label, hint, error, leading/trailing                   |

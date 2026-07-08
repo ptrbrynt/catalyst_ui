@@ -160,12 +160,6 @@ final List<ComponentEntry> registry = [
     build: () => const SnackbarShowcase(),
   ),
   ComponentEntry(
-    name: 'StatCard',
-    category: 'Molecules',
-    description: 'Metric summary with trend',
-    build: () => const StatCardShowcase(),
-  ),
-  ComponentEntry(
     name: 'Stepper',
     category: 'Molecules',
     description: 'Multi-step progress indicator',

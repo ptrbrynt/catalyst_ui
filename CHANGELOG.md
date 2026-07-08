@@ -1,3 +1,7 @@
+# 0.5.0
+
+- **Breaking:** Remove `StatCard` — too specific a use-case for a general-purpose component library
+
 # 0.4.2
 
 - Fix `Slider` touch target not registering taps/drags in the padded hit area around the thumb

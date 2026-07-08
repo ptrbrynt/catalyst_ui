@@ -630,55 +630,6 @@ class _SnackbarShowcaseState extends State<SnackbarShowcase> {
   }
 }
 
-// ─── StatCard ─────────────────────────────────────────────────────────────────
-
-class StatCardShowcase extends StatefulWidget {
-  const StatCardShowcase({super.key});
-  @override
-  State<StatCardShowcase> createState() => _StatCardShowcaseState();
-}
-
-class _StatCardShowcaseState extends State<StatCardShowcase> {
-  StatDelta _delta = StatDelta.positive;
-  bool _primary = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return ShowcasePage(
-      title: 'StatCard',
-      preview: SizedBox(
-        width: 220,
-        child: StatCard(
-          title: 'Monthly Revenue',
-          value: '12,450',
-          unit: r'$',
-          trend: '+8.2% from last month',
-          icon: const Icon(LucideIcons.trendingUp),
-          delta: _delta,
-          primary: _primary,
-        ),
-      ),
-      controls: [
-        SelectControl<StatDelta>(
-          label: 'Delta',
-          value: _delta,
-          options: const [
-            (StatDelta.positive, 'Positive'),
-            (StatDelta.negative, 'Negative'),
-            (StatDelta.neutral, 'Neutral'),
-          ],
-          onChanged: (v) => setState(() => _delta = v),
-        ),
-        BoolControl(
-          label: 'Primary',
-          value: _primary,
-          onChanged: (v) => setState(() => _primary = v),
-        ),
-      ],
-    );
-  }
-}
-
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
 class StepperShowcase extends StatefulWidget {

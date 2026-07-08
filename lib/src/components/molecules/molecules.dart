@@ -9,7 +9,6 @@ export 'pagination.dart';
 export 'segmented_control.dart';
 export 'select.dart';
 export 'snackbar.dart';
-export 'stat_card.dart';
 export 'stepper.dart';
 export 'tabs.dart';
 export 'text_field.dart';
