@@ -17,12 +17,22 @@ enum ActionTone {
 }
 
 /// Defines an action in an [AppBar]
-class AppBarAction {
-  /// Creates an [AppBarAction]
-  const AppBarAction({
+sealed class AppBarAction extends StatelessWidget {
+  const AppBarAction({super.key});
+
+  /// Builds the action widget
+  @override
+  Widget build(BuildContext context);
+}
+
+/// Defines a button in an [AppBar]
+class AppBarButton extends AppBarAction {
+  /// Creates an [AppBarButton]
+  const AppBarButton({
     required this.icon,
     required this.semanticsLabel,
     required this.onTap,
+    super.key,
     this.tone = .neutral,
   });
 
@@ -37,6 +47,37 @@ class AppBarAction {
 
   /// Defines the color scheme for this action
   final ActionTone tone;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      content: semanticsLabel,
+      child: Semantics(
+        label: semanticsLabel,
+        child: GestureDetector(
+          onTap: onTap,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: SizedBox.square(
+              dimension: 44,
+              child: Center(
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: switch (tone) {
+                    .danger => context.colorScheme.danger,
+                    .neutral => context.colorScheme.text,
+                    .primary => context.colorScheme.brand,
+                    .success => context.colorScheme.success,
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// A top application bar for mobile screens.
@@ -64,9 +105,9 @@ class AppBar extends StatelessWidget {
   /// Overrides the auto-generated leading widget.
   final Widget? leading;
 
-  /// Optional list of [AppBarAction]s to show on the trailing end of this
-  /// app bar.
-  final List<AppBarAction> actions;
+  /// Optional list of [Widget]s to show on the trailing end of this
+  /// app bar. Typically [AppBarAction]s or [MenuButton]s.
+  final List<Widget> actions;
 
   /// Icon to display on the default back button. If `null`, defaults to the
   /// `backIcon` supplied in `ThemeData.iconography`.
@@ -105,10 +146,7 @@ class AppBar extends StatelessWidget {
                   children: [
                     ?resolvedLeading,
                     Row(
-                      children: [
-                        for (final action in actions)
-                          _actionWidget(context, action),
-                      ],
+                      children: actions,
                     ),
                   ],
                 ),
@@ -125,43 +163,10 @@ class AppBar extends StatelessWidget {
     if (!(ModalRoute.canPopOf(context) ?? false)) {
       return const SizedBox.shrink();
     }
-    return _actionWidget(
-      context,
-      AppBarAction(
-        icon: backIcon ?? context.iconography.backIcon,
-        semanticsLabel: 'Back',
-        onTap: () => Navigator.pop(context),
-      ),
-    );
-  }
-
-  Widget _actionWidget(BuildContext context, AppBarAction action) {
-    return Tooltip(
-      content: action.semanticsLabel,
-      child: Semantics(
-        label: action.semanticsLabel,
-        child: GestureDetector(
-          onTap: action.onTap,
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: SizedBox.square(
-              dimension: 44,
-              child: Center(
-                child: Icon(
-                  action.icon,
-                  size: 20,
-                  color: switch (action.tone) {
-                    .danger => context.colorScheme.danger,
-                    .neutral => context.colorScheme.text,
-                    .primary => context.colorScheme.brand,
-                    .success => context.colorScheme.success,
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return AppBarButton(
+      icon: backIcon ?? context.iconography.backIcon,
+      semanticsLabel: 'Back',
+      onTap: () => Navigator.pop(context),
     );
   }
 }

@@ -34,7 +34,7 @@ class _AppBarShowcaseState extends State<AppBarShowcase> {
                 title: _hasTitle ? const Text('Page Title') : null,
                 actions: [
                   if (_hasTrailing)
-                    AppBarAction(
+                    AppBarButton(
                       icon: LucideIcons.bell,
                       semanticsLabel: 'Notifications',
                       onTap: () {},

@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
   }
 
   AppBarAction _themeToggle(BuildContext context, {required bool isDark}) {
-    return AppBarAction(
+    return AppBarButton(
       icon: isDark ? LucideIcons.sun : LucideIcons.moon,
       semanticsLabel: 'Toggle Dark Theme',
       onTap: () {
