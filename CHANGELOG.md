@@ -1,3 +1,7 @@
+# 0.6.0
+
+- **Breaking:** `AppBarAction` is now an abstract class with a concrete `AppBarButton` taking its place. Any widget can now be used as an app bar action.
+
 # 0.5.0
 
 - **Breaking:** Remove `StatCard` — too specific a use-case for a general-purpose component library
