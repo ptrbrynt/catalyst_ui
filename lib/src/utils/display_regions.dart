@@ -164,3 +164,66 @@ abstract final class DisplayRegions {
     return Offset(dx, dy).distance;
   }
 }
+
+/// Keeps its child clear of occlusions (such as a camera in a corner of the
+/// display) that overlap it, by padding it sideways — moving content aside
+/// locally rather than shrinking the whole screen's safe area.
+///
+/// Use it for bars and headers that run along an edge with an occlusion in
+/// one corner: only the part next to the occlusion moves.
+class AvoidOcclusions extends StatefulWidget {
+  /// Creates an occlusion-avoiding wrapper.
+  const AvoidOcclusions({required this.child, super.key});
+
+  /// The content to keep clear of occlusions.
+  final Widget child;
+
+  @override
+  State<AvoidOcclusions> createState() => _AvoidOcclusionsState();
+}
+
+class _AvoidOcclusionsState extends State<AvoidOcclusions> {
+  // Occlusions are reported globally; this maps them into the widget. The
+  // rect is from the last frame, as a widget can't know its global position
+  // while it's being laid out.
+  Rect? _globalRect;
+
+  void _measure() {
+    if (!mounted) return;
+    final box = context.findRenderObject();
+    if (box is! RenderBox || !box.hasSize) return;
+    final rect = box.localToGlobal(Offset.zero) & box.size;
+    if (rect != _globalRect) setState(() => _globalRect = rect);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final occlusions = DisplayRegions.occlusions(media).toList();
+    if (occlusions.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _measure());
+    }
+    var left = 0.0;
+    var right = 0.0;
+    final rect = _globalRect;
+    if (rect != null) {
+      for (final occlusion in occlusions) {
+        if (!occlusion.overlaps(rect)) continue;
+        if (occlusion.center.dx < rect.center.dx) {
+          left = left < occlusion.right - rect.left
+              ? occlusion.right - rect.left
+              : left;
+        } else {
+          right = right < rect.right - occlusion.left
+              ? rect.right - occlusion.left
+              : right;
+        }
+      }
+    }
+    // Always padded, so the child keeps its state when occlusions come and go.
+    return Padding(
+      padding: EdgeInsets.only(left: left, right: right),
+      child: widget.child,
+    );
+  }
+}

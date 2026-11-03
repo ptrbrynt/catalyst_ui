@@ -179,30 +179,32 @@ class AppBar extends StatelessWidget {
           ),
           child: SafeArea(
             bottom: false,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Keeps the actions trailing when there's no leading
-                    // widget, such as in the detail pane of a split view.
-                    resolvedLeading ?? const SizedBox.shrink(),
-                    Row(
-                      children: [
-                        ...actions,
-                        if (hasBarActions)
-                          BarActions(
-                            items: barItems,
-                            overflow: overflow,
-                            compression: compression,
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-                ?title,
-              ],
+            child: AvoidOcclusions(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Keeps the actions trailing when there's no leading
+                      // widget, such as in the detail pane of a split view.
+                      resolvedLeading ?? const SizedBox.shrink(),
+                      Row(
+                        children: [
+                          ...actions,
+                          if (hasBarActions)
+                            BarActions(
+                              items: barItems,
+                              overflow: overflow,
+                              compression: compression,
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  ?title,
+                ],
+              ),
             ),
           ),
         ),
