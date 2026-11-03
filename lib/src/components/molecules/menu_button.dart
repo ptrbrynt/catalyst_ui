@@ -7,6 +7,7 @@ import '../../theme/extensions.dart';
 import '../../theme/shadows.dart';
 import '../../theme/typography.dart';
 import '../../tokens/radius.dart';
+import '../../utils/overlay_placement.dart';
 
 /// A sealed base class for items that can appear in a [MenuButton] dropdown.
 ///
@@ -68,7 +69,9 @@ class MenuDivider extends MenuItem {
 /// The dropdown position is determined automatically: it opens below the
 /// trigger unless there is insufficient space, in which case it opens above.
 /// Horizontally it aligns to the trigger's leading edge unless that would
-/// overflow the screen, in which case it aligns to the trailing edge.
+/// overflow the screen, in which case it aligns to the trailing edge. It stays
+/// within the safe area, on the trigger's side of any fold, and clear of
+/// cutouts such as cameras (see [DisplayRegions]).
 ///
 /// ```dart
 /// MenuButton(
@@ -129,14 +132,11 @@ class _MenuButtonState extends State<MenuButton> {
     final checkIcon = context.iconography.checkIcon;
 
     final renderBox = context.findRenderObject()! as RenderBox;
-    final triggerGlobal = renderBox.localToGlobal(Offset.zero);
-    final screenSize = MediaQuery.of(context).size;
-    const dropdownMaxHeight = 240.0;
-    final spaceBelow =
-        screenSize.height - triggerGlobal.dy - renderBox.size.height - 4;
-    final showAbove = spaceBelow < dropdownMaxHeight;
     final dropdownWidth = math.max<double>(renderBox.size.width, 200);
-    final alignEnd = triggerGlobal.dx + dropdownWidth > screenSize.width;
+    final placement = OverlayPlacement.resolve(
+      context,
+      size: Size(dropdownWidth, 240),
+    );
 
     _overlay = OverlayEntry(
       builder: (_) => _MenuButtonDropdown(
@@ -146,8 +146,7 @@ class _MenuButtonState extends State<MenuButton> {
         colorScheme: cs,
         typography: typo,
         shadows: sh,
-        showAbove: showAbove,
-        alignEnd: alignEnd,
+        placement: placement,
         checkIcon: checkIcon,
         onDismiss: _close,
       ),
@@ -188,8 +187,7 @@ class _MenuButtonDropdown extends StatelessWidget {
     required this.colorScheme,
     required this.typography,
     required this.shadows,
-    required this.showAbove,
-    required this.alignEnd,
+    required this.placement,
     required this.checkIcon,
     required this.onDismiss,
   });
@@ -201,28 +199,10 @@ class _MenuButtonDropdown extends StatelessWidget {
   final Typography typography;
   final Shadows shadows;
 
-  /// Whether the dropdown should open above the trigger.
-  final bool showAbove;
-
-  /// Whether the dropdown's trailing edge should align with the trigger's
-  /// trailing edge (used when there is insufficient space to the right).
-  final bool alignEnd;
+  /// Where the dropdown sits relative to the trigger.
+  final OverlayPlacement placement;
   final IconData checkIcon;
   final VoidCallback onDismiss;
-
-  Alignment get _targetAnchor {
-    if (showAbove) {
-      return alignEnd ? Alignment.topRight : Alignment.topLeft;
-    }
-    return alignEnd ? Alignment.bottomRight : Alignment.bottomLeft;
-  }
-
-  Alignment get _followerAnchor {
-    if (showAbove) {
-      return alignEnd ? Alignment.bottomRight : Alignment.bottomLeft;
-    }
-    return alignEnd ? Alignment.topRight : Alignment.topLeft;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,13 +220,13 @@ class _MenuButtonDropdown extends StatelessWidget {
           child: CompositedTransformFollower(
             link: layerLink,
             showWhenUnlinked: false,
-            targetAnchor: _targetAnchor,
-            followerAnchor: _followerAnchor,
-            offset: Offset(0, showAbove ? -4 : 4),
+            targetAnchor: placement.targetAnchor(),
+            followerAnchor: placement.followerAnchor(),
+            offset: placement.offset,
             child: SizedBox(
               width: dropdownWidth,
               child: Container(
-                constraints: const BoxConstraints(maxHeight: 240),
+                constraints: BoxConstraints(maxHeight: placement.maxHeight),
                 decoration: BoxDecoration(
                   color: colorScheme.surface,
                   borderRadius: Radii.lgAll,

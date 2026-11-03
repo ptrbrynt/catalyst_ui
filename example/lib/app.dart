@@ -20,6 +20,7 @@ class ShowcaseApp extends StatelessWidget {
       closeIcon: LucideIcons.x,
       removeIcon: LucideIcons.x,
       alertIcon: LucideIcons.alertTriangle,
+      moreIcon: LucideIcons.ellipsis,
     );
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeMode,

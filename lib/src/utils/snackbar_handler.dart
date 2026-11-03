@@ -106,31 +106,35 @@ class SnackbarHandlerState extends State<SnackbarHandler>
     final themeData = Theme.of(callerContext);
 
     _entry = OverlayEntry(
-      builder:
-          (ctx) => Theme(
-            data: themeData,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: FadeTransition(
-                opacity: _animation,
-                child: ScaleTransition(
-                  scale: Tween<double>(begin: 0.9, end: 1).animate(_animation),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.viewInsetsOf(ctx).bottom,
-                    ),
-                    child: SafeArea(
-                      top: false,
-                      child: Padding(
-                        padding: const EdgeInsets.all(Spacing.s4),
-                        child: snackbar,
-                      ),
+      builder: (ctx) => Theme(
+        data: themeData,
+        // Keep the snackbar on one side of a fold. The safe area keeps it
+        // clear of a vertical bar column.
+        child: DisplayFeatureSubScreen(
+          anchorPoint: Offset.infinite,
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: FadeTransition(
+              opacity: _animation,
+              child: ScaleTransition(
+                scale: Tween<double>(begin: 0.9, end: 1).animate(_animation),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.viewInsetsOf(ctx).bottom,
+                  ),
+                  child: SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.all(Spacing.s4),
+                      child: snackbar,
                     ),
                   ),
                 ),
               ),
             ),
           ),
+        ),
+      ),
     );
 
     Overlay.of(context).insert(_entry!);
