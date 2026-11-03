@@ -58,6 +58,7 @@ class BarItem {
     this.groupPriority = 0,
     this.priority = 0,
     this.badge = false,
+    this.selected = false,
     this.horizontal,
   });
 
@@ -91,6 +92,9 @@ class BarItem {
   /// Whether the item conveys status (such as an active filter). Badged items
   /// stay visible longer than unbadged items of the same priority.
   final bool badge;
+
+  /// Whether the item is on, such as a panel it opens being open.
+  final bool selected;
 
   /// How the item looks in a horizontal bar. Defaults to a circular icon
   /// button (or a text button for text-only items).
@@ -313,6 +317,7 @@ class _VerticalBarButton extends StatelessWidget {
             title: item.title,
             onPressed: item.onPressed,
             badge: item.badge,
+            selected: item.selected,
           )
         : MenuButton(
             items: menu,
@@ -333,12 +338,14 @@ class _BarIconButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.badge = false,
+    this.selected = false,
   });
 
   final IconData icon;
   final String title;
   final VoidCallback? onPressed;
   final bool badge;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -355,7 +362,7 @@ class _BarIconButton extends StatelessWidget {
             elevated: true,
             shape: .circle,
             size: .small,
-            variant: ButtonVariant.secondary,
+            variant: selected ? ButtonVariant.primary : ButtonVariant.secondary,
           ),
           if (badge)
             Positioned(
@@ -666,8 +673,30 @@ class VerticalBarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final edge = VerticalBarEdgeScope.of(context);
-    if (!edge.isVertical) return child;
+    final column = edge.isVertical ? _column(context, edge) : null;
+    final width = column?.width ?? 0;
 
+    // The same structure whether bars are vertical or not, so the page keeps
+    // its state when the device rotates or opens and bars change direction.
+    return _VerticalBarColumnScope(
+      column: column,
+      child: Padding(
+        padding: switch (edge) {
+          VerticalBarEdge.left => EdgeInsets.only(left: width),
+          VerticalBarEdge.right => EdgeInsets.only(right: width),
+          VerticalBarEdge.none => EdgeInsets.zero,
+        },
+        child: MediaQuery.removePadding(
+          context: context,
+          removeLeft: edge == VerticalBarEdge.left,
+          removeRight: edge == VerticalBarEdge.right,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  VerticalBarColumn _column(BuildContext context, VerticalBarEdge edge) {
     final media = MediaQuery.of(context);
     final reservation = VerticalTabBarReservation.maybeOf(context);
     // The system reserves the column in the safe area (it holds the camera
@@ -684,7 +713,7 @@ class VerticalBarPage extends StatelessWidget {
       }
     }
     final scope = VerticalBarEdgeScope.maybeOf(context);
-    final column = VerticalBarColumn(
+    return VerticalBarColumn(
       edge: edge,
       width: width,
       top: math.max(
@@ -695,21 +724,6 @@ class VerticalBarPage extends StatelessWidget {
           ? bottomInset(media, context) + reservation.extent
           : bottomInset(media, context),
       tabBarCompression: reservation?.compression,
-    );
-
-    return _VerticalBarColumnScope(
-      column: column,
-      child: Padding(
-        padding: edge == VerticalBarEdge.left
-            ? EdgeInsets.only(left: width)
-            : EdgeInsets.only(right: width),
-        child: MediaQuery.removePadding(
-          context: context,
-          removeLeft: edge == VerticalBarEdge.left,
-          removeRight: edge == VerticalBarEdge.right,
-          child: child,
-        ),
-      ),
     );
   }
 }
