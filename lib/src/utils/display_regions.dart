@@ -37,6 +37,7 @@ class VerticalBarEdgeScope extends InheritedWidget {
     required super.child,
     this.topCornerRadius = 0,
     this.bottomCornerRadius = 0,
+    this.axisInset,
     super.key,
   });
 
@@ -50,6 +51,14 @@ class VerticalBarEdgeScope extends InheritedWidget {
   /// The radius of the display's rounded corner at the bottom of [edge].
   final double bottomCornerRadius;
 
+  /// How far from [edge] the system centres its own vertical bar controls,
+  /// such as the status bar, and the camera they line up with.
+  ///
+  /// This isn't the middle of the system's column: on iPhone Duo the axis
+  /// sits a little in from the hardware edge. Null centres controls in the
+  /// column.
+  final double? axisInset;
+
   /// Returns the nearest [VerticalBarEdge], or [VerticalBarEdge.none].
   static VerticalBarEdge of(BuildContext context) =>
       maybeOf(context)?.edge ?? VerticalBarEdge.none;
@@ -62,7 +71,8 @@ class VerticalBarEdgeScope extends InheritedWidget {
   bool updateShouldNotify(VerticalBarEdgeScope oldWidget) =>
       edge != oldWidget.edge ||
       topCornerRadius != oldWidget.topCornerRadius ||
-      bottomCornerRadius != oldWidget.bottomCornerRadius;
+      bottomCornerRadius != oldWidget.bottomCornerRadius ||
+      axisInset != oldWidget.axisInset;
 }
 
 /// Helpers for working with reserved regions of the display: folds and hinges

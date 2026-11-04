@@ -1,3 +1,9 @@
+# 0.8.0
+
+- **Breaking:** `VerticalBarPage.cornerClearance`'s second argument is now the distance from the screen edge to the control's centre (`axisInset`), not the column width
+- Add `VerticalBarEdgeScope.axisInset`: how far from the edge the system centres its own vertical bar controls. Vertical toolbars centre on it, so they line up with the status bar (and, on iPhone Duo's outer display, the camera); without it they centre in the column as before
+- Add `VerticalBarColumn.axisInset` and `VerticalBarPage.axisInset()`, for placing other controls (such as a vertical tab bar) on the same axis
+
 # 0.7.1
 
 - Fix broken `README.md`
