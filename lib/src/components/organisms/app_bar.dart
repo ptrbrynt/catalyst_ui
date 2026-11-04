@@ -85,6 +85,10 @@ class AppBarButton extends AppBarAction {
 /// When [automaticallyImplyLeading] is `true` and the current route can be
 /// popped, a back button is shown automatically. On iOS the back button uses
 /// a chevron; on other platforms it uses an arrow.
+///
+/// When bars are vertical (inside a [VerticalBarPage]), the back button and
+/// [items] with a symbol move into the vertical bar column; the [title] and
+/// any [actions] widgets stay in a horizontal bar.
 class AppBar extends StatelessWidget {
   /// Creates an app bar.
   const AppBar({
@@ -94,6 +98,9 @@ class AppBar extends StatelessWidget {
     this.automaticallyImplyLeading = true,
     this.leading,
     this.actions = const [],
+    this.items = const [],
+    this.overflow = const [],
+    this.compression = BarCompression.navigation,
   });
 
   /// An optional centred widget, typically a [Text] title.
@@ -109,6 +116,16 @@ class AppBar extends StatelessWidget {
   /// app bar. Typically [AppBarAction]s or [MenuButton]s.
   final List<Widget> actions;
 
+  /// Toolbar items. Items with [BarItemRole.navigation] act as the leading
+  /// widget when [leading] is null; the rest follow [actions].
+  final List<BarItem> items;
+
+  /// Extra entries for the bar's single overflow menu.
+  final List<MenuItem> overflow;
+
+  /// How the bars give way when a vertical bar runs out of room.
+  final BarCompression compression;
+
   /// Icon to display on the default back button. If `null`, defaults to the
   /// `backIcon` supplied in `ThemeData.iconography`.
   final IconData? backIcon;
@@ -118,8 +135,32 @@ class AppBar extends StatelessWidget {
     final cs = context.colorScheme;
     final motion = context.motion;
 
-    final resolvedLeading =
-        leading ?? (automaticallyImplyLeading ? _backButton(context) : null);
+    final vertical = VerticalBarPage.columnOf(context) != null;
+    final navigation = items.where((i) => i.role == BarItemRole.navigation);
+    final implied = navigation.isEmpty && automaticallyImplyLeading
+        ? _impliedBack(context)
+        : null;
+    final barItems = [?implied, ...items];
+    final hasBarActions = barItems.isNotEmpty || overflow.isNotEmpty;
+
+    final Widget? resolvedLeading;
+    if (leading != null) {
+      resolvedLeading = leading;
+    } else if (vertical) {
+      resolvedLeading = null;
+    } else if (navigation.isNotEmpty) {
+      resolvedLeading = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final item in navigation)
+            item.horizontal ?? _navigationButton(context, item),
+        ],
+      );
+    } else if (implied != null) {
+      resolvedLeading = _navigationButton(context, implied);
+    } else {
+      resolvedLeading = null;
+    }
 
     return AnimatedDefaultTextStyle(
       duration: motion.standard.duration,
@@ -138,20 +179,32 @@ class AppBar extends StatelessWidget {
           ),
           child: SafeArea(
             bottom: false,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ?resolvedLeading,
-                    Row(
-                      children: actions,
-                    ),
-                  ],
-                ),
-                ?title,
-              ],
+            child: AvoidOcclusions(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Keeps the actions trailing when there's no leading
+                      // widget, such as in the detail pane of a split view.
+                      resolvedLeading ?? const SizedBox.shrink(),
+                      Row(
+                        children: [
+                          ...actions,
+                          if (hasBarActions)
+                            BarActions(
+                              items: barItems,
+                              overflow: overflow,
+                              compression: compression,
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  ?title,
+                ],
+              ),
             ),
           ),
         ),
@@ -159,14 +212,21 @@ class AppBar extends StatelessWidget {
     );
   }
 
-  Widget _backButton(BuildContext context) {
-    if (!(ModalRoute.canPopOf(context) ?? false)) {
-      return const SizedBox.shrink();
-    }
-    return AppBarButton(
+  BarItem? _impliedBack(BuildContext context) {
+    if (!(ModalRoute.canPopOf(context) ?? false)) return null;
+    return BarItem(
+      title: 'Back',
       icon: backIcon ?? context.iconography.backIcon,
-      semanticsLabel: 'Back',
-      onTap: () => Navigator.pop(context),
+      role: BarItemRole.navigation,
+      onPressed: () => Navigator.pop(context),
+    );
+  }
+
+  Widget _navigationButton(BuildContext context, BarItem item) {
+    return AppBarButton(
+      icon: item.icon ?? context.iconography.backIcon,
+      semanticsLabel: item.title,
+      onTap: item.onPressed ?? () {},
     );
   }
 }

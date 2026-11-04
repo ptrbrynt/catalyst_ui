@@ -5,6 +5,7 @@ import '../../theme/extensions.dart';
 import '../../theme/shadows.dart';
 import '../../theme/typography.dart';
 import '../../tokens/radius.dart';
+import '../../utils/overlay_placement.dart';
 import '../atoms/checkbox.dart';
 import 'select.dart';
 
@@ -122,11 +123,10 @@ class _MultiSelectState<T> extends State<MultiSelect<T>> {
     final sh = context.shadows;
 
     final renderBox = context.findRenderObject()! as RenderBox;
-    final triggerGlobal = renderBox.localToGlobal(Offset.zero);
-    final screenHeight = MediaQuery.of(context).size.height;
-    const dropdownMaxHeight = 240.0;
-    final spaceBelow = screenHeight - triggerGlobal.dy - _triggerHeight - 4;
-    final showAbove = spaceBelow < dropdownMaxHeight;
+    final placement = OverlayPlacement.resolve(
+      context,
+      size: Size(renderBox.size.width, 240),
+    );
 
     _overlay = OverlayEntry(
       builder: (_) => _MultiSelectDropdown<T>(
@@ -137,7 +137,7 @@ class _MultiSelectState<T> extends State<MultiSelect<T>> {
         colorScheme: cs,
         typography: typo,
         shadows: sh,
-        showAbove: showAbove,
+        placement: placement,
         onToggle: _toggleValue,
         checkIcon: widget.checkIcon ?? context.iconography.checkIcon,
         onDismiss: _close,
@@ -308,7 +308,7 @@ class _MultiSelectDropdown<T> extends StatelessWidget {
     required this.colorScheme,
     required this.typography,
     required this.shadows,
-    required this.showAbove,
+    required this.placement,
     required this.onToggle,
     required this.onDismiss,
     required this.checkIcon,
@@ -322,8 +322,8 @@ class _MultiSelectDropdown<T> extends StatelessWidget {
   final Typography typography;
   final Shadows shadows;
 
-  /// Whether the dropdown should open above the trigger.
-  final bool showAbove;
+  /// Where the dropdown sits relative to the trigger.
+  final OverlayPlacement placement;
 
   final ValueChanged<T> onToggle;
   final VoidCallback onDismiss;
@@ -346,15 +346,13 @@ class _MultiSelectDropdown<T> extends StatelessWidget {
           child: CompositedTransformFollower(
             link: layerLink,
             showWhenUnlinked: false,
-            targetAnchor: showAbove ? Alignment.topLeft : Alignment.bottomLeft,
-            followerAnchor: showAbove
-                ? Alignment.bottomLeft
-                : Alignment.topLeft,
-            offset: Offset(0, showAbove ? -4 : 4),
+            targetAnchor: placement.targetAnchor(),
+            followerAnchor: placement.followerAnchor(),
+            offset: placement.offset,
             child: SizedBox(
               width: triggerWidth,
               child: Container(
-                constraints: const BoxConstraints(maxHeight: 240),
+                constraints: BoxConstraints(maxHeight: placement.maxHeight),
                 decoration: BoxDecoration(
                   color: colorScheme.surface,
                   borderRadius: Radii.lgAll,

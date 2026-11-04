@@ -1,3 +1,16 @@
+# 0.7.0
+
+- **Breaking:** `Iconography` now requires `moreIcon`, used for a bar's overflow menu
+- Add iPhone Duo support (iOS 27.1), all constraint-driven and inert on other devices:
+  - `VerticalBarEdge`, `VerticalBarEdgeScope`, `DisplayRegions` and `AvoidOcclusions` for the hardware bar side, corner radii and reserved display regions
+  - `BarItem`, `VerticalToolbar`, `VerticalBarColumn`, `VerticalBarPage`, `OverflowMenuButton`, `TabBarCompression`, `VerticalTabBarReservation` and `HorizontalBarScope` for adaptive horizontal/vertical bars
+  - `VerticalTabBar`, the tab bar's vertical form
+  - `ArrangementView`, a two-pane split/overlay view that clears the fold, and `SliverGridDelegateWithEvenColumns`
+  - `AppBar` gains `items`, `overflow` and compression, and avoids occlusions
+  - `MenuButton`, `Select`, `MultiSelect`, `Tooltip` and snackbars avoid reserved regions and the fold
+- Fix `AppBar` trailing actions moving to the leading side when there is no leading widget
+- Fix `Button`'s hidden loading spinner animating while not loading
+
 # 0.6.0
 
 - **Breaking:** `AppBarAction` is now an abstract class with a concrete `AppBarButton` taking its place. Any widget can now be used as an app bar action.

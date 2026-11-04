@@ -23,6 +23,7 @@ class Iconography {
     required this.closeIcon,
     required this.removeIcon,
     required this.alertIcon,
+    required this.moreIcon,
   });
 
   /// Icon used as checkmarks in components such as Checkboxes
@@ -60,4 +61,10 @@ class Iconography {
 
   /// Icon used in error states.
   final IconData alertIcon;
+
+  /// Icon used for a bar's overflow menu.
+  ///
+  /// Typically an ellipsis. Reserve it for overflow, and give other menus a
+  /// distinct symbol.
+  final IconData moreIcon;
 }

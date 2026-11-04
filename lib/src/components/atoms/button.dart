@@ -412,9 +412,14 @@ class _ButtonState extends State<Button> {
             opacity: widget.loading ? 1 : 0,
             duration: motion.standard.duration,
             curve: motion.standard.curve,
-            child: Spinner(
-              color: style.foregroundColor,
-              size: widget.size.iconSize,
+            // Paused unless loading: a hidden spinner would otherwise keep
+            // every button on screen drawing frames.
+            child: TickerMode(
+              enabled: widget.loading,
+              child: Spinner(
+                color: style.foregroundColor,
+                size: widget.size.iconSize,
+              ),
             ),
           ),
         ],

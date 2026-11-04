@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/radius.dart';
+import '../../utils/overlay_placement.dart';
 
 /// The side on which a [Tooltip] appears relative to its child.
 enum TooltipSide {
@@ -17,7 +18,8 @@ enum TooltipSide {
 /// A small informational overlay that appears on hover or long-press.
 ///
 /// Fades and scales in above (or below) [child], then disappears when the
-/// pointer leaves or the long-press ends.
+/// pointer leaves or the long-press ends. It flips sides when there isn't
+/// room, and stays clear of folds and cutouts (see [DisplayRegions]).
 ///
 /// ```dart
 /// Tooltip(
@@ -92,55 +94,67 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       final cs = context.colorScheme;
       final typo = context.typography;
       final shadows = context.shadows;
-      final isTop = widget.side == TooltipSide.top;
+      final textStyle = typo.caption.copyWith(
+        color: cs.onInverse,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+      );
+      final painter = TextPainter(
+        text: TextSpan(text: widget.content, style: textStyle),
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+      )..layout();
+      final placement = OverlayPlacement.resolve(
+        context,
+        size: Size(painter.width + 20, painter.height + 12),
+        gap: 8,
+        centered: true,
+        preferAbove: widget.side == TooltipSide.top,
+      );
+      painter.dispose();
+      final isTop = placement.showAbove;
 
       _entry = OverlayEntry(
-        builder:
-            (_) => Align(
-              alignment: Alignment.topLeft,
-              child: CompositedTransformFollower(
-                link: _link,
-                showWhenUnlinked: false,
-                targetAnchor:
-                    isTop ? Alignment.topCenter : Alignment.bottomCenter,
-                followerAnchor:
-                    isTop ? Alignment.bottomCenter : Alignment.topCenter,
-                offset: Offset(0, isTop ? -8 : 8),
-                child: IgnorePointer(
-                  child: FadeTransition(
-                    opacity: _animation,
-                    child: ScaleTransition(
-                      scale: Tween<double>(
-                        begin: 0.9,
-                        end: 1,
-                      ).animate(_animation),
-                      alignment:
-                          isTop ? Alignment.bottomCenter : Alignment.topCenter,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: cs.inverse,
-                          borderRadius: Radii.smAll,
-                          boxShadow: shadows.md,
-                        ),
-                        child: Text(
-                          widget.content,
-                          softWrap: false,
-                          style: typo.caption.copyWith(
-                            color: cs.onInverse,
-                            fontWeight: FontWeight.w500,
-                            height: 1.4,
-                          ),
-                        ),
-                      ),
+        builder: (_) => Align(
+          alignment: Alignment.topLeft,
+          child: CompositedTransformFollower(
+            link: _link,
+            showWhenUnlinked: false,
+            targetAnchor: placement.targetAnchor(centered: true),
+            followerAnchor: placement.followerAnchor(centered: true),
+            offset: placement.offset,
+            child: IgnorePointer(
+              child: FadeTransition(
+                opacity: _animation,
+                child: ScaleTransition(
+                  scale: Tween<double>(
+                    begin: 0.9,
+                    end: 1,
+                  ).animate(_animation),
+                  alignment: isTop
+                      ? Alignment.bottomCenter
+                      : Alignment.topCenter,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: cs.inverse,
+                      borderRadius: Radii.smAll,
+                      boxShadow: shadows.md,
+                    ),
+                    child: Text(
+                      widget.content,
+                      softWrap: false,
+                      style: textStyle,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+        ),
       );
 
       Overlay.of(context).insert(_entry!);

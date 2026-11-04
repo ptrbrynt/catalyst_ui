@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../theme/extensions.dart';
 import '../../tokens/spacing.dart';
+import '../molecules/menu_button.dart';
+import '../molecules/tooltip.dart';
 
 /// A single destination entry in a [BottomNav] bar.
 class BottomNavDestination<T> {
@@ -101,6 +103,125 @@ class BottomNav<T> extends StatelessWidget {
                   Icon(d.icon, size: 22, color: itemColor),
                   Text(d.label, textAlign: TextAlign.center),
                 ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A tab bar that runs down the side of the screen, for devices that place
+/// bars vertically.
+///
+/// Each destination is shown as a symbol, with its label used for
+/// accessibility and tooltips. When [minimized] is true (task-focused screens
+/// that need the room for their toolbar), only the selected destination is
+/// shown, and tapping it opens a menu of all destinations.
+class VerticalTabBar<T> extends StatelessWidget {
+  /// Creates a vertical tab bar.
+  const VerticalTabBar({
+    required this.selectedItem,
+    required this.onItemSelected,
+    required this.destinations,
+    this.minimized = false,
+    super.key,
+  });
+
+  /// The width of each destination.
+  static const double itemExtent = 44;
+
+  /// The value of the currently selected destination.
+  final T selectedItem;
+
+  /// Called when the user taps a destination.
+  final ValueChanged<T> onItemSelected;
+
+  /// The list of destinations.
+  final List<BottomNavDestination<T>> destinations;
+
+  /// Whether to show only the selected destination.
+  final bool minimized;
+
+  /// The height the bar needs.
+  static double extentFor(int destinations, {bool minimized = false}) =>
+      (minimized ? 1 : destinations) * itemExtent + Spacing.s1 * 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = context.colorScheme;
+    final selected = destinations
+        .where((d) => d.value == selectedItem)
+        .firstOrNull;
+
+    final Widget content;
+    if (minimized && selected != null) {
+      content = MenuButton(
+        items: [
+          for (final d in destinations)
+            MenuOption(
+              label: d.label,
+              icon: d.icon,
+              selected: d.value == selectedItem,
+              onTap: () => onItemSelected(d.value),
+            ),
+        ],
+        build: (context, open) => _dest(context, selected, open),
+      );
+    } else {
+      content = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final d in destinations)
+            _dest(context, d, () => onItemSelected(d.value)),
+        ],
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(Spacing.s1),
+      decoration: BoxDecoration(
+        color: cs.surface,
+        borderRadius: BorderRadius.circular(itemExtent),
+        border: Border.all(color: cs.borderSubtle),
+        boxShadow: context.shadows.md,
+      ),
+      child: content,
+    );
+  }
+
+  Widget _dest(
+    BuildContext context,
+    BottomNavDestination<T> d,
+    VoidCallback onTap,
+  ) {
+    final cs = context.colorScheme;
+    final isSelected = d.value == selectedItem;
+    return Tooltip(
+      content: d.label,
+      child: Semantics(
+        button: true,
+        selected: isSelected,
+        label: d.label,
+        excludeSemantics: true,
+        child: GestureDetector(
+          onTap: onTap,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: AnimatedContainer(
+              duration: context.motion.micro.duration,
+              curve: context.motion.micro.curve,
+              width: itemExtent,
+              height: itemExtent,
+              decoration: BoxDecoration(
+                color: isSelected ? cs.subtle : null,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                d.icon,
+                size: 22,
+                color: isSelected ? cs.brand : cs.textSubtle,
               ),
             ),
           ),
