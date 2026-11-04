@@ -512,7 +512,9 @@ class _VerticalBarPortalState extends State<_VerticalBarPortal> {
         right: column.edge == VerticalBarEdge.right ? 0 : null,
         top: column.top,
         bottom: column.bottom,
-        width: column.width,
+        // Centred on the system's control axis, which may sit off the
+        // column's centre.
+        width: column.axisInset * 2,
         child: Align(
           alignment: Alignment.topCenter,
           child: widget.child,
@@ -532,14 +534,19 @@ class VerticalBarColumn {
     required this.width,
     required this.top,
     required this.bottom,
+    double? axisInset,
     this.tabBarCompression,
-  });
+  }) : axisInset = axisInset ?? width / 2;
 
   /// Which edge the column runs along.
   final VerticalBarEdge edge;
 
   /// The width of the column, measured from the screen edge.
   final double width;
+
+  /// How far from the screen edge controls are centred: the system's control
+  /// axis, so they line up with the status bar and camera.
+  final double axisInset;
 
   /// Where the toolbar starts.
   final double top;
@@ -555,12 +562,14 @@ class VerticalBarColumn {
       other is VerticalBarColumn &&
       other.edge == edge &&
       other.width == width &&
+      other.axisInset == axisInset &&
       other.top == top &&
       other.bottom == bottom &&
       other.tabBarCompression == tabBarCompression;
 
   @override
-  int get hashCode => Object.hash(edge, width, top, bottom, tabBarCompression);
+  int get hashCode =>
+      Object.hash(edge, width, axisInset, top, bottom, tabBarCompression);
 }
 
 /// Collects task-focused screens' requests to minimize the tab bar.
@@ -642,15 +651,30 @@ class VerticalBarPage extends StatelessWidget {
     return math.max(systemInset, VerticalBarEdge.barExtent);
   }
 
+  /// How far from the screen edge the controls in the column along [edge]
+  /// are centred: the axis the system reports through
+  /// [VerticalBarEdgeScope.axisInset], or the middle of the column.
+  ///
+  /// Wrap a control in a box twice this wide, anchored to the edge, and
+  /// centre it there to line it up with the system's own controls.
+  static double axisInset(BuildContext context, VerticalBarEdge edge) {
+    final width = columnWidth(MediaQuery.of(context), edge);
+    final reported = VerticalBarEdgeScope.maybeOf(context)?.axisInset;
+    if (reported == null) return width / 2;
+    // Keep a whole control inside the column.
+    const half = VerticalToolbar.itemExtent / 2;
+    return reported.clamp(half, width - half);
+  }
+
   /// How far from the top (or bottom) of the display the first (or last)
-  /// control in a column of [width] must sit to stay inside a rounded corner
-  /// of [radius], with a small gap — the control's curve follows the
-  /// display's, rather than running into it.
-  static double cornerClearance(double radius, double width) {
+  /// control, centred [axisInset] from the screen edge, must sit to stay
+  /// inside a rounded corner of [radius] with a small gap: the control's curve
+  /// follows the display's, rather than running into it.
+  static double cornerClearance(double radius, double axisInset) {
     const controlRadius = VerticalToolbar.itemExtent / 2;
     const gap = Spacing.s2;
     final reach = radius - controlRadius - gap;
-    final inset = radius - width / 2;
+    final inset = radius - axisInset;
     if (radius <= 0 || inset <= 0) return 0;
     if (reach <= inset) return radius - controlRadius;
     final center = radius - math.sqrt(reach * reach - inset * inset);
@@ -663,10 +687,7 @@ class VerticalBarPage extends StatelessWidget {
     final edge = scope?.edge ?? VerticalBarEdge.none;
     return math.max(
       media.padding.bottom + Spacing.s2,
-      cornerClearance(
-        scope?.bottomCornerRadius ?? 0,
-        columnWidth(media, edge),
-      ),
+      cornerClearance(scope?.bottomCornerRadius ?? 0, axisInset(context, edge)),
     );
   }
 
@@ -713,12 +734,14 @@ class VerticalBarPage extends StatelessWidget {
       }
     }
     final scope = VerticalBarEdgeScope.maybeOf(context);
+    final axis = axisInset(context, edge);
     return VerticalBarColumn(
       edge: edge,
       width: width,
+      axisInset: axis,
       top: math.max(
         top + Spacing.s2,
-        cornerClearance(scope?.topCornerRadius ?? 0, width),
+        cornerClearance(scope?.topCornerRadius ?? 0, axis),
       ),
       bottom: reservation != null
           ? bottomInset(media, context) + reservation.extent
